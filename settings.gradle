@@ -1,0 +1,33 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+
+        jcenter()
+
+
+
+
+
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        jcenter()
+
+
+        versionCatalogs {
+            create("moengage") {
+                from("com.moengage:android-dependency-catalog:3.2.3")
+            }
+        }
+
+    }
+}
+rootProject.name = "ScrapWala"
+include ':app'

@@ -1,43 +1,115 @@
 package com.scrapwala
 
+import android.os.Build
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.scrapwala.ui.theme.ScrapWalaTheme
+import android.os.Handler
+import android.os.Looper
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
+import com.scrapwala.screens.home.adapter.HomePagerAdapter
+import com.scrapwala.screens.home.ui.DashBoardFragment
+import com.scrapwala.screens.pickups.PickUpsFragment
+import com.scrapwala.screens.profile.ProfileFragment
+import com.scrapwala.screens.referearn.ReferEarnFragment
+import com.sq.yrd.squareyards.R
+import com.sq.yrd.squareyards.databinding.ActivityMainBinding
 
-class MainActivity : ComponentActivity() {
+
+var firstFragment: Fragment? = null
+
+var secondFragment: Fragment? = null
+
+var thirdFragment: Fragment? = null
+
+var forthFragment: Fragment? = null
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var bindingBase: ActivityMainBinding
+    private var adapter: HomePagerAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            ScrapWalaTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
-                }
-            }
+        bindingBase = ActivityMainBinding.inflate(layoutInflater)
+        changeStatusBarColor()
+        setContentView(bindingBase.root)
+        setUpMainPageTasks()
+        initView()
+
+    }
+
+    private fun initView() {
+
+    }
+
+    private fun changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.statusBarColor = resources.getColor(R.color._151515, this.theme);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = resources.getColor(R.color._151515);
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    private fun setUpMainPageTasks() {
+        setUpBottomNav()
+        bottomNavListener()
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ScrapWalaTheme {
-        Greeting("Android")
+    private fun setUpBottomNav() {
+        firstFragment = DashBoardFragment()
+        secondFragment = ReferEarnFragment()
+        thirdFragment = PickUpsFragment()
+        forthFragment = ProfileFragment()
+
+        addFragments()
+    }
+
+    private fun addFragments() {
+        adapter = HomePagerAdapter(supportFragmentManager, lifecycle)
+
+        adapter?.addFragment(firstFragment!!)
+
+        adapter?.addFragment(secondFragment!!)
+
+        adapter?.addFragment(thirdFragment!!)
+
+        adapter?.addFragment(forthFragment!!)
+
+        bindingBase.bottomFragframeLayout.orientation = ViewPager2.ORIENTATION_HORIZONTAL;
+
+        bindingBase.bottomFragframeLayout.offscreenPageLimit = 3
+        bindingBase.bottomFragframeLayout.adapter = adapter
+        bindingBase.bottomFragframeLayout.isUserInputEnabled = false;
+    }
+
+    private fun bottomNavListener() {
+        bindingBase.navView.setOnItemSelectedListener { item ->
+
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    setCurrentFragment(0)
+                }
+                R.id.navigation_refer_earn -> {
+                    setCurrentFragment(1)
+                }
+
+                R.id.navigation_pickups -> {
+                    setCurrentFragment(2)
+                }
+
+                R.id.navigation_profile -> {
+                    setCurrentFragment(3)
+                }
+            }
+            true
+        }
+
+    }
+
+    private fun setCurrentFragment(index: Int) {
+        if (index != -1) {
+            bindingBase.bottomFragframeLayout.setCurrentItem(index, false)
+        }
     }
 }

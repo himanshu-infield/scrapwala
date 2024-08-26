@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.sq.yrd.squareyards.databinding.ActiivtySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -15,20 +16,20 @@ class SplashActivity : AppCompatActivity() {
 
 
     private var redirectUrl: String?=""
-    private lateinit var binding: ActivitySplashBinding
+    private lateinit var binding: ActiivtySplashBinding
     var jObj: JSONObject?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySplashBinding.inflate(layoutInflater)
+        binding = ActiivtySplashBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
 //        listenFcm()
 
-        val video = Uri.parse("android.resource://" + packageName + "/" + R.raw.sqyrd);
+      //  val video = Uri.parse("android.resource://" + packageName + "/" + R.raw.sqyrd);
 
 
-        binding.videoView.setVideoURI(video)
+      //  binding.videoView.setVideoURI(video)
 
 
         binding.videoView.setZOrderOnTop(true);//this line solve the problem
@@ -45,10 +46,10 @@ class SplashActivity : AppCompatActivity() {
 
 
 
-                    navigateToHomeActivity(this@SplashActivity, bundle)
+                //    navigateToHomeActivity(this@SplashActivity, bundle)
                 }
                 else{
-                    navigateToHomeActivity(this@SplashActivity, null)
+                  //  navigateToHomeActivity(this@SplashActivity, null)
 
                 }
 

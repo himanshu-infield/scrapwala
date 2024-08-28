@@ -286,6 +286,5 @@ dependencies {
     implementation ("com.asksira.android:loopingviewpager:1.4.1")
     implementation "com.airbnb.android:lottie:3.4.0"
     implementation 'com.github.aids61517:EasyRatingView:1.1.0'
-
-
+    implementation("com.tbuonomo:dotsindicator:5.0")
 }

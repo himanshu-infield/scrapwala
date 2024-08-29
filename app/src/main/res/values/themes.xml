@@ -24,4 +24,9 @@
     <style name="tooltipShOverylay">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">12sp</item>
+        <!--<item name="android:fontFamily">@font/cera_pro_medium</item>-->
+    </style>
 </resources>

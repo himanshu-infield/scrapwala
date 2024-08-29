@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/_0d0d0f"
+    android:background="@color/white"
     tools:context="com.scrapwala.screens.home.ui.DashBoardFragment">
 
 
@@ -40,7 +40,7 @@
                     android:layout_marginTop="@dimen/_8dp"
                     android:gravity="center_horizontal"
                     android:text="Waste recycle is super easy"
-                    android:textColor="@color/white"
+                    android:textColor="@color/_333333"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
@@ -161,7 +161,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_download" />
+                                android:src="@drawable/ic_recycle" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -194,7 +194,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_download" />
+                                android:src="@drawable/ic_carbon" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -207,7 +207,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Recycle"
+                                android:text="Carbon"
                                 android:textColor="@color/_333333"
                                 android:textSize="@dimen/_10sp" />
 
@@ -216,7 +216,7 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/_5dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_gridient_one"
@@ -227,7 +227,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_download" />
+                                android:src="@drawable/ic_leaves" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -240,7 +240,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Recycle"
+                                android:text="Coins"
                                 android:textColor="@color/_333333"
                                 android:textSize="@dimen/_10sp" />
 
@@ -277,13 +277,13 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_10dp"
-                        app:dotsColor="@color/white"
+                        app:dotsColor="@color/_666666"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="6dp"
                         app:dotsSpacing="4dp"
                         app:dotsWidthFactor="3.5"
                         app:progressMode="true"
-                        app:selectedDotColor="@color/white" />
+                        app:selectedDotColor="@color/_333333" />
 
 
                 </LinearLayout>
@@ -294,7 +294,7 @@
                     android:layout_marginTop="@dimen/_20dp"
                     android:layout_marginHorizontal="@dimen/_15dp"
                     android:text="Waste Category Rate List"
-                    android:textColor="@color/white"
+                    android:textColor="@color/_333333"
                     android:textSize="@dimen/_14sp" />
 
                 <LinearLayout
@@ -317,14 +317,14 @@
                         <ImageView
                             android:layout_width="38dp"
                             android:layout_height="38dp"
-                            android:src="@drawable/ic_home_icon" />
+                            android:src="@drawable/ic_pappers" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_18dp"
                             android:text="Paper"
-                            android:textColor="@color/white"
+                            android:textColor="@color/_333333"
                             android:textSize="@dimen/_12sp" />
 
                     </LinearLayout>
@@ -343,14 +343,14 @@
                         <ImageView
                             android:layout_width="38dp"
                             android:layout_height="38dp"
-                            android:src="@drawable/ic_home_icon" />
+                            android:src="@drawable/ic_matel" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_18dp"
-                            android:text="Paper"
-                            android:textColor="@color/white"
+                            android:text="Metal"
+                            android:textColor="@color/_333333"
                             android:textSize="@dimen/_12sp" />
 
                     </LinearLayout>
@@ -369,14 +369,14 @@
                         <ImageView
                             android:layout_width="38dp"
                             android:layout_height="38dp"
-                            android:src="@drawable/ic_home_icon" />
+                            android:src="@drawable/ic_plastic" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_18dp"
-                            android:text="Paper"
-                            android:textColor="@color/white"
+                            android:text="Plastic"
+                            android:textColor="@color/_333333"
                             android:textSize="@dimen/_12sp" />
 
                     </LinearLayout>
@@ -395,14 +395,14 @@
                         <ImageView
                             android:layout_width="38dp"
                             android:layout_height="38dp"
-                            android:src="@drawable/ic_home_icon" />
+                            android:src="@drawable/ic_waste" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_18dp"
-                            android:text="Paper"
-                            android:textColor="@color/white"
+                            android:text="E-Waste"
+                            android:textColor="@color/_333333"
                             android:textSize="@dimen/_12sp" />
 
                     </LinearLayout>

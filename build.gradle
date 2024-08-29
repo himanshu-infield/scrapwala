@@ -9,6 +9,7 @@ buildscript {
         google()  // Ensure this repository is included
         mavenCentral()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 
     dependencies {

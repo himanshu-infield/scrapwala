@@ -9,7 +9,7 @@ import androidx.viewpager2.adapter.FragmentViewHolder
 
 class HomePagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
-    public val fragmentList = ArrayList<Fragment>()
+    private val fragmentList = ArrayList<Fragment>()
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position]
     }

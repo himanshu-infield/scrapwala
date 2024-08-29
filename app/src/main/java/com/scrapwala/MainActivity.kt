@@ -25,6 +25,7 @@ var secondFragment: Fragment? = null
 var thirdFragment: Fragment? = null
 
 var forthFragment: Fragment? = null
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bindingBase: ActivityMainBinding
@@ -32,11 +33,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingBase = ActivityMainBinding.inflate(layoutInflater)
-        changeStatusBarColor()
+        // changeStatusBarColor()
         setContentView(bindingBase.root)
         setUpMainPageTasks()
         initView()
+    }
 
+     fun bottomNavVisibility(visibility:Boolean =false) {
+        if (visibility){
+        bindingBase.llBottom.visibility = View.GONE
+        }
     }
 
     private fun initView() {
@@ -45,9 +51,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.statusBarColor = resources.getColor(R.color._151515, this.theme);
+            window.statusBarColor = resources.getColor(R.color._f2f2f2, this.theme);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = resources.getColor(R.color._151515);
+            window.statusBarColor = resources.getColor(R.color._f2f2f2);
         }
     }
 
@@ -90,11 +96,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home -> {
                     setCurrentFragment(0)
                 }
+
                 R.id.navigation_refer_earn -> {
                     setCurrentFragment(1)
                 }
 
                 R.id.navigation_pickups -> {
+                 //   bottomNavVisibility(true)
                     setCurrentFragment(2)
                 }
 

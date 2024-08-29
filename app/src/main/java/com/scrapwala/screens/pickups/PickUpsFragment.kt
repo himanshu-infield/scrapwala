@@ -27,6 +27,5 @@ lateinit var binding: FragmentPickUpsBinding
     }
 
     private fun initView() {
-
     }
 }

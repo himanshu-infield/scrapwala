@@ -1,12 +1,13 @@
-package com.scrapwala.screens.splash
+package com.scrapwala.screens.splash.ui
 
 import android.annotation.SuppressLint
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.sq.yrd.squareyards.databinding.ActiivtySplashBinding
+import com.scrapwala.databinding.ActiivtySplashBinding
+import com.scrapwala.redirectionhandler.navigateToOnboardingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -32,32 +33,13 @@ class SplashActivity : AppCompatActivity() {
       //  binding.videoView.setVideoURI(video)
 
 
-        binding.videoView.setZOrderOnTop(true);//this line solve the problem
 
 
-        binding.videoView.setOnCompletionListener(object : MediaPlayer.OnCompletionListener {
-            override fun onCompletion(p0: MediaPlayer?) {
+  Handler().postDelayed(Runnable {
 
-                var bundle: Bundle?=null
+navigateToOnboardingActivity(this,null)
 
-                if(redirectUrl.isNullOrEmpty().not()){
-                    bundle= Bundle()
-                    bundle.putString("redirecyUrl",redirectUrl)
-
-
-
-                //    navigateToHomeActivity(this@SplashActivity, bundle)
-                }
-                else{
-                  //  navigateToHomeActivity(this@SplashActivity, null)
-
-                }
-
-                this@SplashActivity.finish()
-
-
-            }
-        })
+},1000)
 
 
         if (intent.action!=null &&intent.data!=null){
@@ -73,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.d("onresumeSplash", "triggered")
-        binding.videoView.start()
+
     }
 
 

@@ -1,16 +1,11 @@
 package com.scrapwala.screens.pickups
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
-import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
-import com.scrapwala.MainActivity
-import com.scrapwala.screens.pickups.adapter.PickupPagerAdapter
-import com.sq.yrd.squareyards.databinding.FragmentPickUpsBinding
+import com.scrapwala.databinding.FragmentPickUpsBinding
 
 
 class PickUpsFragment : Fragment() {

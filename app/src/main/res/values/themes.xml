@@ -29,4 +29,207 @@
         <item name="android:textSize">12sp</item>
         <!--<item name="android:fontFamily">@font/cera_pro_medium</item>-->
     </style>
+
+
+
+
+
+
+
+
+
+
+    <style name="heading_18sp">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/graphik_bold</item>
+    </style>
+
+
+    <style name="heading_20sp">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/graphik_bold</item>
+    </style>
+
+
+    <style name="heading_26sp">
+        <item name="android:textSize">26sp</item>
+        <item name="android:fontFamily">@font/graphik_bold</item>
+    </style>
+
+
+
+
+
+    <style name="heading_24sp">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/graphik_bold</item>
+    </style>
+
+
+    <style name="heading_28sp">
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">@font/graphik_bold</item>
+    </style>
+
+
+    <style name="heading_12sp">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/graphik_bold</item>
+    </style>
+
+
+    <style name="heading_14sp">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/graphik_bold</item>
+    </style>
+
+
+
+    <style name="heading_36sp">
+        <item name="android:textSize">36sp</item>
+        <item name="android:fontFamily">@font/graphik_bold</item>
+    </style>
+
+
+
+    <style name="heading_32sp">
+        <item name="android:textSize">32sp</item>
+        <item name="android:fontFamily">@font/graphik_bold</item>
+    </style>
+
+
+
+    <style name="semibold_12sp">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/graphik_semibold</item>
+    </style>
+
+
+
+    <style name="semibold_10sp">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/graphik_semibold</item>
+    </style>
+
+
+
+    <style name="semibold_8sp">
+        <item name="android:textSize">8sp</item>
+        <item name="android:fontFamily">@font/graphik_semibold</item>
+    </style>
+
+
+
+    <style name="semibold_14sp">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/graphik_semibold</item>
+    </style>
+
+
+    <style name="semibold_16sp">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/graphik_semibold</item>
+    </style>
+
+
+
+
+    <style name="semibold_18sp">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/graphik_semibold</item>
+    </style>
+
+
+    <style name="medium_10sp">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/graphik_medium</item>
+    </style>
+
+
+
+
+    <style name="medium_8sp">
+        <item name="android:textSize">8sp</item>
+        <item name="android:fontFamily">@font/graphik_medium</item>
+    </style>
+
+
+    <style name="semibold_22sp">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/graphik_semibold</item>
+    </style>
+
+
+
+    <style name="semibold_20sp">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/graphik_semibold</item>
+    </style>
+
+
+    <style name="medium_12sp">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/graphik_medium</item>
+    </style>
+
+
+    <style name="medium_14sp">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/graphik_medium</item>
+    </style>
+
+
+
+    <style name="medium_16sp">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/graphik_medium</item>
+    </style>
+
+
+    <style name="normal_12sp">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/graphik_regular</item>
+    </style>
+
+
+
+    <style name="normal_14sp">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/graphik_regular</item>
+    </style>
+
+    <style name="normal_10sp">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/graphik_regular</item>
+    </style>
+
+
+    <style name="normal_18sp">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/graphik_regular</item>
+    </style>
+
+
+
+
+<!--    <style name="normal_itallic_10sp">-->
+<!--        <item name="android:textSize">10sp</item>-->
+<!--        <item name="android:fontFamily">@font/poppins_italic</item>-->
+<!--    </style>-->
+
+    <style name="normal_9sp">
+        <item name="android:textSize">9sp</item>
+        <item name="android:fontFamily">@font/graphik_regular</item>
+    </style>
+
+
+
+
+
+
+
+
+
+
+
 </resources>

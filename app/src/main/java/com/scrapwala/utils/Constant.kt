@@ -10,4 +10,10 @@ object  Constant {
     const val SERVER_NOT_RESPONDING = "Server is not responding.Please try again later."
     const val UNEXPECTED_RESULT = "Unexpected result. Unable to parse response from server"
     const val SOMETHING_WENT_WRONG = "Something went wrong.Please try again later."
+
+
+
+
+
+    var PREFERENCE_NAME:String="SCRAPWALA_PREF"
 }

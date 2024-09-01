@@ -1,17 +1,12 @@
 package com.scrapwala.screens.home.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayoutMediator
-import com.scrapwala.MainActivity
+import androidx.fragment.app.Fragment
+import com.scrapwala.databinding.FragmentDashBoardBinding
 import com.scrapwala.screens.home.adapter.ViewPagerAdapter
-import com.sq.yrd.squareyards.R
-import com.sq.yrd.squareyards.databinding.FragmentDashBoardBinding
 
 class DashBoardFragment : Fragment() {
 

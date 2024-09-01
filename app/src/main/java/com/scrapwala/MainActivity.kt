@@ -9,13 +9,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.scrapwala.databinding.ActivityMainBinding
 import com.scrapwala.screens.home.adapter.HomePagerAdapter
 import com.scrapwala.screens.home.ui.DashBoardFragment
 import com.scrapwala.screens.pickups.PickUpsFragment
 import com.scrapwala.screens.profile.ProfileFragment
 import com.scrapwala.screens.referearn.ReferEarnFragment
-import com.sq.yrd.squareyards.R
-import com.sq.yrd.squareyards.databinding.ActivityMainBinding
 
 
 var firstFragment: Fragment? = null

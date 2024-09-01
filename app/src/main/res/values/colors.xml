@@ -16,13 +16,18 @@
     <color name="_1c2124">#1c2124</color>
     <color name="_151515">#151515</color>
     <color name="_75cb52">#75cb52</color>
+    <color name="_666666">#666666</color>
+
+
+    <color name="_eaeaea">#eaeaea</color>
+
+    <color name="app_green">#57bc2f</color>
     <color name="_f2f2f2">#f2f2f2</color>
 
     <color name="selected_tab_color">#32CD32</color> <!-- Green color for selected tab -->
     <color name="unselected_tab_color">#FFFFFF</color> <!-- White color for unselected tab -->
     <color name="selected_text_color">#000000</color> <!-- Black color for selected tab text -->
     <color name="unselected_text_color">#757575</color>
-    <color name="_666666">#666666</color>
     <color name="f4f8fb">#f4f8fb</color> <!-- Gray color for unselected tab text -->
 
 </resources>

@@ -16,11 +16,14 @@
         tools:replace="android:allowBackup"
         tools:targetApi="31">
         <activity
+            android:name="com.scrapwala.screens.pickups.PickupsActivity"
+            android:exported="false" />
+        <activity
             android:name="com.scrapwala.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"
             android:label="@string/app_name"
-            android:theme="@style/Theme.ScrapWala">
+            android:theme="@style/Theme.ScrapWala"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

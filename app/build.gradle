@@ -20,7 +20,7 @@ plugins {
 
 android {
 
-    namespace 'com.sq.yrd.squareyards'
+    namespace 'com.scrapwala'
     compileSdk 34
 
 

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/viewFlipper"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="25dp"
+        android:layout_height="wrap_content">
+
+
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+
+        <TextView
+            style="@style/heading_28sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:text="GET OTP"
+            android:textColor="@color/_333333"></TextView>
+
+
+        <TextView
+            style="@style/normal_18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+
+
+            android:text="Enter your mobile number to start
+selling recyclables"
+            android:textColor="@color/_333333"></TextView>
+
+
+        <TextView
+            style="@style/normal_12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Mobile no"
+            android:textColor="@color/_333333"></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:elevation="2dp"
+            android:background="@drawable/rect_login"
+
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:paddingVertical="15dp"
+                android:text="+91 India"></TextView>
+
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:background="#d1d0d0"></TextView>
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"></androidx.appcompat.widget.AppCompatEditText>
+
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/normal_12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:text="You will receive an OTP for verification"
+            android:textColor="@color/_666666"></TextView>
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="125dp"
+            android:background="@drawable/rect_green_app"
+            android:layout_width="match_parent"
+            android:text="Get OTP"
+            android:textColor="@color/white"
+            android:id="@+id/txtGetOtp"
+            android:layout_marginHorizontal="15dp"
+
+            android:layout_height="50dp"/>
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="25dp"
+        android:layout_height="wrap_content">
+
+
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+
+            <TextView
+                style="@style/heading_28sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="150dp"
+                android:text="VERIFICATION CODE"
+                android:textColor="@color/_333333"></TextView>
+
+
+            <TextView
+                style="@style/normal_18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:text="Enter verification code we sent to
++91 9876543210
+
+"
+                android:textColor="@color/_333333"></TextView>
+
+
+            <TextView
+                style="@style/normal_12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="Enter the OTP you received"
+                android:textColor="@color/_333333"></TextView>
+
+            <com.mukeshsolanki.OtpView
+                android:id="@+id/otp_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:inputType="number"
+                android:padding="0dp"
+                android:layout_marginTop="10dp"
+                android:state_selected="false"
+                android:textAllCaps="true"
+                android:textColor="@color/_333333"
+                app:OtpHideLineWhenFilled="false"
+                app:OtpItemCount="4"
+                app:OtpItemHeight="48dp"
+                app:OtpItemSpacing="6dp"
+                app:OtpItemWidth="37dp"
+                app:OtpLineColor="@color/_eaeaea"
+                app:OtpLineWidth="1dp"
+                app:OtpViewType="rectangle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtOtpSent" />
+
+            <TextView
+                style="@style/normal_12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:text="You will receive an OTP for verification"
+                android:textColor="@color/_666666"></TextView>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="125dp"
+            android:background="@drawable/rect_green_app"
+            android:layout_width="match_parent"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:id="@+id/txtContinueButton"
+            android:layout_marginHorizontal="15dp"
+
+            android:layout_height="50dp"/>
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ViewFlipper>

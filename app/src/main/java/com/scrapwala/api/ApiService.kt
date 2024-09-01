@@ -1,9 +1,9 @@
 package com.scrapwala.api
 
 import android.content.Context
+import com.scrapwala.BuildConfig
 import com.scrapwala.utils.Constant
 import com.scrapwala.utils.network.NetworkResultCallAdapterFactory
-import com.sq.yrd.squareyards.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -47,7 +47,7 @@ interface ApiService {
                         val builder = chain.request().newBuilder()
                         builder.header("appSource","android")
 
-                        builder.header("appVersion",BuildConfig.VERSION_NAME)
+                        builder.header("appVersion", BuildConfig.VERSION_NAME)
 
                         builder.header("appVersionCode",BuildConfig.VERSION_CODE.toString())
 

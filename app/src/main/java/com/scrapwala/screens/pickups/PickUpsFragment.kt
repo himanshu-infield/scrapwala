@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sq.yrd.squareyards.R
-import com.sq.yrd.squareyards.databinding.FragmentPickUpsBinding
-import com.sq.yrd.squareyards.databinding.FragmentReferEarnBinding
+import com.scrapwala.databinding.FragmentPickUpsBinding
 
 
 class PickUpsFragment : Fragment() {

@@ -431,23 +431,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:background="@drawable/rect_green_app"
             android:layout_marginHorizontal="@dimen/_15dp">
 
             <TextView
+                android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/bg_submit_one"
                 android:gravity="center_horizontal"
-                android:padding="18dp" />
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_submit"
-                android:gravity="center_horizontal"
-                android:padding="18dp"
+                android:padding="16dp"
                 android:text="Schedule a Pickup"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sp" />

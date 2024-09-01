@@ -39,224 +39,35 @@
                         android:textSize="@dimen/_12sp"
                         android:textColor="@color/_333333"/>
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_15dp"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:background="@drawable/edit_text_border"/>
+                        app:errorIconDrawable="@null">
+
+                        <com.scrapwala.utils.widgets.TextInputCustomClass
+                            android:id="@+id/edtName"
+                            style="@style/MyFilledEditBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                            android:fontFamily="@font/graphik_medium"
+                            android:hint="Full Name"
+                            android:inputType="textPersonName"
+                            android:maxLength="250"
+                            android:paddingTop="26dp"
+                            android:singleLine="true"
+                            android:textCursorDrawable="@null"
+                            android:textSize="14sp" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waste Category"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_15dp"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:background="@drawable/edit_text_border"/>
-
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waste Category"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_15dp"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:background="@drawable/edit_text_border"/>
-
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waste Category"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_15dp"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:background="@drawable/edit_text_border"/>
-
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waste Category"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_15dp"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:background="@drawable/edit_text_border"/>
-
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waste Category"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_15dp"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:background="@drawable/edit_text_border"/>
-
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waste Category"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_15dp"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:background="@drawable/edit_text_border"/>
-
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waste Category"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_15dp"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:background="@drawable/edit_text_border"/>
-
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waste Category"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_15dp"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:background="@drawable/edit_text_border"/>
-
-
-
-
-                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -281,28 +92,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rect_green_app"
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/bg_submit_one"
                 android:gravity="center_horizontal"
-                android:padding="18dp" />
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_submit"
-                android:gravity="center_horizontal"
-                android:padding="18dp"
+                android:padding="16dp"
                 android:text="Schedule a Pickup"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sp" />
-
-
         </RelativeLayout>
     </LinearLayout>
 

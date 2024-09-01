@@ -17,6 +17,11 @@
     <color name="_151515">#151515</color>
     <color name="_75cb52">#75cb52</color>
     <color name="_666666">#666666</color>
+    <color name="primary_dark">#1F1F1F</color>
+    <color name="secondary_dark">#414141</color>
+    <color name="separator_second">#e6e6e6</color>
+    <color name ="name_heading">#1F1F1F</color>
+    <color name ="_414141">#414141</color>
 
 
     <color name="_eaeaea">#eaeaea</color>

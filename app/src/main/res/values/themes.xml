@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.ScrapWala" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge" />
+    <style name="Theme.ScrapWala" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+    <item name="editTextStyle">@style/MyFilledEditBox</item>
+
+    <!--remove that white startup screen-->
+    <item name="android:windowDisablePreview">true</item>
+</style>
 
     <style name="ShapeAppearance.App.CircleImageView" parent="">
         <item name="cornerFamily">rounded</item>
@@ -225,7 +230,24 @@
 
 
 
-
+    <style name="MyFilledEditBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+    <item name="colorPrimary">@color/secondary_dark</item>
+    <item name="colorOnSurface">@color/secondary_dark</item>
+    <item name="android:background">@drawable/selectordrawable</item>
+    <item name="android:textColor">@color/name_heading</item>
+    <item name="hintTextColor">@color/name_heading</item>
+    <item name="colorControlActivated">@color/red</item>
+    <item name="colorAccent">@color/name_heading</item>
+    </style>
+    <style name="filledEditBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="colorPrimary">@color/secondary_dark</item>
+        <item name="colorOnSurface">@color/secondary_dark</item>
+        <item name="android:background">@drawable/selectordrawable</item>
+        <item name="android:textColor">@color/name_heading</item>
+        <item name="hintTextColor">@color/_414141</item>
+        <item name="colorControlActivated">@color/red</item>
+        <item name="colorAccent">@color/name_heading</item>
+    </style>
 
 
 

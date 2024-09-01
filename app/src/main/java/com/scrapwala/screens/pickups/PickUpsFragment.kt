@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.tabs.TabLayout
 import com.scrapwala.databinding.FragmentPickUpsBinding
+import com.scrapwala.screens.pickups.adapter.PickupPagerAdapter
 
 
 class PickUpsFragment : Fragment() {
@@ -33,7 +35,7 @@ lateinit var binding: FragmentPickUpsBinding
 
         for (i in 0 until binding.tabLayout.tabCount) {
             val tab = (binding.tabLayout.getChildAt(0) as ViewGroup).getChildAt(i)
-            val p = tab.layoutParams as MarginLayoutParams
+            val p = tab.layoutParams as ViewGroup.MarginLayoutParams
             p.setMargins(0, 0, 12, 0)
             tab.requestLayout()
         }
@@ -42,7 +44,7 @@ lateinit var binding: FragmentPickUpsBinding
         val adapter = PickupPagerAdapter(requireContext(), parentFragmentManager, binding.tabLayout.tabCount)
         binding.viewpager.adapter = adapter
 
-        binding.viewpager.addOnPageChangeListener(TabLayoutOnPageChangeListener(binding.tabLayout))
+        binding.viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -65,7 +67,7 @@ lateinit var binding: FragmentPickUpsBinding
     private fun initView() {
         binding.toolbar.tvHeading.text = "Pickup"
         binding.toolbar.imgBack.setOnClickListener{
-            requireActivity().finish()
+            requireActivity().onBackPressed()
         }
 
     }

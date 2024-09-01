@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
+import com.scrapwala.databinding.ActivityPickupsBinding
 import com.scrapwala.screens.pickups.adapter.PickupPagerAdapter
-import com.sq.yrd.squareyards.R
-import com.sq.yrd.squareyards.databinding.ActivityPickupsBinding
 
 class PickupsActivity : AppCompatActivity() {
     lateinit var binding: ActivityPickupsBinding

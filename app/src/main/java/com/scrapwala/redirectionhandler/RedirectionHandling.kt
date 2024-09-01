@@ -8,6 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.scrapwala.MainActivity
 import com.scrapwala.screens.login.ui.LoginActivity
 import com.scrapwala.screens.onboarding.ui.OnboardingActivity
+import com.scrapwala.screens.pickups.PickupsActivity
 
 fun navigateToOnboardingActivity(context: Activity, bundle: Bundle?) {
     var intent = Intent(context, OnboardingActivity::class.java)
@@ -74,5 +75,19 @@ fun navigateToMainActivity(context: Activity, bundle: Bundle?, needFlag: Boolean
 //    }
 
 
+
+}
+
+
+
+fun navigateToPickupsActivity(context: Activity, bundle: Bundle?, needFlag: Boolean? = false,) {
+    val intent = Intent(context, PickupsActivity::class.java)
+    if (needFlag!!) {
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+    }
+    bundle?.let {
+        intent.putExtras(it)
+    }
+    context.startActivity(intent)
 
 }

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var bindingBase: ActivityMainBinding
     private var adapter: HomePagerAdapter? = null
+    private var bottomTabIndex: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingBase = ActivityMainBinding.inflate(layoutInflater)
@@ -93,19 +94,23 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
                 R.id.navigation_home -> {
+                    bottomTabIndex = 0
                     setCurrentFragment(0)
                 }
 
                 R.id.navigation_refer_earn -> {
+                    bottomTabIndex = 1
                     setCurrentFragment(1)
                 }
 
                 R.id.navigation_pickups -> {
+                    bottomTabIndex = 2
                  //   bottomNavVisibility(true)
                     setCurrentFragment(2)
                 }
 
                 R.id.navigation_profile -> {
+                    bottomTabIndex = 3
                     setCurrentFragment(3)
                 }
             }
@@ -117,6 +122,17 @@ class MainActivity : AppCompatActivity() {
     private fun setCurrentFragment(index: Int) {
         if (index != -1) {
             bindingBase.bottomFragframeLayout.setCurrentItem(index, false)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (bottomTabIndex != 0) {
+            bottomTabIndex = 0
+            bindingBase.navView.selectedItemId = 0
+            bindingBase.navView.menu.getItem(0).isChecked = true
+            bindingBase.bottomFragframeLayout.setCurrentItem(0, false)
+        } else {
+            finish()
         }
     }
 }

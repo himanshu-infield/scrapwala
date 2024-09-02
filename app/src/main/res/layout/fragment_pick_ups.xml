@@ -27,27 +27,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <com.google.android.material.tabs.TabLayout
-                app:tabTextAppearance="@style/TabTextAppearance"
-                android:id="@+id/tabLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12dp"
-                app:tabGravity="fill"
-                app:tabMode="fixed"
-                app:tabIndicator="@null"
+                android:layout_marginHorizontal="@dimen/_22dp"
+                android:layout_marginTop="@dimen/_12dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#64d540"
+                    app:cardCornerRadius="8dp">
+                    <com.google.android.material.tabs.TabLayout
+                        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                        android:id="@+id/tabLayout"
+                        app:tabIndicatorGravity="stretch"
+                        app:tabMaxWidth="0dp"
+                        app:tabGravity="fill"
+                        app:tabMode="fixed"
+                        app:tabIndicatorColor="#64d540"
+                        app:tabSelectedTextColor="@android:color/white"
+                        app:tabTextColor="?attr/colorPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"/>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
-                app:tabBackground="@drawable/tab_background_selector"
-                app:tabTextColor="@color/tab_text_color"
-                app:tabSelectedTextColor="@color/white"
-                app:tabPaddingTop="8dp"
-                android:textSize="@dimen/_12sp"
-                app:tabPaddingBottom="8dp">
-            </com.google.android.material.tabs.TabLayout>
 
             <com.scrapwala.utils.NonSwipeableViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content" />
 
 

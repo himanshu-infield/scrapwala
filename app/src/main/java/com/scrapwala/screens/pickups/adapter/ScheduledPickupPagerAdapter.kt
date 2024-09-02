@@ -8,7 +8,7 @@ import com.scrapwala.screens.pickups.fragment.CompletedFragment
 import com.scrapwala.screens.pickups.fragment.SchedulePickupFragment
 import com.scrapwala.screens.pickups.fragment.UpcomingFragment
 
-class PickupPagerAdapter(
+class ScheduledPickupPagerAdapter(
     private val myContext: Context,
     fm: FragmentManager,
     private val totalTabs: Int
@@ -17,9 +17,8 @@ class PickupPagerAdapter(
     // This is for fragment tabs
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> SchedulePickupFragment()
-            1 -> UpcomingFragment()
-            2 -> CompletedFragment()
+            0 -> UpcomingFragment()
+            1 -> CompletedFragment()
             else -> throw IllegalArgumentException("Invalid tab position")
         }
     }

@@ -18,13 +18,13 @@
             android:padding="@dimen/_15dp"
             android:src="@drawable/ic_back" />
         <TextView
+            style="@style/semibold_14sp"
             android:id="@+id/tvHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/_333333"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:textSize="@dimen/_14sp"
             android:text="Category"/>
 
 

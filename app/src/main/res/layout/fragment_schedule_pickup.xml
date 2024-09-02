@@ -39,39 +39,317 @@
                         android:textSize="@dimen/_12sp"
                         android:textColor="@color/_333333"/>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/name"
+
+                    <!--Category Type-->
+                    <RelativeLayout
+                        android:id="@+id/rlEmployedType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:errorIconDrawable="@null">
+                        android:layout_marginTop="@dimen/_10dp">
 
-                        <com.scrapwala.utils.widgets.TextInputCustomClass
-                            android:id="@+id/edtName"
-                            style="@style/MyFilledEditBox"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/category"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-                            android:fontFamily="@font/graphik_medium"
-                            android:hint="Full Name"
-                            android:inputType="textPersonName"
-                            android:maxLength="250"
-                            android:paddingTop="26dp"
-                            android:singleLine="true"
-                            android:textCursorDrawable="@null"
-                            android:textSize="14sp" />
+                            android:textColorHint="@color/_666666"
+                            android:imeOptions="actionNext"
+                            app:errorIconDrawable="@null"
+                            app:hintEnabled="false"
+                            app:endIconDrawable="@drawable/ic_down"
+                            app:endIconMode="custom">
+
+                            <com.scrapwala.utils.widgets.TextInputCustomClass
+                                android:id="@+id/edtCategory"
+                                style="@style/filledEditBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="53dp"
+                                android:fontFamily="@font/graphik_medium"
+                                android:hint="Select Category"
+                                android:text=""
+                                android:paddingTop="0dp"
+                                android:paddingBottom="0dp"
+                                android:singleLine="true"
+                                android:textSize="14sp"
+                                android:focusable="false"
+                                android:clickable="true"/>
 
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <AutoCompleteTextView
+                            android:id="@+id/autoCompleteTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:overlapAnchor="false"
+                            android:dropDownVerticalOffset="2dp"
+                            android:textColor="@android:color/transparent"
+                            android:paddingStart="@dimen/_15dp"
+                            android:background="@android:color/transparent"
+                            android:inputType="none"/>
+
+                    </RelativeLayout>
 
 
 
                 </LinearLayout>
 
-
-
-                <View
+                <!--weight Type-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_15dp"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:padding="@dimen/_15dp"
+                    android:background="@drawable/rect_radius12_f4f8fb">
+
+                    <TextView
+                        style="@style/medium_12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estimate Weight"
+                        android:textSize="@dimen/_12sp"
+                        android:textColor="@color/_333333"/>
+
+                    <SeekBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10dp"/>
+
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/weight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_12dp"
+                            android:textColorHint="@color/_666666"
+                            android:imeOptions="actionNext"
+                            app:errorIconDrawable="@null"
+                            app:hintEnabled="false">
+
+                            <com.scrapwala.utils.widgets.TextInputCustomClass
+                                android:id="@+id/edtWeight"
+                                style="@style/filledEditBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="53dp"
+                                android:fontFamily="@font/graphik_medium"
+                                android:hint="Estimate Weight"
+                                android:text=""
+                                android:paddingTop="0dp"
+                                android:paddingBottom="0dp"
+                                android:singleLine="true"
+                                android:textSize="14sp"
+                                android:focusable="true"
+                                android:clickable="true"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+
+                <!--date-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:padding="@dimen/_15dp"
+                    android:background="@drawable/rect_radius12_f4f8fb">
+
+                    <TextView
+                        style="@style/medium_12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date"
+                        android:textSize="@dimen/_12sp"
+                        android:textColor="@color/_333333"/>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12dp"
+                        android:textColorHint="@color/_666666"
+                        android:imeOptions="actionNext"
+                        app:errorIconDrawable="@null"
+                        app:hintEnabled="false"
+                        app:endIconDrawable="@drawable/ic_calendar"
+                        app:endIconMode="custom">
+
+                        <com.scrapwala.utils.widgets.TextInputCustomClass
+                            android:id="@+id/edtDate"
+                            style="@style/filledEditBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="53dp"
+                            android:fontFamily="@font/graphik_medium"
+                            android:hint="Select Date"
+                            android:text=""
+                            android:paddingTop="0dp"
+                            android:paddingBottom="0dp"
+                            android:singleLine="true"
+                            android:textSize="14sp"
+                            android:focusable="false"
+                            android:clickable="true"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!--time-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:padding="@dimen/_15dp"
+                    android:background="@drawable/rect_radius12_f4f8fb">
+
+                    <TextView
+                        style="@style/medium_12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Time"
+                        android:textSize="@dimen/_12sp"
+                        android:textColor="@color/_333333"/>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12dp"
+                        android:textColorHint="@color/_666666"
+                        android:imeOptions="actionNext"
+                        app:errorIconDrawable="@null"
+                        app:hintEnabled="false"
+                        app:endIconDrawable="@drawable/ic_time"
+                        app:endIconMode="custom">
+
+                        <com.scrapwala.utils.widgets.TextInputCustomClass
+                            android:id="@+id/edtTime"
+                            style="@style/filledEditBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="53dp"
+                            android:fontFamily="@font/graphik_medium"
+                            android:hint="Select Time"
+                            android:text=""
+                            android:paddingTop="0dp"
+                            android:paddingBottom="0dp"
+                            android:singleLine="true"
+                            android:textSize="14sp"
+                            android:focusable="false"
+                            android:clickable="true"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+
+                <!--address-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:padding="@dimen/_15dp"
+                    android:background="@drawable/rect_radius12_f4f8fb">
+
+                    <TextView
+                        style="@style/medium_12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textSize="@dimen/_12sp"
+                        android:textColor="@color/_333333"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12dp"
+                        android:textColorHint="@color/_666666"
+                        android:imeOptions="actionNext"
+                        app:errorIconDrawable="@null"
+                        app:hintEnabled="false">
+
+                        <com.scrapwala.utils.widgets.TextInputCustomClass
+                            android:id="@+id/edtAddress"
+                            style="@style/filledEditBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="53dp"
+                            android:fontFamily="@font/graphik_medium"
+                            android:hint="Enter Address"
+                            android:text=""
+                            android:paddingTop="0dp"
+                            android:paddingBottom="0dp"
+                            android:singleLine="true"
+                            android:textSize="14sp"
+                            android:focusable="true"
+                            android:clickable="true"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="18dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/dotted_rect_bg"
+                        android:gravity="center">
+                        <TextView
+                            style="@style/semibold_12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#64d540"
+                            android:text="+  Add Another Address"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!--Message-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:padding="@dimen/_15dp"
+                    android:background="@drawable/rect_radius12_f4f8fb">
+
+                    <TextView
+                        style="@style/medium_12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Message"
+                        android:textSize="@dimen/_12sp"
+                        android:textColor="@color/_333333"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12dp"
+                        android:textColorHint="@color/_666666"
+                        android:imeOptions="actionNext"
+                        app:errorIconDrawable="@null"
+                        app:hintEnabled="false">
+
+                        <com.scrapwala.utils.widgets.TextInputCustomClass
+                            android:id="@+id/edtMessage"
+                            style="@style/filledEditBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:fontFamily="@font/graphik_medium"
+                            android:hint="Enter message if any"
+                            android:gravity="top"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="0dp"
+                            android:singleLine="true"
+                            android:textSize="14sp"
+                            android:focusable="true"
+                            android:clickable="true"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -89,6 +367,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_15dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,6 +377,7 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                style="@style/semibold_14sp"
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

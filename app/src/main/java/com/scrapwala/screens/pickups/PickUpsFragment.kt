@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import com.scrapwala.databinding.FragmentPickUpsBinding
 import com.scrapwala.screens.pickups.adapter.PickupPagerAdapter
+import com.scrapwala.screens.pickups.adapter.ScheduledPickupPagerAdapter
 
 
 class PickUpsFragment : Fragment() {
@@ -28,20 +29,11 @@ lateinit var binding: FragmentPickUpsBinding
     }
 
     private fun setUPTabLayout() {
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Schedule Pickup"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Upcoming"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Completed"))
 
 
-        for (i in 0 until binding.tabLayout.tabCount) {
-            val tab = (binding.tabLayout.getChildAt(0) as ViewGroup).getChildAt(i)
-            val p = tab.layoutParams as ViewGroup.MarginLayoutParams
-            p.setMargins(0, 0, 12, 0)
-            tab.requestLayout()
-        }
-
-
-        val adapter = PickupPagerAdapter(requireContext(), parentFragmentManager, binding.tabLayout.tabCount)
+        val adapter = ScheduledPickupPagerAdapter(requireContext(), parentFragmentManager, binding.tabLayout.tabCount)
         binding.viewpager.adapter = adapter
 
         binding.viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
@@ -65,7 +57,7 @@ lateinit var binding: FragmentPickUpsBinding
     }
 
     private fun initView() {
-        binding.toolbar.tvHeading.text = "Pickup"
+        binding.toolbar.tvHeading.text = "Scheduled Pickup"
         binding.toolbar.imgBack.setOnClickListener{
             requireActivity().onBackPressed()
         }

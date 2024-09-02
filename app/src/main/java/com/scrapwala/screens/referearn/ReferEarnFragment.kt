@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.scrapwala.R
 import com.scrapwala.databinding.FragmentReferEarnBinding
 
 class ReferEarnFragment : Fragment() {
@@ -25,7 +26,10 @@ private lateinit var binding: FragmentReferEarnBinding
     }
 
     private fun initView() {
-
+        binding.toolbar.tvHeading.text = getString(R.string.refer_and_earn)
+        binding.toolbar.imgBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
     }
 
 }

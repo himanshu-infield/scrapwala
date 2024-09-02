@@ -17,6 +17,12 @@
     <color name="_151515">#151515</color>
     <color name="_75cb52">#75cb52</color>
     <color name="_666666">#666666</color>
+    <color name="primary_dark">#1F1F1F</color>
+    <color name="secondary_dark">#414141</color>
+    <color name="separator_second">#e2e2e2</color>
+    <color name ="name_heading">#1F1F1F</color>
+    <color name ="_414141">#414141</color>
+    <color name="_242424">#242424</color>
 
 
     <color name="_eaeaea">#eaeaea</color>
@@ -25,4 +31,13 @@
     <color name="_1f1f1f">#1f1f1f</color>
 
     <color name="app_green">#57bc2f</color>
+    <color name="_f2f2f2">#f2f2f2</color>
+
+    <color name="selected_tab_color">#32CD32</color> <!-- Green color for selected tab -->
+    <color name="unselected_tab_color">#FFFFFF</color> <!-- White color for unselected tab -->
+    <color name="selected_text_color">#000000</color> <!-- Black color for selected tab text -->
+    <color name="unselected_text_color">#757575</color>
+    <color name="f4f8fb">#f4f8fb</color>
+    <color name="_1f1f1f">#1f1f1f</color>
+
 </resources>

@@ -9,9 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/_0d0d0f"
+        android:background="@color/white"
         tools:context="com.scrapwala.screens.pickups.PickUpsFragment">
-
         <include
             android:id="@+id/toolbar"
             layout="@layout/apps_toolbar"
@@ -20,35 +19,49 @@
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="visible" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/_15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:layout_marginTop="@dimen/_22dp">
-
-                <com.google.android.material.slider.Slider
-                    style="@style/Custom_Slider_Style"
-                    android:theme="@style/slider_overlay"
-                    app:labelStyle="@style/tooltip"
-                    android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/_22dp"
+                android:layout_marginTop="@dimen/_12dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:labelBehavior="withinBounds"
-                    android:value="7"
-                    android:valueFrom="0"
-                    android:valueTo="10"
-                    />
-
+                    android:layout_margin="10dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#64d540"
+                    app:cardCornerRadius="8dp">
+                    <com.google.android.material.tabs.TabLayout
+                        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                        android:id="@+id/tabLayout"
+                        app:tabIndicatorGravity="stretch"
+                        app:tabMaxWidth="0dp"
+                        app:tabGravity="fill"
+                        app:tabMode="fixed"
+                        app:tabIndicatorColor="#64d540"
+                        app:tabSelectedTextColor="@android:color/white"
+                        app:tabTextColor="?attr/colorPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"/>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
+
+
+            <com.scrapwala.utils.NonSwipeableViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content" />
+
+
 
         </LinearLayout>
 

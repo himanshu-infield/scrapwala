@@ -32,7 +32,12 @@
 
 
         <activity android:name=".screens.login.ui.LoginActivity" />
-        <activity android:name="com.scrapwala.MainActivity" />
+        <activity android:name="com.scrapwala.MainActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name="com.scrapwala.screens.pickups.PickupsActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
 
     </application>
 

@@ -1,0 +1,58 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context="com.scrapwala.screens.pickups.PickUpsFragment">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/apps_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/_15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <com.google.android.material.tabs.TabLayout
+                app:tabTextAppearance="@style/TabTextAppearance"
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12dp"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabIndicator="@null"
+
+                app:tabBackground="@drawable/tab_background_selector"
+                app:tabTextColor="@color/tab_text_color"
+                app:tabSelectedTextColor="@color/white"
+                app:tabPaddingTop="8dp"
+                android:textSize="@dimen/_12sp"
+                app:tabPaddingBottom="8dp">
+            </com.google.android.material.tabs.TabLayout>
+
+            <com.scrapwala.utils.NonSwipeableViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

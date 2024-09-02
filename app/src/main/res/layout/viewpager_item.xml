@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="@dimen/_15dp"
-    android:background="@drawable/rect_white"
+    android:background="@drawable/rect_viewpager_dashboard"
     android:gravity="center"
     android:orientation="vertical">
 

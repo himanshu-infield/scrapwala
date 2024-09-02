@@ -24,18 +24,25 @@ var secondFragment: Fragment? = null
 var thirdFragment: Fragment? = null
 
 var forthFragment: Fragment? = null
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bindingBase: ActivityMainBinding
     private var adapter: HomePagerAdapter? = null
+    private var bottomTabIndex: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingBase = ActivityMainBinding.inflate(layoutInflater)
-        changeStatusBarColor()
+        // changeStatusBarColor()
         setContentView(bindingBase.root)
         setUpMainPageTasks()
         initView()
+    }
 
+     fun bottomNavVisibility(visibility:Boolean =false) {
+        if (visibility){
+        bindingBase.llBottom.visibility = View.GONE
+        }
     }
 
     private fun initView() {
@@ -44,9 +51,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.statusBarColor = resources.getColor(R.color._151515, this.theme);
+            window.statusBarColor = resources.getColor(R.color._f2f2f2, this.theme);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = resources.getColor(R.color._151515);
+            window.statusBarColor = resources.getColor(R.color._f2f2f2);
         }
     }
 
@@ -87,17 +94,23 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
                 R.id.navigation_home -> {
+                    bottomTabIndex = 0
                     setCurrentFragment(0)
                 }
+
                 R.id.navigation_refer_earn -> {
+                    bottomTabIndex = 1
                     setCurrentFragment(1)
                 }
 
                 R.id.navigation_pickups -> {
+                    bottomTabIndex = 2
+                 //   bottomNavVisibility(true)
                     setCurrentFragment(2)
                 }
 
                 R.id.navigation_profile -> {
+                    bottomTabIndex = 3
                     setCurrentFragment(3)
                 }
             }
@@ -109,6 +122,17 @@ class MainActivity : AppCompatActivity() {
     private fun setCurrentFragment(index: Int) {
         if (index != -1) {
             bindingBase.bottomFragframeLayout.setCurrentItem(index, false)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (bottomTabIndex != 0) {
+            bottomTabIndex = 0
+            bindingBase.navView.selectedItemId = 0
+            bindingBase.navView.menu.getItem(0).isChecked = true
+            bindingBase.bottomFragframeLayout.setCurrentItem(0, false)
+        } else {
+            finish()
         }
     }
 }

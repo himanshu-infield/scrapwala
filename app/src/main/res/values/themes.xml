@@ -112,6 +112,11 @@
         <item name="android:fontFamily">@font/graphik_bold</item>
     </style>
 
+    <style name="normal_11sp">
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">@font/graphik_regular</item>
+    </style>
+
 
     <style name="heading_14sp">
         <item name="android:textSize">14sp</item>

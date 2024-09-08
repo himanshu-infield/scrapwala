@@ -8,4 +8,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="refer_and_earn"><![CDATA[Refer & Earn]]></string>
+    <string name="your_profile">Your Profile</string>
+    <string name="your_contribution_to_save_earth_till_now">Your contribution to save\nearth till now</string>
+    <string name="profile_update">Profile Update</string>
+    <string name="earn_points_for_sale_trash">Earn Points For\nSale Trash</string>
 </resources>

@@ -35,4 +35,31 @@ class LoginActivity : BaseAppCompatActivity() {
 
 
 
+
+    private fun startTimer(retryInterval: Long) {
+
+
+//        var timer = object : CountDownTimer(retryInterval * 1000, 1000) {
+//            override fun onTick(millisUntilFinished: Long) {
+//                binding.verifyOtp.timer.visibility = View.VISIBLE
+//
+//                binding.verifyOtp.timer.setText("in 0:" + checkDigit(time))
+//                time--
+//            }
+//
+//            override fun onFinish() {
+//                binding.verifyOtp.timer.visibility = View.GONE
+//                binding.verifyOtp.resendOtp.isEnabled = true
+//            }
+//        }
+//
+//
+//        time = retryInterval
+//        timer.start()
+
+
+    }
+
+
+
 }

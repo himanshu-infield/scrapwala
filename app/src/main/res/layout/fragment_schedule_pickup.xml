@@ -71,7 +71,7 @@
                                 android:singleLine="true"
                                 android:textSize="14sp"
                                 android:focusable="false"
-                                android:clickable="true"/>
+                                android:clickable="false"/>
 
 
                         </com.google.android.material.textfield.TextInputLayout>

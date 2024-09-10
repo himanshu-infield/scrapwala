@@ -9,6 +9,7 @@ import com.scrapwala.MainActivity
 import com.scrapwala.screens.login.ui.LoginActivity
 import com.scrapwala.screens.onboarding.ui.OnboardingActivity
 import com.scrapwala.screens.pickups.PickupsActivity
+import com.scrapwala.screens.pickups.category.ui.CategoryActivity
 
 fun navigateToOnboardingActivity(context: Activity, bundle: Bundle?) {
     var intent = Intent(context, OnboardingActivity::class.java)
@@ -85,6 +86,19 @@ fun navigateToPickupsActivity(context: Activity, bundle: Bundle?, needFlag: Bool
     if (needFlag!!) {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
     }
+    bundle?.let {
+        intent.putExtras(it)
+    }
+    context.startActivity(intent)
+
+}
+
+
+
+
+fun navigateToCategoryActivity(context: Activity, bundle: Bundle?, needFlag: Boolean? = false,) {
+    val intent = Intent(context, CategoryActivity::class.java)
+
     bundle?.let {
         intent.putExtras(it)
     }

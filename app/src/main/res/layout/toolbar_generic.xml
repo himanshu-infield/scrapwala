@@ -15,7 +15,7 @@
         android:background="@color/white"
         android:elevation="0dp"
         app:contentInsetStartWithNavigation="0dp"
-        app:theme="@style/blackToolbarStyle">
+        >
 
 
         <ImageView

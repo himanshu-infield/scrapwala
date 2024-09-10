@@ -63,7 +63,7 @@ class OnboardingActivity : AppCompatActivity() {
         loginCarousal.add(obj1)
 
         val obj2 = LoginCarousal()
-        obj2.carousalHeading = "USell recyclables now"
+        obj2.carousalHeading = "Sell recyclables now"
         obj2.carousalDescription = "Sell recyclables now"
         loginCarousal.add(obj2)
 

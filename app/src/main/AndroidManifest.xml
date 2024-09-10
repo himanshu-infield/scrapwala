@@ -38,6 +38,7 @@
             android:name="com.scrapwala.screens.pickups.PickupsActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
+        <activity android:name="com.scrapwala.screens.pickups.category.ui.CategoryActivity" />
 
     </application>
 

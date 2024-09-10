@@ -1,5 +1,6 @@
 package com.scrapwala.screens.pickups.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import android.widget.SeekBar
 import android.widget.Toast
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
+import com.scrapwala.redirectionhandler.navigateToCategoryActivity
 import com.scrapwala.utils.extensionclass.setErrorMessage
 
 class SchedulePickupFragment : Fragment() {
@@ -37,20 +39,21 @@ class SchedulePickupFragment : Fragment() {
             }
         }
 
+
         binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                binding.autoCompleteTextView.showDropDown()
+                navigateToCategoryActivity(requireActivity(),null)
             }
             false
         })
-        binding.autoCompleteTextView.inputType = InputType.TYPE_NULL
-        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, wasteCategory)
-        binding.autoCompleteTextView.setAdapter(adapter)
-
-        binding.autoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
-            val selectedItem = parent.getItemAtPosition(position).toString()
-            binding.edtCategory.setText(""+selectedItem)
-        }
+//        binding.autoCompleteTextView.inputType = InputType.TYPE_NULL
+//        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, wasteCategory)
+//        binding.autoCompleteTextView.setAdapter(adapter)
+//
+//        binding.autoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
+//            val selectedItem = parent.getItemAtPosition(position).toString()
+//            binding.edtCategory.setText(""+selectedItem)
+//        }
     }
 
 
@@ -61,5 +64,20 @@ class SchedulePickupFragment : Fragment() {
             formValid = false
         }
         return formValid
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode==100){
+            if(data!=null){
+                var item=data.getStringExtra("clickedItem")
+
+
+                if(item.isNullOrEmpty().not()){
+                    binding.edtCategory.setText(item)
+                }
+            }
+        }
     }
 }

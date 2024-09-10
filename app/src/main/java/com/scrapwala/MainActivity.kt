@@ -27,7 +27,7 @@ var forthFragment: Fragment? = null
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var bindingBase: ActivityMainBinding
+     lateinit var bindingBase: ActivityMainBinding
     private var adapter: HomePagerAdapter? = null
     private var bottomTabIndex: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {

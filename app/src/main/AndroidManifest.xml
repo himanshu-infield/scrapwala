@@ -31,6 +31,10 @@
         <activity android:name="com.scrapwala.screens.onboarding.ui.OnboardingActivity" />
 
 
+
+        <activity
+            android:name=".screens.profile.EditProfileActivity"
+            android:exported="false" />
         <activity android:name=".screens.login.ui.LoginActivity" />
         <activity android:name="com.scrapwala.MainActivity"
             android:windowSoftInputMode="adjustPan"/>
@@ -38,7 +42,22 @@
             android:name="com.scrapwala.screens.pickups.PickupsActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
-        <activity android:name="com.scrapwala.screens.pickups.category.ui.CategoryActivity" />
+
+
+        <activity android:name="com.scrapwala.utils.access_media.ChooseMediaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
     </application>
 

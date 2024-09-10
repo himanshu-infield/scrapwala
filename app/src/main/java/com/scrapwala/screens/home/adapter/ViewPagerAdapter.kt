@@ -10,7 +10,7 @@ import com.scrapwala.R
 class ViewPagerAdapter(private val items: List<String>) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView: TextView = itemView.findViewById(R.id.textView)
+       // val textView: TextView = itemView.findViewById(R.id.textView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,7 +19,7 @@ class ViewPagerAdapter(private val items: List<String>) : RecyclerView.Adapter<V
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView.text = items[position]
+       // holder.textView.text = items[position]
     }
 
     override fun getItemCount(): Int = items.size

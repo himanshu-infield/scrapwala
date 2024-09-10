@@ -72,6 +72,7 @@ class CategoryAdapter(
                 itemViewBinding.txtCategoryName.setText(item.categoryName)
             }
 
+
             else{
                 itemViewBinding.txtCategoryName.visibility= View.GONE
 

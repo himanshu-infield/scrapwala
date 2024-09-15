@@ -110,10 +110,27 @@
                         android:textSize="@dimen/_12sp"
                         android:textColor="@color/_333333"/>
 
-                    <SeekBar
+                   <!-- <SeekBar
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10dp"/>
+                        android:layout_marginTop="@dimen/_10dp"/>-->
+
+                    <com.google.android.material.slider.Slider
+                        style="@style/Myslider"
+                        android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stepSize="1"
+                        app:tickColor="@android:color/transparent"
+                        app:trackColorActive="#75cb52"
+                        app:trackHeight="8dp"
+                        app:trackColorInactive="#d0d0d0"
+                        app:thumbColor="#75cb52"
+                        app:thumbRadius="@dimen/_10dp"
+                        app:labelBehavior="visible"
+                        android:value="20"
+                        android:valueFrom="10"
+                        android:valueTo="50" />
 
 
 

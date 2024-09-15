@@ -2,25 +2,34 @@ package com.scrapwala.screens.pickups.fragment
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
+import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.SeekBar
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
+import androidx.databinding.DataBindingUtil
 import com.google.gson.Gson
+import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
-import com.scrapwala.screens.pickups.category.ui.CategoryActivity
+import com.scrapwala.screens.pickups.PickupsActivity
 import com.scrapwala.screens.pickups.category.ui.SelectAddressActivity
 import com.scrapwala.screens.pickups.model.AddressData
 import com.scrapwala.utils.extensionclass.setErrorMessage
+import java.text.SimpleDateFormat
 import java.util.Calendar
-
+import java.util.Date
+import java.util.Locale
 
 class SchedulePickupFragment : Fragment() {
     private val wasteCategory = listOf("Paper", "Metal","Plastic","E-Waste")
@@ -39,15 +48,53 @@ class SchedulePickupFragment : Fragment() {
 
     private fun initView() {
 
+
+        binding.slider.setLabelFormatter { value: Float ->
+            "${value.toInt()}KG"
+        }
+        binding.slider.addOnChangeListener { slider, value, fromUser ->
+            // value is the current value of the slider
+            val sliderValue = value.toInt()
+            println("Slider value: $sliderValue kg")
+
+            // You can update a TextView or any other UI element with the value
+            binding.edtWeight.setText("$sliderValue KG".toString())
+        }
+        val sliderValue = binding.slider.value.toInt()
+        binding.edtWeight.setText("$sliderValue KG")
+    }
+
+
+
         binding.btnSubmit.setOnClickListener {
             if (isValidate()){
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(
+                    (context as Activity).getWindow().getDecorView().getWindowToken(),
+                    0
+                )
+                binding.edtCategory.setText("")
+                binding.edtWeight.setText("")
+                binding.edtDate.setText("")
+                binding.edtTime.setText("")
+                binding.edtAddress.setText("")
+                binding.edtMessage.setText("")
+                openDialog()
 
             }
         }
 
+    binding.linearSelectAddres.setOnClickListener {
+        val intent = Intent(requireContext(), SelectAddressActivity::class.java)
+        someActivityResultLauncher.launch(intent)
+    }
+
+    /**select waste category**/
 
 
-
+        binding.edtDate.setOnClickListener {
+            showDatePickerDialog()
+        }
         binding.edtTime.setOnClickListener {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -72,47 +119,36 @@ class SchedulePickupFragment : Fragment() {
             timePickerDialog.show()
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-binding.linearSelectAddres.setOnClickListener {
-    val intent = Intent(requireContext(), SelectAddressActivity::class.java)
-    someActivityResultLauncher.launch(intent)
-}
-
-
-        binding.edtDate.setOnClickListener {
-            showDatePickerDialog()
-        }
-
-
-            binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
-                if (event.action == MotionEvent.ACTION_DOWN) {
-                    val intent = Intent(requireContext(), CategoryActivity::class.java)
-                    someActivityResultLauncher.launch(intent)
-                }
-                false
-            })
-//        binding.autoCompleteTextView.inputType = InputType.TYPE_NULL
-//        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, wasteCategory)
-//        binding.autoCompleteTextView.setAdapter(adapter)
-//
-//        binding.autoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
-//            val selectedItem = parent.getItemAtPosition(position).toString()
-//            binding.edtCategory.setText(""+selectedItem)
-//        }
     }
 
+
+
+
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireActivity(),
+            { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(selectedYear, selectedMonth, selectedDayOfMonth)
+                val selected_Date = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
+                binding.edtDate.setText(selected_Date.toString())
+            },
+            year, month, day
+        )
+
+          // Disable previous dates
+        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+
+        datePickerDialog.show()
+
+
+    }
 
     private fun isValidate(): Boolean {
         var formValid: Boolean = true
@@ -122,85 +158,76 @@ binding.linearSelectAddres.setOnClickListener {
         }
         return formValid
     }
+}
 
 
 
 
 
-        private fun showDatePickerDialog() {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
+private fun openDialog() {
+    val dialog = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+    val inflater = LayoutInflater.from(requireContext())
+    val layoutScheduledPickupBinding: LayoutScheduledPickupBinding = DataBindingUtil.inflate(inflater, R.layout.layout_scheduled_pickup, null, false)
+    dialog.setContentView(layoutScheduledPickupBinding.root)
 
-            val datePickerDialog = DatePickerDialog(
-                requireActivity(),
-                { _, selectedYear, selectedMonth, selectedDayOfMonth ->
-                    val selectedDate = Calendar.getInstance()
-                    selectedDate.set(selectedYear, selectedMonth, selectedDayOfMonth)
-                    val selected_Date = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
-                    binding.edtDate.setText(selected_Date.toString())
-                },
-                year, month, day
+
+    layoutScheduledPickupBinding.imgClose.setOnClickListener {
+        // finish()
+        (activity as PickupsActivity).binding.viewpager.currentItem = 1
+        dialog.dismiss()
+    }
+
+    layoutScheduledPickupBinding.btnScheduleAnother.setOnClickListener {
+        dialog.dismiss()
+    }
+    layoutScheduledPickupBinding.viewPickup.setOnClickListener {
+        (activity as PickupsActivity).binding.viewpager.currentItem = 1
+        dialog.dismiss()
+    }
+
+    dialog.show()
+
+}
+
+
+public fun setCatgory(item:String){
+    if(item.isNullOrEmpty().not()){
+        binding.edtCategory.setText(item)
+    }
+
+}
+
+
+private val someActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode == 100) {
+        val data: Intent? = result.data
+
+        var item=data?.getStringExtra("clickedItem")
+
+
+        if(item.isNullOrEmpty().not()){
+            setCatgory(item?:"")
+        }
+    }
+
+    else if (result.resultCode == 101) {
+        val data: Intent? = result.data
+
+        var item=data?.getStringExtra("selectedAddress")
+
+
+        if(item.isNullOrEmpty().not()){
+            var addressObj = Gson().fromJson<AddressData>(
+                item,
+                AddressData::class.java
             )
 
-            // Disable previous dates
-            datePickerDialog.datePicker.minDate = calendar.timeInMillis
-
-            datePickerDialog.show()
-
+            if(addressObj!=null &&addressObj.fullAddress.isNullOrEmpty().not()){
+                binding.edtAddress.setText(addressObj.fullAddress)
+            }
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-   public fun setCatgory(item:String){
-        if(item.isNullOrEmpty().not()){
-            binding.edtCategory.setText(item)
-        }
-
     }
 
-
-    private val someActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == 100) {
-            val data: Intent? = result.data
-
-            var item=data?.getStringExtra("clickedItem")
-
-
-            if(item.isNullOrEmpty().not()){
-              setCatgory(item?:"")
-            }
-        }
-
-        else if (result.resultCode == 101) {
-            val data: Intent? = result.data
-
-            var item=data?.getStringExtra("selectedAddress")
-
-
-            if(item.isNullOrEmpty().not()){
-                var addressObj = Gson().fromJson<AddressData>(
-                    item,
-                    AddressData::class.java
-                )
-
-                if(addressObj!=null &&addressObj.fullAddress.isNullOrEmpty().not()){
-                    binding.edtAddress.setText(addressObj.fullAddress)
-                }
-
-            }
-        }
-
-    }
+}
 }

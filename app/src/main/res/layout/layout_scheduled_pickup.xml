@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="20dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_close" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/_15dp"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_thanks" />
+            <TextView
+                style="@style/heading_28sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:textColor="@color/_1f1f1f"
+                android:text="Pickup Scheduled"/>
+
+            <TextView
+                style="@style/regular_16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/_18dp"
+                android:textColor="@color/_666666"
+                android:text="Congratulations your pickup has been scheduled"/>
+
+            <TextView
+                style="@style/semibold_14sp"
+                android:id="@+id/btnScheduleAnother"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/rect_green_app"
+                android:text="Schedule a Pickup"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sp" />
+
+            <TextView
+                style="@style/semibold_14sp"
+                android:id="@+id/viewPickup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rect_gray_button"
+                android:text="View Pickup"
+                android:textColor="@color/_0d0d0f"
+                android:textSize="@dimen/_14sp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</layout>

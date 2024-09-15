@@ -1,6 +1,9 @@
 package com.scrapwala.utils.extensionclass
 
+import android.app.Activity
+import android.content.Context
 import android.content.res.ColorStateList
+import android.view.inputmethod.InputMethodManager
 import com.google.android.material.textfield.TextInputLayout
 import com.scrapwala.R
 
@@ -42,6 +45,14 @@ fun TextInputLayout.setErrorMessage(
             }
         }
 
+    }
+
+    fun hideSoftKeyBoard(context: Context) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(
+            (context as Activity).getWindow().getDecorView().getWindowToken(),
+            0
+        )
     }
 
 

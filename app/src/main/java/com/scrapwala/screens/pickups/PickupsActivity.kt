@@ -1,14 +1,20 @@
 package com.scrapwala.screens.pickups
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
 import com.scrapwala.databinding.ActivityPickupsBinding
 import com.scrapwala.screens.pickups.adapter.PickupPagerAdapter
+import com.scrapwala.screens.pickups.fragment.CompletedFragment
+import com.scrapwala.screens.pickups.fragment.SchedulePickupFragment
+import com.scrapwala.screens.pickups.fragment.UpcomingFragment
 
 class PickupsActivity : AppCompatActivity() {
+    private var adapter: PickupPagerAdapter?=null
     lateinit var binding: ActivityPickupsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +38,16 @@ class PickupsActivity : AppCompatActivity() {
         }
 
 
-        val adapter = PickupPagerAdapter(this, supportFragmentManager, binding.tabLayout.tabCount)
+
+        var fragmentList= arrayListOf<Fragment>()
+
+        fragmentList.add(SchedulePickupFragment())
+
+        fragmentList.add(UpcomingFragment())
+
+        fragmentList.add(CompletedFragment())
+
+         adapter = PickupPagerAdapter(this, supportFragmentManager, binding.tabLayout.tabCount,fragmentList)
         binding.viewpager.adapter = adapter
 
         binding.viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
@@ -62,4 +77,7 @@ class PickupsActivity : AppCompatActivity() {
         }
 
     }
+
+
+
 }

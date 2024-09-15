@@ -47,6 +47,9 @@
         <activity android:name="com.scrapwala.utils.access_media.ChooseMediaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity android:name="com.scrapwala.screens.pickups.category.ui.CategoryActivity" />
+        <activity android:name="com.scrapwala.screens.pickups.category.ui.SelectAddressActivity" />
+        <activity android:name="com.scrapwala.screens.pickups.AddAddressActivity" />
 
 
         <provider

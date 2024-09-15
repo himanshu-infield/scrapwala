@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.scrapwala.databinding.FragmentDashBoardBinding
+import com.scrapwala.redirectionhandler.navigateToCategoryActivity
 import com.scrapwala.redirectionhandler.navigateToPickupsActivity
 import com.scrapwala.screens.home.adapter.ViewPagerAdapter
 
@@ -30,6 +31,12 @@ class DashBoardFragment : Fragment() {
     }
 
     private fun initView() {
+
+
+        binding.linearCategory.setOnClickListener {
+
+            navigateToCategoryActivity(requireActivity(),null)
+        }
         binding.btnSubmit.setOnClickListener{
             navigateToPickupsActivity(requireActivity(),null)
         }

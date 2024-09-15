@@ -1,22 +1,26 @@
 package com.scrapwala.screens.pickups.fragment
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.SeekBar
-import android.widget.Toast
-import com.scrapwala.R
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import com.google.gson.Gson
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
+import com.scrapwala.screens.pickups.category.ui.CategoryActivity
+import com.scrapwala.screens.pickups.category.ui.SelectAddressActivity
+import com.scrapwala.screens.pickups.model.AddressData
 import com.scrapwala.utils.extensionclass.setErrorMessage
 import java.util.Calendar
+
 
 class SchedulePickupFragment : Fragment() {
     private val wasteCategory = listOf("Paper", "Metal","Plastic","E-Waste")
@@ -81,26 +85,32 @@ class SchedulePickupFragment : Fragment() {
 
 
 
-
+binding.linearSelectAddres.setOnClickListener {
+    val intent = Intent(requireContext(), SelectAddressActivity::class.java)
+    someActivityResultLauncher.launch(intent)
+}
 
 
         binding.edtDate.setOnClickListener {
             showDatePickerDialog()
-
-        binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                binding.autoCompleteTextView.showDropDown()
-            }
-            false
-        })
-        binding.autoCompleteTextView.inputType = InputType.TYPE_NULL
-        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, wasteCategory)
-        binding.autoCompleteTextView.setAdapter(adapter)
-
-        binding.autoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
-            val selectedItem = parent.getItemAtPosition(position).toString()
-            binding.edtCategory.setText(""+selectedItem)
         }
+
+
+            binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    val intent = Intent(requireContext(), CategoryActivity::class.java)
+                    someActivityResultLauncher.launch(intent)
+                }
+                false
+            })
+//        binding.autoCompleteTextView.inputType = InputType.TYPE_NULL
+//        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, wasteCategory)
+//        binding.autoCompleteTextView.setAdapter(adapter)
+//
+//        binding.autoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
+//            val selectedItem = parent.getItemAtPosition(position).toString()
+//            binding.edtCategory.setText(""+selectedItem)
+//        }
     }
 
 
@@ -149,17 +159,48 @@ class SchedulePickupFragment : Fragment() {
 
 
 
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            if(resultCode==100){
-                if(data!=null){
-                    var item=data.getStringExtra("clickedItem")
 
 
-                    if(item.isNullOrEmpty().not()){
-                        binding.edtCategory.setText(item)
-                    }
-                }
+
+
+   public fun setCatgory(item:String){
+        if(item.isNullOrEmpty().not()){
+            binding.edtCategory.setText(item)
+        }
+
+    }
+
+
+    private val someActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == 100) {
+            val data: Intent? = result.data
+
+            var item=data?.getStringExtra("clickedItem")
+
+
+            if(item.isNullOrEmpty().not()){
+              setCatgory(item?:"")
             }
         }
+
+        else if (result.resultCode == 101) {
+            val data: Intent? = result.data
+
+            var item=data?.getStringExtra("selectedAddress")
+
+
+            if(item.isNullOrEmpty().not()){
+                var addressObj = Gson().fromJson<AddressData>(
+                    item,
+                    AddressData::class.java
+                )
+
+                if(addressObj!=null &&addressObj.fullAddress.isNullOrEmpty().not()){
+                    binding.edtAddress.setText(addressObj.fullAddress)
+                }
+
+            }
+        }
+
+    }
 }

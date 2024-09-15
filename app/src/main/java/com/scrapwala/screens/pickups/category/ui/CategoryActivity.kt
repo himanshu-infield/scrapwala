@@ -10,7 +10,10 @@ import com.scrapwala.databinding.ActivityCategoryBinding
 import com.scrapwala.screens.pickups.category.adapter.CategoryAdapter
 import com.scrapwala.screens.pickups.category.adapter.ClickedItemCallback
 import com.scrapwala.screens.pickups.category.model.CategoryData
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class CategoryActivity: AppCompatActivity() {
 
     private var data: ArrayList<CategoryData>?=null
@@ -108,6 +111,7 @@ class CategoryActivity: AppCompatActivity() {
                 intent.putExtra("clickedItem",item)
 
                 setResult(100,intent)
+                finish()
 
             }
 

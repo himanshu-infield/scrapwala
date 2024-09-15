@@ -278,10 +278,12 @@
                             android:fontFamily="@font/graphik_medium"
                             android:hint="Enter Address"
                             android:text=""
+
                             android:paddingTop="0dp"
                             android:paddingBottom="0dp"
                             android:singleLine="true"
                             android:textSize="14sp"
+                            android:enabled="false"
                             android:focusable="true"
                             android:clickable="true"/>
                     </com.google.android.material.textfield.TextInputLayout>
@@ -291,6 +293,7 @@
                         android:layout_height="wrap_content"
                         android:padding="18dp"
                         android:layout_marginTop="8dp"
+                        android:id="@+id/linearSelectAddres"
                         android:background="@drawable/dotted_rect_bg"
                         android:gravity="center">
                         <TextView
@@ -298,7 +301,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#64d540"
-                            android:text="+  Add Another Address"/>
+                            android:text="+ Select Address"/>
 
                     </LinearLayout>
 

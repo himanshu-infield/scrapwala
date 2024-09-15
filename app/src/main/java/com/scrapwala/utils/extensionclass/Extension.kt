@@ -46,3 +46,19 @@ fun TextInputLayout.setErrorMessage(
 
 
 }
+
+
+
+fun TextInputLayout.removePadding(paddingvalueleft: Int = 2, paddingvalueTop: Int = 2) {
+
+    try {
+        for (i in 0 until this.childCount) {
+            this.getChildAt(i).setPadding(0, 0, 0, 0)
+
+        }
+    } catch (excep: Exception) {
+        excep.printStackTrace()
+    }
+
+
+}

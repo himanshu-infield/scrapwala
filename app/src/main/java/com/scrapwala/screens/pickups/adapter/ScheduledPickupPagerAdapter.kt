@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.scrapwala.screens.pickups.fragment.CompletedFragment
-import com.scrapwala.screens.pickups.fragment.SchedulePickupFragment
 import com.scrapwala.screens.pickups.fragment.UpcomingFragment
 
 class ScheduledPickupPagerAdapter(

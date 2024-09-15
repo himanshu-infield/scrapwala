@@ -1,7 +1,10 @@
 package com.scrapwala.screens.pickups.fragment
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import androidx.fragment.app.Fragment
@@ -9,16 +12,15 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import android.widget.SeekBar
-import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
+import com.scrapwala.databinding.LayoutScheduledPickupBinding
+import com.scrapwala.screens.pickups.PickupsActivity
 import com.scrapwala.utils.extensionclass.setErrorMessage
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 class SchedulePickupFragment : Fragment() {
     private val wasteCategory = listOf("Paper", "Metal","Plastic","E-Waste")
@@ -39,7 +41,18 @@ class SchedulePickupFragment : Fragment() {
 
         binding.btnSubmit.setOnClickListener {
             if (isValidate()){
-
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(
+                    (context as Activity).getWindow().getDecorView().getWindowToken(),
+                    0
+                )
+                binding.edtCategory.setText("")
+                binding.edtWeight.setText("")
+                binding.edtDate.setText("")
+                binding.edtTime.setText("")
+                binding.edtAddress.setText("")
+                binding.edtMessage.setText("")
+                openDialog()
             }
         }
 
@@ -88,6 +101,30 @@ class SchedulePickupFragment : Fragment() {
         }
     }
 
+    private fun openDialog() {
+        val dialog = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        val inflater = LayoutInflater.from(requireContext())
+        val layoutScheduledPickupBinding: LayoutScheduledPickupBinding = DataBindingUtil.inflate(inflater, R.layout.layout_scheduled_pickup, null, false)
+        dialog.setContentView(layoutScheduledPickupBinding.root)
+
+
+        layoutScheduledPickupBinding.imgClose.setOnClickListener {
+            // finish()
+            (activity as PickupsActivity).binding.viewpager.currentItem = 1
+            dialog.dismiss()
+        }
+
+        layoutScheduledPickupBinding.btnScheduleAnother.setOnClickListener {
+            dialog.dismiss()
+        }
+        layoutScheduledPickupBinding.viewPickup.setOnClickListener {
+            (activity as PickupsActivity).binding.viewpager.currentItem = 1
+            dialog.dismiss()
+        }
+
+        dialog.show()
+
+    }
 
 
     private fun showDatePickerDialog() {
@@ -119,6 +156,23 @@ class SchedulePickupFragment : Fragment() {
         var formValid: Boolean = true
         if (binding.edtCategory.text.toString().trim().isNullOrEmpty()) {
             binding.category.setErrorMessage("Please enter select category")
+            formValid = false
+        }
+
+        if (binding.edtWeight.text.toString().trim().isNullOrEmpty()) {
+            binding.weight.setErrorMessage("Please enter estimate weight")
+            formValid = false
+        }
+        if (binding.edtDate.text.toString().trim().isNullOrEmpty()) {
+            binding.date.setErrorMessage("Please select date")
+            formValid = false
+        }
+        if (binding.edtTime.text.toString().trim().isNullOrEmpty()) {
+            binding.time.setErrorMessage("Please select time")
+            formValid = false
+        }
+        if (binding.edtAddress.text.toString().trim().isNullOrEmpty()) {
+            binding.address.setErrorMessage("Please enter address")
             formValid = false
         }
         return formValid

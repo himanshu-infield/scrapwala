@@ -59,7 +59,7 @@ class ProfileFragment : Fragment() {
             (activity as MainActivity).bindingBase.bottomFragframeLayout.setCurrentItem(1, false)
         }
 
-        binding.tvEditProfile.setOnClickListener {
+        binding.llEditProfile.setOnClickListener {
             navigateToEditProfileActivity(requireActivity(),null)
         }
 

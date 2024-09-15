@@ -61,15 +61,16 @@
                         android:textColor="@color/_414141"
                         android:text="Code"/>
                     <TextView
+                        android:id="@+id/couponCode"
                         style="@style/bold_16sp"
                         android:layout_width="wrap_content"
-
                         android:layout_height="wrap_content"
                         android:textColor="@color/_414141"
                         android:text="SCRAP400"/>
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/copyText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -98,20 +99,24 @@
                 android:layout_marginTop="@dimen/_15dp"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:id="@+id/btnFacebook"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_facebook"/>
                 <ImageView
+                    android:id="@+id/btnInstagram"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:src="@drawable/ic_insta"/>
                 <ImageView
+                    android:id="@+id/btnLinkedIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:src="@drawable/ic_linkdin"/>
                 <ImageView
+                    android:id="@+id/btnWhatsapp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"

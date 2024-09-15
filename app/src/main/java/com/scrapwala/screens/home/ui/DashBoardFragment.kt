@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.scrapwala.databinding.FragmentDashBoardBinding
+import com.scrapwala.redirectionhandler.navigateToEditProfileActivity
 import com.scrapwala.redirectionhandler.navigateToPickupsActivity
 import com.scrapwala.screens.home.adapter.ViewPagerAdapter
 
@@ -32,6 +33,10 @@ class DashBoardFragment : Fragment() {
     private fun initView() {
         binding.btnSubmit.setOnClickListener{
             navigateToPickupsActivity(requireActivity(),null)
+        }
+
+        binding.rlEditProfile.setOnClickListener {
+            navigateToEditProfileActivity(requireActivity(),null)
         }
 
     }

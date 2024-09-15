@@ -99,6 +99,20 @@ class SchedulePickupFragment : Fragment() {
             timePickerDialog.show()
 
         }
+
+        binding.slider.setLabelFormatter { value: Float ->
+            "${value.toInt()}KG"
+        }
+        binding.slider.addOnChangeListener { slider, value, fromUser ->
+            // value is the current value of the slider
+            val sliderValue = value.toInt()
+            println("Slider value: $sliderValue kg")
+
+            // You can update a TextView or any other UI element with the value
+            binding.edtWeight.setText("$sliderValue KG".toString())
+        }
+        val sliderValue = binding.slider.value.toInt()
+        binding.edtWeight.setText("$sliderValue KG")
     }
 
     private fun openDialog() {

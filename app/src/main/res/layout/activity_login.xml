@@ -282,6 +282,7 @@ selling recyclables"
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_marginTop="17dp"
                 android:layout_height="wrap_content">
 
 
@@ -290,18 +291,37 @@ selling recyclables"
                 style="@style/normal_12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:text="No Code? Resend After "
+
+                android:text="Did not receive the OTP ? "
                 android:textColor="@color/_666666"></TextView>
 
 
 
 
 
+
+
+                <TextView
+                    android:id="@+id/resendOtp"
+                    style="@style/medium_12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+
+                    android:layout_marginEnd="4dp"
+                    android:paddingBottom="10dp"
+                    android:text="Resend Otp"
+                    android:enabled="true"
+                    android:textColor="@color/name_heading"
+
+                    ></TextView>
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     style="@style/semibold_12sp"
-                    android:id="@+id/txtTime"
+                    android:id="@+id/timer"
+                    android:visibility="gone"
                     android:textColor="@color/_666666"
                     android:layout_height="wrap_content"></TextView>
 

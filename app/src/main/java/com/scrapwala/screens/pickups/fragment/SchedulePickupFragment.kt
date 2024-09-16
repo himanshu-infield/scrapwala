@@ -18,11 +18,14 @@ import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import com.google.gson.Gson
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
+import com.scrapwala.databinding.LayoutScheduledPickupBinding
 import com.scrapwala.screens.pickups.PickupsActivity
+import com.scrapwala.screens.pickups.category.ui.CategoryActivity
 import com.scrapwala.screens.pickups.category.ui.SelectAddressActivity
 import com.scrapwala.screens.pickups.model.AddressData
 import com.scrapwala.utils.extensionclass.setErrorMessage
@@ -49,6 +52,15 @@ class SchedulePickupFragment : Fragment() {
     private fun initView() {
 
 
+        binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                val intent = Intent(requireContext(), CategoryActivity::class.java)
+                someActivityResultLauncher.launch(intent)
+            }
+            false
+        })
+
+
         binding.slider.setLabelFormatter { value: Float ->
             "${value.toInt()}KG"
         }
@@ -62,7 +74,8 @@ class SchedulePickupFragment : Fragment() {
         }
         val sliderValue = binding.slider.value.toInt()
         binding.edtWeight.setText("$sliderValue KG")
-    }
+
+
 
 
 
@@ -83,6 +96,10 @@ class SchedulePickupFragment : Fragment() {
 
             }
         }
+
+
+
+
 
     binding.linearSelectAddres.setOnClickListener {
         val intent = Intent(requireContext(), SelectAddressActivity::class.java)
@@ -151,14 +168,32 @@ class SchedulePickupFragment : Fragment() {
     }
 
     private fun isValidate(): Boolean {
+
         var formValid: Boolean = true
         if (binding.edtCategory.text.toString().trim().isNullOrEmpty()) {
             binding.category.setErrorMessage("Please enter select category")
             formValid = false
         }
+
+        if (binding.edtWeight.text.toString().trim().isNullOrEmpty()) {
+            binding.weight.setErrorMessage("Please enter estimate weight")
+            formValid = false
+        }
+        if (binding.edtDate.text.toString().trim().isNullOrEmpty()) {
+            binding.date.setErrorMessage("Please select date")
+            formValid = false
+        }
+        if (binding.edtTime.text.toString().trim().isNullOrEmpty()) {
+            binding.time.setErrorMessage("Please select time")
+            formValid = false
+        }
+        if (binding.edtAddress.text.toString().trim().isNullOrEmpty()) {
+            binding.address.setErrorMessage("Please enter address")
+            formValid = false
+        }
         return formValid
     }
-}
+
 
 
 

@@ -1,10 +1,13 @@
 package com.scrapwala.screens.login.ui
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.view.View
 import com.scrapwala.R
 import com.scrapwala.baseactivity.BaseAppCompatActivity
 import com.scrapwala.databinding.ActivityLoginBinding
 import com.scrapwala.redirectionhandler.navigateToMainActivity
+import com.scrapwala.utils.extensionclass.checkDigit
 import com.scrapwala.utils.extensionclass.removePadding
 import com.scrapwala.utils.extensionclass.setErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +18,13 @@ class LoginActivity : BaseAppCompatActivity() {
 
     private lateinit  var binding: ActivityLoginBinding
 
+
+
+
+    var time: Long = 0
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,6 +33,12 @@ class LoginActivity : BaseAppCompatActivity() {
 
 
 
+
+        binding.resendOtp.setOnClickListener {
+
+            startTimer(60)
+        }
+
         binding.txtGetOtp.setOnClickListener {
 
             if(validate()){
@@ -30,6 +46,8 @@ class LoginActivity : BaseAppCompatActivity() {
                         "+91"+binding.edtPhone.text.toString())
 
                 binding.viewFlipper.displayedChild = 1
+                binding.resendOtp.isEnabled = false
+                startTimer( 60)
             }
 
         }
@@ -130,23 +148,23 @@ class LoginActivity : BaseAppCompatActivity() {
     private fun startTimer(retryInterval: Long) {
 
 
-//        var timer = object : CountDownTimer(retryInterval * 1000, 1000) {
-//            override fun onTick(millisUntilFinished: Long) {
-//                binding.verifyOtp.timer.visibility = View.VISIBLE
-//
-//                binding.verifyOtp.timer.setText("in 0:" + checkDigit(time))
-//                time--
-//            }
-//
-//            override fun onFinish() {
-//                binding.verifyOtp.timer.visibility = View.GONE
-//                binding.verifyOtp.resendOtp.isEnabled = true
-//            }
-//        }
-//
-//
-//        time = retryInterval
-//        timer.start()
+        var timer = object : CountDownTimer(retryInterval * 1000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                binding.timer.visibility = View.VISIBLE
+
+                binding.timer.setText("in 0:" + checkDigit(time))
+                time--
+            }
+
+            override fun onFinish() {
+                binding.timer.visibility = View.GONE
+                binding.resendOtp.isEnabled = true
+            }
+        }
+
+
+        time = retryInterval
+        timer.start()
 
 
     }

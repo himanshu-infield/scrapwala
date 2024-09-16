@@ -60,6 +60,11 @@ fun TextInputLayout.setErrorMessage(
 
 
 
+fun checkDigit(number: Long): String? {
+    return if (number <= 9) "0$number" else number.toString()
+}
+
+
 fun TextInputLayout.removePadding(paddingvalueleft: Int = 2, paddingvalueTop: Int = 2) {
 
     try {

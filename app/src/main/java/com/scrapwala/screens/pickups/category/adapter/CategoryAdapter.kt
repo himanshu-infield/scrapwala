@@ -73,6 +73,14 @@ class CategoryAdapter(
             }
 
 
+            else if (item.categoryName.isNullOrEmpty().not() && position != 0&&item.categoryName?.equals(cityList.get(position-1).categoryName)!!.not()&&!isFilteredList ) {
+
+                itemViewBinding.txtCategoryName.visibility= View.VISIBLE
+                itemViewBinding.txtCategoryName.setText(item.categoryName)
+            }
+
+
+
             else{
                 itemViewBinding.txtCategoryName.visibility= View.GONE
 

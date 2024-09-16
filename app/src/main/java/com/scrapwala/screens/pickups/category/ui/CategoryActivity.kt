@@ -54,11 +54,11 @@ class CategoryActivity: AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
 
-                if(s.toString().isNullOrEmpty().not()&&s.toString().length>3){
+                if(s.toString().isNullOrEmpty().not()&&s.toString().length>2){
 
                     if(data.isNullOrEmpty().not()){
                      var filterData=   data?.filter {
-                            it.itemName!!.contains(s.toString())
+                            it.itemName!!.contains(s.toString(),true)
                         }
 
 
@@ -102,6 +102,18 @@ class CategoryActivity: AppCompatActivity() {
             categoryData.itemPrice="₹12/Kg"
             data?.add(categoryData)
         }
+
+
+        for(i in 0 until 10){
+            var categoryData=CategoryData()
+
+            categoryData.categoryName="Glass"
+            categoryData.itemName="Glass"
+            categoryData.itemPrice="₹16/Kg"
+            data?.add(categoryData)
+        }
+
+
 
         adapter=CategoryAdapter(this,data!!,object:ClickedItemCallback{
             override fun clickedItem(position: Int, item: String) {

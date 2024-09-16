@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             style="@style/medium_12sp"
             android:text="Paper"
+            android:layout_marginVertical="8dp"
             android:id="@+id/txtCategoryName"
             android:textColor="@color/_333333"
 

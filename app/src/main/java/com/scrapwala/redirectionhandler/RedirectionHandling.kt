@@ -8,7 +8,9 @@ import androidx.lifecycle.LifecycleOwner
 import com.scrapwala.MainActivity
 import com.scrapwala.screens.login.ui.LoginActivity
 import com.scrapwala.screens.onboarding.ui.OnboardingActivity
+import com.scrapwala.screens.pickups.AddAddressActivity
 import com.scrapwala.screens.pickups.PickupsActivity
+import com.scrapwala.screens.pickups.category.ui.CategoryActivity
 import com.scrapwala.screens.profile.EditProfileActivity
 
 fun navigateToOnboardingActivity(context: Activity, bundle: Bundle?) {
@@ -34,6 +36,18 @@ fun navigateToLoginActivity(context: Activity, bundle: Bundle?) {
 
 }
 
+
+
+
+fun navigateToAddAdddress(context: Activity, bundle: Bundle?) {
+    var intent = Intent(context, AddAddressActivity::class.java)
+    bundle?.let {
+        intent.putExtras(it)
+    }
+
+    context.startActivity(intent)
+
+}
 
 
 fun navigateToMainActivity(context: Activity, bundle: Bundle?, needFlag: Boolean = false,) {
@@ -98,6 +112,19 @@ fun navigateToEditProfileActivity(context: Activity, bundle: Bundle?, needFlag: 
     if (needFlag!!) {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
     }
+    bundle?.let {
+        intent.putExtras(it)
+    }
+    context.startActivity(intent)
+
+}
+
+
+
+
+fun navigateToCategoryActivity(context: Activity, bundle: Bundle?) {
+    val intent = Intent(context, CategoryActivity::class.java)
+
     bundle?.let {
         intent.putExtras(it)
     }

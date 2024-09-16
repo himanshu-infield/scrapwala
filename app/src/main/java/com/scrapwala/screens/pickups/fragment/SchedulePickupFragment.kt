@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import androidx.fragment.app.Fragment
@@ -14,13 +15,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.SeekBar
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
+import com.google.gson.Gson
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
 import com.scrapwala.databinding.LayoutScheduledPickupBinding
 import com.scrapwala.screens.pickups.PickupsActivity
+import com.scrapwala.screens.pickups.category.ui.CategoryActivity
+import com.scrapwala.screens.pickups.category.ui.SelectAddressActivity
+import com.scrapwala.screens.pickups.model.AddressData
 import com.scrapwala.utils.extensionclass.setErrorMessage
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class SchedulePickupFragment : Fragment() {
     private val wasteCategory = listOf("Paper", "Metal","Plastic","E-Waste")
@@ -39,6 +51,34 @@ class SchedulePickupFragment : Fragment() {
 
     private fun initView() {
 
+
+        binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                val intent = Intent(requireContext(), CategoryActivity::class.java)
+                someActivityResultLauncher.launch(intent)
+            }
+            false
+        })
+
+
+        binding.slider.setLabelFormatter { value: Float ->
+            "${value.toInt()}KG"
+        }
+        binding.slider.addOnChangeListener { slider, value, fromUser ->
+            // value is the current value of the slider
+            val sliderValue = value.toInt()
+            println("Slider value: $sliderValue kg")
+
+            // You can update a TextView or any other UI element with the value
+            binding.edtWeight.setText("$sliderValue KG".toString())
+        }
+        val sliderValue = binding.slider.value.toInt()
+        binding.edtWeight.setText("$sliderValue KG")
+
+
+
+
+
         binding.btnSubmit.setOnClickListener {
             if (isValidate()){
                 val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -53,24 +93,21 @@ class SchedulePickupFragment : Fragment() {
                 binding.edtAddress.setText("")
                 binding.edtMessage.setText("")
                 openDialog()
+
             }
         }
 
-        binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                binding.autoCompleteTextView.showDropDown()
-            }
-            false
-        })
-        /**select waste category**/
-        binding.autoCompleteTextView.inputType = InputType.TYPE_NULL
-        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, wasteCategory)
-        binding.autoCompleteTextView.setAdapter(adapter)
 
-        binding.autoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
-            val selectedItem = parent.getItemAtPosition(position).toString()
-            binding.edtCategory.setText(""+selectedItem)
-        }
+
+
+
+    binding.linearSelectAddres.setOnClickListener {
+        val intent = Intent(requireContext(), SelectAddressActivity::class.java)
+        someActivityResultLauncher.launch(intent)
+    }
+
+    /**select waste category**/
+
 
         binding.edtDate.setOnClickListener {
             showDatePickerDialog()
@@ -99,46 +136,10 @@ class SchedulePickupFragment : Fragment() {
             timePickerDialog.show()
 
         }
-
-        binding.slider.setLabelFormatter { value: Float ->
-            "${value.toInt()}KG"
-        }
-        binding.slider.addOnChangeListener { slider, value, fromUser ->
-            // value is the current value of the slider
-            val sliderValue = value.toInt()
-            println("Slider value: $sliderValue kg")
-
-            // You can update a TextView or any other UI element with the value
-            binding.edtWeight.setText("$sliderValue KG".toString())
-        }
-        val sliderValue = binding.slider.value.toInt()
-        binding.edtWeight.setText("$sliderValue KG")
     }
 
-    private fun openDialog() {
-        val dialog = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
-        val inflater = LayoutInflater.from(requireContext())
-        val layoutScheduledPickupBinding: LayoutScheduledPickupBinding = DataBindingUtil.inflate(inflater, R.layout.layout_scheduled_pickup, null, false)
-        dialog.setContentView(layoutScheduledPickupBinding.root)
 
 
-        layoutScheduledPickupBinding.imgClose.setOnClickListener {
-            // finish()
-            (activity as PickupsActivity).binding.viewpager.currentItem = 1
-            dialog.dismiss()
-        }
-
-        layoutScheduledPickupBinding.btnScheduleAnother.setOnClickListener {
-            dialog.dismiss()
-        }
-        layoutScheduledPickupBinding.viewPickup.setOnClickListener {
-            (activity as PickupsActivity).binding.viewpager.currentItem = 1
-            dialog.dismiss()
-        }
-
-        dialog.show()
-
-    }
 
 
     private fun showDatePickerDialog() {
@@ -167,6 +168,7 @@ class SchedulePickupFragment : Fragment() {
     }
 
     private fun isValidate(): Boolean {
+
         var formValid: Boolean = true
         if (binding.edtCategory.text.toString().trim().isNullOrEmpty()) {
             binding.category.setErrorMessage("Please enter select category")
@@ -191,4 +193,76 @@ class SchedulePickupFragment : Fragment() {
         }
         return formValid
     }
+
+
+
+
+
+
+private fun openDialog() {
+    val dialog = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+    val inflater = LayoutInflater.from(requireContext())
+    val layoutScheduledPickupBinding: LayoutScheduledPickupBinding = DataBindingUtil.inflate(inflater, R.layout.layout_scheduled_pickup, null, false)
+    dialog.setContentView(layoutScheduledPickupBinding.root)
+
+
+    layoutScheduledPickupBinding.imgClose.setOnClickListener {
+        // finish()
+        (activity as PickupsActivity).binding.viewpager.currentItem = 1
+        dialog.dismiss()
+    }
+
+    layoutScheduledPickupBinding.btnScheduleAnother.setOnClickListener {
+        dialog.dismiss()
+    }
+    layoutScheduledPickupBinding.viewPickup.setOnClickListener {
+        (activity as PickupsActivity).binding.viewpager.currentItem = 1
+        dialog.dismiss()
+    }
+
+    dialog.show()
+
+}
+
+
+public fun setCatgory(item:String){
+    if(item.isNullOrEmpty().not()){
+        binding.edtCategory.setText(item)
+    }
+
+}
+
+
+private val someActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode == 100) {
+        val data: Intent? = result.data
+
+        var item=data?.getStringExtra("clickedItem")
+
+
+        if(item.isNullOrEmpty().not()){
+            setCatgory(item?:"")
+        }
+    }
+
+    else if (result.resultCode == 101) {
+        val data: Intent? = result.data
+
+        var item=data?.getStringExtra("selectedAddress")
+
+
+        if(item.isNullOrEmpty().not()){
+            var addressObj = Gson().fromJson<AddressData>(
+                item,
+                AddressData::class.java
+            )
+
+            if(addressObj!=null &&addressObj.fullAddress.isNullOrEmpty().not()){
+                binding.edtAddress.setText(addressObj.fullAddress)
+            }
+
+        }
+    }
+
+}
 }

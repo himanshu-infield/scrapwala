@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/viewFlipper"
+    android:measureAllChildren="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:orientation="vertical">
@@ -54,38 +55,96 @@ selling recyclables"
             android:text="Mobile no"
             android:textColor="@color/_333333"></TextView>
 
-        <LinearLayout
+
+
+
+
+
+
+
+
+
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:hintEnabled="false"
             android:layout_marginTop="10dp"
-            android:elevation="2dp"
-            android:background="@drawable/rect_login"
-
-            android:orientation="horizontal">
+            app:errorIconDrawable="@null">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:paddingVertical="15dp"
-                android:text="+91 India"></TextView>
-
-
-            <TextView
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="15dp"
-                android:background="#d1d0d0"></TextView>
-
-
-            <androidx.appcompat.widget.AppCompatEditText
+            <com.scrapwala.utils.widgets.TextInputCustomClass
+                android:id="@+id/edtPhone"
+                style="@style/MyFilledEditBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"></androidx.appcompat.widget.AppCompatEditText>
+                android:layout_height="55dp"
+                app:hintEnabled="false"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/graphik_regular"
+                android:textColor="@color/_333333"
+                android:inputType="number"
+
+                android:maxLength="15"
+
+                android:paddingStart="95dp"
+
+                android:textSize="14sp"
 
 
-        </LinearLayout>
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+
+    android:orientation="horizontal"
+    android:layout_marginTop="13dp"
+    android:gravity="center_vertical"
+    android:layout_height="50dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+
+
+
+        style="@style/normal_14sp"
+        android:textColor="@color/_333333"
+
+        android:text="+91 India"></TextView>
+
+
+    <TextView
+        android:layout_width="1dp"
+        android:layout_marginHorizontal="8dp"
+
+        android:background="#eaeaea"
+        android:id="@+id/txtSeparator"
+        android:layout_height="match_parent"></TextView>
+
+
+</LinearLayout>
+
+
+
+</RelativeLayout>
+
 
         <TextView
             style="@style/normal_12sp"
@@ -162,11 +221,9 @@ selling recyclables"
                 style="@style/normal_18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtVerify"
                 android:layout_marginTop="27dp"
-                android:text="Enter verification code we sent to
-+91 9876543210
-
-"
+                android:text=""
                 android:textColor="@color/_333333"></TextView>
 
 
@@ -177,6 +234,22 @@ selling recyclables"
                 android:layout_marginTop="40dp"
                 android:text="Enter the OTP you received"
                 android:textColor="@color/_333333"></TextView>
+
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputOtpView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundMode="filled"
+
+                app:errorEnabled="false"
+                app:errorIconDrawable="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtOtpSent">
 
             <com.mukeshsolanki.OtpView
                 android:id="@+id/otp_view"
@@ -200,20 +273,59 @@ selling recyclables"
                 app:OtpLineColor="@color/_eaeaea"
                 app:OtpLineWidth="1dp"
                 app:OtpViewType="rectangle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtOtpSent" />
+                />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="17dp"
+                android:layout_height="wrap_content">
+
+
 
             <TextView
                 style="@style/normal_12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:text="You will receive an OTP for verification"
+
+                android:text="Did not receive the OTP ? "
                 android:textColor="@color/_666666"></TextView>
 
 
 
 
+
+
+
+                <TextView
+                    android:id="@+id/resendOtp"
+                    style="@style/medium_12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+
+                    android:layout_marginEnd="4dp"
+                    android:paddingBottom="10dp"
+                    android:text="Resend Otp"
+                    android:enabled="true"
+                    android:textColor="@color/name_heading"
+
+                    ></TextView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/semibold_12sp"
+                    android:id="@+id/timer"
+                    android:visibility="gone"
+                    android:textColor="@color/_666666"
+                    android:layout_height="wrap_content"></TextView>
+
+            </LinearLayout>
 
 
         </LinearLayout>

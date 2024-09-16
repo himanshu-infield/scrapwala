@@ -128,7 +128,6 @@
                         app:trackColorInactive="#d0d0d0"
                         app:thumbColor="#75cb52"
                         app:thumbRadius="@dimen/_10dp"
-                        app:labelBehavior="visible"
                         android:value="20"
                         android:valueFrom="10"
                         android:valueTo="50" />

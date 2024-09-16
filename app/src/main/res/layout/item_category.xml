@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            style="@style/medium_12sp"
+            android:text="Paper"
+            android:layout_marginVertical="8dp"
+            android:id="@+id/txtCategoryName"
+            android:textColor="@color/_333333"
+
+            android:layout_height="wrap_content"></TextView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="15dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/rect_category"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_paper"
+                android:layout_height="wrap_content"></ImageView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="20dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    style="@style/normal_12sp"
+                    android:maxLines="1"
+                    android:id="@+id/txtItemName"
+
+                    android:textColor="@color/_333333"
+                    android:text="News Papper"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:layout_marginTop="4dp"
+                    style="@style/bold_16sp"
+                    android:text="₹ 15/Kg"
+
+                    android:id="@+id/txtItemPrice"
+
+                    android:textColor="#54b752"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

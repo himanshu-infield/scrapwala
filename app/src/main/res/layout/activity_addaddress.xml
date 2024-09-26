@@ -173,6 +173,59 @@
         </LinearLayout>
 
 
+
+
+        <LinearLayout
+            android:id="@+id/linearCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLandmark"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
+
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                style="@style/medium_12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City"
+                android:textColor="@color/_333333"
+                android:textSize="@dimen/_12sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12dp"
+                android:textColorHint="@color/_666666"
+                android:imeOptions="actionDone"
+                app:errorIconDrawable="@null"
+                app:hintEnabled="false"
+                app:endIconDrawable="@drawable/arrow_forward"
+                app:endIconMode="custom">
+
+                <com.scrapwala.utils.widgets.TextInputCustomClass
+                    android:id="@+id/edtDate"
+                    style="@style/filledEditBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="53dp"
+                    android:fontFamily="@font/graphik_medium"
+                    android:hint="Select City"
+                    android:text=""
+                    android:paddingTop="0dp"
+                    android:paddingBottom="0dp"
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:focusable="false"
+                    android:clickable="true"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+
+
+
+
         <LinearLayout
             android:id="@+id/linearTag"
             android:layout_width="match_parent"

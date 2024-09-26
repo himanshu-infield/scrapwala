@@ -1,4 +1,4 @@
-package  com.scrapwala.utils.network
+package  com.scrapwala.di
 
 import android.content.Context
 import com.scrapwala.api.ApiService

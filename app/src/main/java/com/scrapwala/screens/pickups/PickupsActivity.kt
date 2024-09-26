@@ -12,7 +12,9 @@ import com.scrapwala.screens.pickups.adapter.PickupPagerAdapter
 import com.scrapwala.screens.pickups.fragment.CompletedFragment
 import com.scrapwala.screens.pickups.fragment.SchedulePickupFragment
 import com.scrapwala.screens.pickups.fragment.UpcomingFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PickupsActivity : AppCompatActivity() {
     private var adapter: PickupPagerAdapter?=null
     lateinit var binding: ActivityPickupsBinding

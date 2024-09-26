@@ -332,4 +332,31 @@
     <style name="SearchViewMy" parent="Widget.AppCompat.Light.SearchView">
         <item name="searchHintIcon">@null</item>
     </style>
+
+
+    <style name="myFullscreenAlertDialogStyle" parent="android:style/Theme.Translucent">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowIsFloating">false</item>
+
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+
+
+
+
+
+    <style name="TransparentDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item> <!-- Optional: To keep the dim background -->
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
 </resources>

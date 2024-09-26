@@ -2,6 +2,8 @@ package com.scrapwala.api
 
 import android.content.Context
 import com.scrapwala.BuildConfig
+import com.scrapwala.screens.pickups.category.model.CategoryResponse
+import com.scrapwala.utils.ApiResult
 import com.scrapwala.utils.Constant
 import com.scrapwala.utils.network.NetworkResultCallAdapterFactory
 import okhttp3.Interceptor
@@ -9,26 +11,14 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
 import java.util.concurrent.TimeUnit
 
 interface ApiService {
-//
-//    @POST("/auth/otp/send")
-//    suspend fun getOtp(@HeaderMap headers: Map<String, String>,
-//        @Body request:OtpRequest):ApiResult<GetOtpResponse>
 
-
-
-
-
-//    @POST("/auth/otp/verify")
-//    suspend fun verifyOtp(@HeaderMap headers: Map<String, String>,
-//                       @Body request:VerifyOtpRequest):ApiResult<VerifyOtpResponse>
-//
-//    @GET("/master/user/countrycodes")
-//    suspend fun getCountryCode():ApiResult<CountryCodeResponse>
-
-
+    @GET("/api/category")
+    suspend fun userGetCategory(
+    ): ApiResult<CategoryResponse>
 
 
 

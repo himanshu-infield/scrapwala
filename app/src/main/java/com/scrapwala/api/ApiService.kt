@@ -3,6 +3,10 @@ package com.scrapwala.api
 import android.content.Context
 import com.scrapwala.BuildConfig
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
+import com.scrapwala.screens.pickups.model.AddAddressData
+import com.scrapwala.screens.pickups.model.AddressListResponse
+import com.scrapwala.screens.pickups.model.CityListResponse
+import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.utils.ApiResult
 import com.scrapwala.utils.Constant
 import com.scrapwala.utils.network.NetworkResultCallAdapterFactory
@@ -11,7 +15,12 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.HeaderMap
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 interface ApiService {
@@ -20,8 +29,18 @@ interface ApiService {
     suspend fun userGetCategory(
     ): ApiResult<CategoryResponse>
 
+    @GET("/api/city")
+    suspend fun getCityList():ApiResult<CityListResponse>
+
+    @GET("/api/address/user/{id}")
+    suspend fun getAddressList(@Path("id") id: Int):ApiResult<AddressListResponse>
+
+    @GET("/api/address/delete/{id}")
+    suspend fun deleteAddress(@Path("id") id: Int):ApiResult<SuccessResponse>
 
 
+    @POST("/api/address/create")
+    suspend fun saveAddress(@Body request:AddAddressData):ApiResult<SuccessResponse>
 
 
 

@@ -16,4 +16,4 @@ data class AddAddressData(
     var pincode: String?="" ,
     @SerializedName("city_id")
     var cityId: String?=""
-): Serializable
+)

@@ -1,28 +1,28 @@
 package com.scrapwala.utils.extensionclass
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.scrapwala.R
-import com.scrapwala.databinding.LoaderLayoutBinding
 import com.scrapwala.utils.ApiError
 import com.scrapwala.utils.ApiResult
 import com.scrapwala.utils.ApiSuccess
@@ -162,7 +162,7 @@ fun hideKeyboard(context: Context) {
 }*/
 
 
-fun showProgressDialog(context: Context): AlertDialog {
+/*fun showProgressDialog(context: Context): AlertDialog {
     val builder = AlertDialog.Builder(context)
     builder.setCancelable(false)
 
@@ -202,6 +202,23 @@ fun showProgressDialog(context: Context): AlertDialog {
     dialog.setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
 
     return dialog
+}*/
+
+
+ var loadDialog: Dialog? = null
+fun showSpinner(context: Context?) {
+    if (loadDialog != null) {
+        if (loadDialog!!.isShowing()) loadDialog!!.dismiss()
+    }
+    loadDialog = Dialog(context!!)
+    loadDialog!!.setContentView(R.layout.loader_layout)
+    loadDialog!!.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    loadDialog!!.setCanceledOnTouchOutside(false)
+    loadDialog!!.show()
+}
+
+fun hideSpinner() {
+    if (loadDialog != null && loadDialog!!.isShowing) loadDialog!!.dismiss()
 }
 
 
@@ -270,4 +287,39 @@ fun showCustomToast(
     snackbarLayout.addView(customSnackView, 0)
     snackbar.show()
 
+}
+
+
+fun View.hideKeyboard() {
+    val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
+}
+
+public fun setupFullHeight(context: Context, bottomSheetDialog: BottomSheetDialog) {
+    val bottomSheet =
+        bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
+    val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet!!)
+    val layoutParams = bottomSheet?.layoutParams
+    val windowHeight: Int = getWindowHeight(context)
+    val actionBarHeight = with(TypedValue().also {
+        context.theme?.resolveAttribute(
+            android.R.attr.actionBarSize,
+            it,
+            true
+        )
+    }) {
+        TypedValue.complexToDimensionPixelSize(this.data, context.resources.displayMetrics)
+    }
+    if (layoutParams != null) {
+        layoutParams.height = windowHeight
+    }
+    bottomSheet.layoutParams = layoutParams
+    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+}
+
+fun getWindowHeight(context: Context): Int {
+    // Calculate window height for fullscreen use
+    val displayMetrics = DisplayMetrics()
+    (context as Activity?)?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+    return displayMetrics.heightPixels
 }

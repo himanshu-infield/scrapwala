@@ -17,8 +17,9 @@ import com.scrapwala.screens.pickups.category.model.CategoryData
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
 import com.scrapwala.utils.ErrorResponse
+import com.scrapwala.utils.extensionclass.hideSpinner
 import com.scrapwala.utils.extensionclass.showCustomToast
-import com.scrapwala.utils.extensionclass.showProgressDialog
+import com.scrapwala.utils.extensionclass.showSpinner
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -32,13 +33,11 @@ class CategoryActivity: AppCompatActivity() {
 
     private val viewModel: PickupViewModel by viewModels()
     private lateinit var categoryResponse: CategoryResponse
-    private lateinit var progressDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityCategoryBinding.inflate(layoutInflater)
-        progressDialog = showProgressDialog(this)
         setContentView(binding.root)
 
 
@@ -53,7 +52,7 @@ class CategoryActivity: AppCompatActivity() {
         viewModel.responseCategory.observe(this as AppCompatActivity, Observer {
             when (it) {
                 is CategoryResponse -> {
-                    progressDialog.dismiss()
+                  hideSpinner()
                     categoryResponse = it
                     if (categoryResponse.success==1 && categoryResponse.data.isNullOrEmpty().not()){
                         renderData(categoryResponse)
@@ -61,14 +60,14 @@ class CategoryActivity: AppCompatActivity() {
                 }
 
                 is ErrorResponse -> {
-                    progressDialog.dismiss()
+                   hideSpinner()
                     if (it.message.isNullOrEmpty().not()) {
                         showCustomToast(findViewById(android.R.id.content),this,it.message)
                     }
                 }
 
                 is String -> {
-                    progressDialog.dismiss()
+                    hideSpinner()
                     showCustomToast(findViewById(android.R.id.content),this,it)
                 }
             }
@@ -94,7 +93,7 @@ class CategoryActivity: AppCompatActivity() {
     }
 
     private fun callApiCategoryList() {
-        progressDialog.show()
+        showSpinner(this@CategoryActivity)
         viewModel.getCategoryList()
     }
 

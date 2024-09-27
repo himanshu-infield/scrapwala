@@ -10,10 +10,11 @@ import com.scrapwala.R
 import com.scrapwala.databinding.ItemAddressBinding
 import com.scrapwala.screens.pickups.category.adapter.ClickedItemCallback
 import com.scrapwala.screens.pickups.model.AddressData
+import com.scrapwala.screens.pickups.model.AddressListResponse
 
 class SelectAddressAdapter(
     var context: Context,
-    var cityList: ArrayList<AddressData>,
+    var cityList: MutableList<AddressListResponse.Data?>,
     var clickedItemCallback: SelectAddressCallback
 ) : RecyclerView.Adapter<SelectAddressAdapter.AddressViewHolder>() {
 
@@ -35,7 +36,7 @@ class SelectAddressAdapter(
     }
 
     //    // method for filtering our recyclerview items.
-    fun filterList(filterlist: ArrayList<AddressData>, isFilterList:Boolean) {
+    fun filterList(filterlist: MutableList<AddressListResponse.Data?>, isFilterList:Boolean) {
 
         cityList = filterlist
 
@@ -46,7 +47,7 @@ class SelectAddressAdapter(
 
     override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
 
-        holder.bindData(cityList.get(position), position)
+        holder.bindData(cityList.get(position)!!, position)
     }
 
     override fun getItemCount(): Int {
@@ -54,10 +55,12 @@ class SelectAddressAdapter(
         return cityList.size
     }
 
+
+
     inner class AddressViewHolder(var itemViewBinding: ItemAddressBinding) :
         RecyclerView.ViewHolder(itemViewBinding.root) {
 
-        fun bindData(item: AddressData, position: Int) {
+        fun bindData(item: AddressListResponse.Data, position: Int) {
 
             itemViewBinding.root.setOnClickListener {
                 clickedItemCallback.selectedAddress( item)
@@ -67,16 +70,12 @@ class SelectAddressAdapter(
 
 
             itemViewBinding.imgDelete.setOnClickListener {
-
-
-                cityList.remove(item)
-                notifyDataSetChanged()
                 clickedItemCallback.deleteAddress(item)
             }
 
-            if (item.addressTag.isNullOrEmpty().not()) {
+            if (item.addressType.isNullOrEmpty().not()) {
 
-                itemViewBinding.txtAddressTag.setText(item.addressTag)
+                itemViewBinding.txtAddressTag.setText(item.addressType)
 
             }
 
@@ -86,16 +85,16 @@ class SelectAddressAdapter(
 
             }
 
-            if (item.fullAddress.isNullOrEmpty().not()) {
-                itemViewBinding.txtFullAddress.setText(item.fullAddress)
+            if (item.addressLine1.isNullOrEmpty().not()) {
+                itemViewBinding.txtFullAddress.setText(item.addressLine1+" "+item.addressLine2)
             }
             else{
                 itemViewBinding.txtFullAddress.setText("")
             }
 
 
-            if (item.addressPincode.isNullOrEmpty().not() ) {
-                itemViewBinding.txtPincode.setText(item.addressPincode)
+            if (item.pincode.isNullOrEmpty().not() ) {
+                itemViewBinding.txtPincode.setText(item.pincode)
             }
             else{
                 itemViewBinding.txtPincode.setText("")
@@ -104,5 +103,10 @@ class SelectAddressAdapter(
 
         }
 
+    }
+
+    fun removeItem(item: AddressListResponse.Data){
+        cityList.remove(item)
+        notifyDataSetChanged()
     }
 }

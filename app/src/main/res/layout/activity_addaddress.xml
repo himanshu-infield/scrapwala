@@ -194,7 +194,7 @@
                 android:textSize="@dimen/_12sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/date"
+                android:id="@+id/city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12dp"
@@ -202,11 +202,11 @@
                 android:imeOptions="actionDone"
                 app:errorIconDrawable="@null"
                 app:hintEnabled="false"
-                app:endIconDrawable="@drawable/arrow_forward"
+                app:endIconDrawable="@drawable/ic_down"
                 app:endIconMode="custom">
 
                 <com.scrapwala.utils.widgets.TextInputCustomClass
-                    android:id="@+id/edtDate"
+                    android:id="@+id/edt_city"
                     style="@style/filledEditBox"
                     android:layout_width="match_parent"
                     android:layout_height="53dp"

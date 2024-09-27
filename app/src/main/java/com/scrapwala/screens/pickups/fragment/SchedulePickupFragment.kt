@@ -14,25 +14,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.google.gson.Gson
-import com.moengage.core.internal.utils.showToast
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
 import com.scrapwala.databinding.LayoutScheduledPickupBinding
 import com.scrapwala.screens.pickups.PickupsActivity
 import com.scrapwala.screens.pickups.category.ui.CategoryActivity
-import com.scrapwala.screens.pickups.category.ui.SelectAddressActivity
+import com.scrapwala.screens.pickups.SelectAddressActivity
 import com.scrapwala.screens.pickups.model.AddressData
-import com.scrapwala.screens.pickups.category.model.CategoryResponse
-import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
-import com.scrapwala.utils.ErrorResponse
+import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.utils.extensionclass.setErrorMessage
-import com.scrapwala.utils.extensionclass.showCustomToast
-import com.scrapwala.utils.extensionclass.showProgressDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
@@ -256,13 +248,13 @@ private val someActivityResultLauncher = registerForActivityResult(ActivityResul
 
 
         if(item.isNullOrEmpty().not()){
-            var addressObj = Gson().fromJson<AddressData>(
+            var addressObj = Gson().fromJson<AddressListResponse.Data>(
                 item,
-                AddressData::class.java
+                AddressListResponse.Data::class.java
             )
 
-            if(addressObj!=null &&addressObj.fullAddress.isNullOrEmpty().not()){
-                binding.edtAddress.setText(addressObj.fullAddress)
+            if(addressObj!=null &&addressObj.addressLine1.isNullOrEmpty().not()){
+                binding.edtAddress.setText(addressObj.addressLine1+" "+addressObj.addressLine2+" "+addressObj.pincode)
             }
 
         }

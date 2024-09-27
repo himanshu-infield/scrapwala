@@ -359,4 +359,10 @@
         <item name="android:backgroundDimEnabled">true</item> <!-- Optional: To keep the dim background -->
         <item name="android:windowCloseOnTouchOutside">false</item>
     </style>
+
+
+    <style name="blackToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/white</item>
+    </style>
 </resources>

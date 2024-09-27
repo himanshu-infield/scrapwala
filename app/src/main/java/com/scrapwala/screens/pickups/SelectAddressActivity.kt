@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import com.moengage.core.internal.utils.showToast
 import com.scrapwala.databinding.ActivitySelectaddressBinding
 import com.scrapwala.redirectionhandler.navigateToAddAdddress
 import com.scrapwala.screens.pickups.adapter.SelectAddressAdapter
@@ -98,7 +99,7 @@ class SelectAddressActivity: AppCompatActivity() {
             override fun deleteAddress(item: AddressListResponse.Data) {
                 itemSelectDelete = item
                 showSpinner(this@SelectAddressActivity)
-                viewModel.getAddressList(item.id!!)
+                viewModel.deleteAddress(item.id!!)
             }
 
 
@@ -114,6 +115,7 @@ class SelectAddressActivity: AppCompatActivity() {
                 is SuccessResponse -> {
                     hideSpinner()
                     if (it.success==1){
+                        showToast(this, it.message?:"User deleted successfully!")
                         if (itemSelectDelete!=null){
                             adapter?.removeItem(itemSelectDelete!!)
                         }

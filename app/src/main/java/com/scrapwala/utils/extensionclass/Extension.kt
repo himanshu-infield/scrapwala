@@ -208,14 +208,37 @@ fun hideKeyboard(context: Context) {
  var loadDialog: Dialog? = null
 fun showSpinner(context: Context?) {
     if (loadDialog != null) {
-        if (loadDialog!!.isShowing()) loadDialog!!.dismiss()
+        if (loadDialog!!.isShowing) loadDialog!!.dismiss()
     }
+
     loadDialog = Dialog(context!!)
     loadDialog!!.setContentView(R.layout.loader_layout)
-    loadDialog!!.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    loadDialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     loadDialog!!.setCanceledOnTouchOutside(false)
+
+    // Disable back press
+    loadDialog!!.setOnKeyListener { dialog, keyCode, event ->
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // Return true to prevent the back press action
+            return@setOnKeyListener true
+        }
+        // Let the event pass if it's not a back press
+        return@setOnKeyListener false
+    }
+
+
+    // Dim background by adjusting the dimAmount (0.0f = no dim, 1.0f = full dim)
+    val window = loadDialog!!.window
+    if (window != null) {
+        val layoutParams = window.attributes
+        layoutParams.dimAmount = 0.8f // Adjust dim level (e.g., 0.6 for 60% dim)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        window.attributes = layoutParams
+    }
+
     loadDialog!!.show()
 }
+
 
 fun hideSpinner() {
     if (loadDialog != null && loadDialog!!.isShowing) loadDialog!!.dismiss()

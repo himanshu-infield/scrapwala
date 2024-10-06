@@ -7,18 +7,13 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
-import android.widget.SeekBar
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import com.google.gson.Gson
 import com.scrapwala.R
@@ -26,17 +21,18 @@ import com.scrapwala.databinding.FragmentSchedulePickupBinding
 import com.scrapwala.databinding.LayoutScheduledPickupBinding
 import com.scrapwala.screens.pickups.PickupsActivity
 import com.scrapwala.screens.pickups.category.ui.CategoryActivity
-import com.scrapwala.screens.pickups.category.ui.SelectAddressActivity
+import com.scrapwala.screens.pickups.SelectAddressActivity
 import com.scrapwala.screens.pickups.model.AddressData
+import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.utils.extensionclass.setErrorMessage
-import java.text.SimpleDateFormat
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
+@AndroidEntryPoint
 class SchedulePickupFragment : Fragment() {
     private val wasteCategory = listOf("Paper", "Metal","Plastic","E-Waste")
     lateinit var binding: FragmentSchedulePickupBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -49,9 +45,9 @@ class SchedulePickupFragment : Fragment() {
         initView()
     }
 
+
+
     private fun initView() {
-
-
         binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 val intent = Intent(requireContext(), CategoryActivity::class.java)
@@ -252,13 +248,13 @@ private val someActivityResultLauncher = registerForActivityResult(ActivityResul
 
 
         if(item.isNullOrEmpty().not()){
-            var addressObj = Gson().fromJson<AddressData>(
+            var addressObj = Gson().fromJson<AddressListResponse.Data>(
                 item,
-                AddressData::class.java
+                AddressListResponse.Data::class.java
             )
 
-            if(addressObj!=null &&addressObj.fullAddress.isNullOrEmpty().not()){
-                binding.edtAddress.setText(addressObj.fullAddress)
+            if(addressObj!=null &&addressObj.addressLine1.isNullOrEmpty().not()){
+                binding.edtAddress.setText(addressObj.addressLine1+" "+addressObj.addressLine2+" "+addressObj.pincode)
             }
 
         }

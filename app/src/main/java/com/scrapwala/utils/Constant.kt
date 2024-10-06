@@ -1,7 +1,7 @@
 package com.scrapwala.utils
 
 object  Constant {
-    var BASE_URL:String="https://app-gateway.squareyards.com"
+    var BASE_URL:String="https://treestructure.onrender.com"
 
 
 

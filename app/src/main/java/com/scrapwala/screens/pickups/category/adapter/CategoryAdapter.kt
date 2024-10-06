@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scrapwala.R
 import com.scrapwala.databinding.ItemCategoryBinding
 import com.scrapwala.screens.pickups.category.model.CategoryData
+import com.scrapwala.screens.pickups.category.model.CategoryResponse
 
 class CategoryAdapter(
     var context: Context,
-    var cityList: List<CategoryData>,
+    var cityList: List<CategoryResponse.Data?>,
     var clickedItemCallback:ClickedItemCallback
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
@@ -34,7 +35,7 @@ class CategoryAdapter(
     }
 
 //    // method for filtering our recyclerview items.
-    fun filterList(filterlist: ArrayList<CategoryData>,isFilterList:Boolean) {
+    fun filterList(filterlist: ArrayList<CategoryResponse.Data>,isFilterList:Boolean) {
 
         cityList = filterlist
 
@@ -45,7 +46,7 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
 
-        holder.bindData(cityList.get(position), position)
+        cityList.get(position)?.let { holder.bindData(it, position) }
     }
 
     override fun getItemCount(): Int {
@@ -56,27 +57,27 @@ class CategoryAdapter(
     inner class CategoryViewHolder(var itemViewBinding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(itemViewBinding.root) {
 
-        fun bindData(item: CategoryData, position: Int) {
+        fun bindData(item: CategoryResponse.Data, position: Int) {
 
             itemViewBinding.root.setOnClickListener {
-                clickedItemCallback.clickedItem(position, item.itemName?:"")
+                clickedItemCallback.clickedItem(position, item.name?:"")
             }
 
 
 
 
 
-            if (item.categoryName.isNullOrEmpty().not() && position == 0&&!isFilteredList) {
+            if (item.category.isNullOrEmpty().not() && position == 0&&!isFilteredList) {
 
                 itemViewBinding.txtCategoryName.visibility= View.VISIBLE
-                itemViewBinding.txtCategoryName.setText(item.categoryName)
+                itemViewBinding.txtCategoryName.setText(item.category)
             }
 
 
-            else if (item.categoryName.isNullOrEmpty().not() && position != 0&&item.categoryName?.equals(cityList.get(position-1).categoryName)!!.not()&&!isFilteredList ) {
+            else if (item.category.isNullOrEmpty().not() && position != 0&&item.category?.equals(cityList.get(position-1)?.category)!!.not()&&!isFilteredList ) {
 
                 itemViewBinding.txtCategoryName.visibility= View.VISIBLE
-                itemViewBinding.txtCategoryName.setText(item.categoryName)
+                itemViewBinding.txtCategoryName.setText(item.category)
             }
 
 
@@ -86,16 +87,16 @@ class CategoryAdapter(
 
             }
 
-            if (item.itemName.isNullOrEmpty().not()) {
-                itemViewBinding.txtItemName.setText(item.itemName)
+            if (item.name.isNullOrEmpty().not()) {
+                itemViewBinding.txtItemName.setText(item.name)
             }
             else{
                 itemViewBinding.txtItemName.setText("")
             }
 
 
-            if (item.itemPrice.isNullOrEmpty().not() ) {
-                itemViewBinding.txtItemPrice.setText(item.itemPrice)
+            if (item.price!=null ) {
+                itemViewBinding.txtItemPrice.setText(""+item.price+"/"+item.weight)
             }
             else{
                 itemViewBinding.txtItemPrice.setText("")

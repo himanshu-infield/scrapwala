@@ -21,4 +21,5 @@
     <dimen name="_21dp">21dp</dimen>
     <dimen name="_35dp">35dp</dimen>
     <dimen name="_16dp">16dp</dimen>
+    <dimen name="_1dp">1dp</dimen>
 </resources>

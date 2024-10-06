@@ -7,6 +7,7 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.scrapwala.databinding.ActiivtySplashBinding
+import com.scrapwala.redirectionhandler.navigateToMainActivity
 import com.scrapwala.redirectionhandler.navigateToOnboardingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
@@ -37,7 +38,8 @@ class SplashActivity : AppCompatActivity() {
 
   Handler().postDelayed(Runnable {
 
-navigateToOnboardingActivity(this,null)
+//navigateToOnboardingActivity(this,null)
+      navigateToMainActivity(this, null, true)
 
 },1000)
 

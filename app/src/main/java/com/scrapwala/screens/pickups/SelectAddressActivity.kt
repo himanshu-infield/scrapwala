@@ -15,7 +15,6 @@ import com.scrapwala.redirectionhandler.navigateToAddAdddress
 import com.scrapwala.screens.pickups.adapter.SelectAddressAdapter
 import com.scrapwala.screens.pickups.adapter.SelectAddressCallback
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
-import com.scrapwala.screens.pickups.model.AddressData
 import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
@@ -28,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SelectAddressActivity: AppCompatActivity() {
 
-    private var data: ArrayList<AddressData>?=null
+    private var data: ArrayList<AddressListResponse.Data>?=null
     private var adapter: SelectAddressAdapter?=null
     private var itemSelectDelete: AddressListResponse.Data? = null
     private lateinit var binding: ActivitySelectaddressBinding
@@ -85,7 +84,7 @@ class SelectAddressActivity: AppCompatActivity() {
 
     private fun renderData(addressListResponse: AddressListResponse) {
         var layoutManager = LinearLayoutManager(this)
-        data= arrayListOf<AddressData>()
+        data= arrayListOf<AddressListResponse.Data>()
 
 
         adapter=SelectAddressAdapter(this,addressListResponse.data!!,object:SelectAddressCallback{

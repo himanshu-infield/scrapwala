@@ -5,16 +5,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import com.scrapwala.databinding.ActivityCategoryBinding
 import com.scrapwala.screens.pickups.category.adapter.CategoryAdapter
-import com.scrapwala.screens.pickups.category.adapter.ClickedItemCallback
-import com.scrapwala.screens.pickups.category.model.CategoryData
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
+import com.scrapwala.screens.pickups.clickinterface.ClickedItemCallback
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
 import com.scrapwala.utils.ErrorResponse
 import com.scrapwala.utils.extensionclass.hideSpinner
@@ -157,7 +154,7 @@ class CategoryActivity: AppCompatActivity() {
     private fun setRecyclerAdapter(sortedCategories: List<CategoryResponse.Data?>?) {
         var layoutManager = LinearLayoutManager(this)
 
-        adapter=CategoryAdapter(this,sortedCategories!!,object:ClickedItemCallback{
+        adapter=CategoryAdapter(this,sortedCategories!!,object: ClickedItemCallback {
             override fun clickedItem(position: Int, item: String) {
 
                 var intent=Intent()

@@ -8,13 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.scrapwala.R
 import com.scrapwala.databinding.ItemCategoryBinding
-import com.scrapwala.screens.pickups.category.model.CategoryData
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
+import com.scrapwala.screens.pickups.clickinterface.ClickedItemCallback
 
 class CategoryAdapter(
     var context: Context,
     var cityList: List<CategoryResponse.Data?>,
-    var clickedItemCallback:ClickedItemCallback
+    var clickedItemCallback: ClickedItemCallback
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
 

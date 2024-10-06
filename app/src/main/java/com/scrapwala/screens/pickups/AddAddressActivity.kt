@@ -24,8 +24,6 @@ import com.scrapwala.screens.pickups.adapter.CityListAdapter
 import com.scrapwala.screens.pickups.adapter.ClickedCityItemCallback
 import com.scrapwala.screens.pickups.adapter.SelectAddressAdapter
 import com.scrapwala.screens.pickups.model.AddAddressData
-import com.scrapwala.screens.pickups.model.AddressData
-import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.screens.pickups.model.CityListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
@@ -41,7 +39,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AddAddressActivity : AppCompatActivity() {
 
-    private var data: ArrayList<AddressData>? = null
     private var adapter: SelectAddressAdapter? = null
     var selectedAddressType = "Home"
     private lateinit var binding: ActivityAddaddressBinding

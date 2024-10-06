@@ -22,7 +22,6 @@ import com.scrapwala.databinding.LayoutScheduledPickupBinding
 import com.scrapwala.screens.pickups.PickupsActivity
 import com.scrapwala.screens.pickups.category.ui.CategoryActivity
 import com.scrapwala.screens.pickups.SelectAddressActivity
-import com.scrapwala.screens.pickups.model.AddressData
 import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.utils.extensionclass.setErrorMessage
 import dagger.hilt.android.AndroidEntryPoint

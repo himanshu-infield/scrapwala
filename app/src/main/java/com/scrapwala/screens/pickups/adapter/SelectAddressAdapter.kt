@@ -8,8 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.scrapwala.R
 import com.scrapwala.databinding.ItemAddressBinding
-import com.scrapwala.screens.pickups.category.adapter.ClickedItemCallback
-import com.scrapwala.screens.pickups.model.AddressData
 import com.scrapwala.screens.pickups.model.AddressListResponse
 
 class SelectAddressAdapter(

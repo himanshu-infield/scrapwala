@@ -38,8 +38,8 @@ class SplashActivity : AppCompatActivity() {
 
   Handler().postDelayed(Runnable {
 
-//navigateToOnboardingActivity(this,null)
-      navigateToMainActivity(this, null, true)
+navigateToOnboardingActivity(this,null)
+//      navigateToMainActivity(this, null, true)
 
 },1000)
 

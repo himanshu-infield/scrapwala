@@ -2,6 +2,9 @@ package com.scrapwala.api
 
 import android.content.Context
 import com.scrapwala.BuildConfig
+import com.scrapwala.screens.login.model.SendOtpRequest
+import com.scrapwala.screens.login.model.VerifyOtpRequest
+import com.scrapwala.screens.login.model.VerifyOtpResponse
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
 import com.scrapwala.screens.pickups.model.AddAddressData
 import com.scrapwala.screens.pickups.model.AddressListResponse
@@ -44,6 +47,12 @@ interface ApiService {
 
 
 
+    @POST("/api/users/verifyOtp")
+    suspend fun verifyOtp(@Body request:VerifyOtpRequest):ApiResult<VerifyOtpResponse>
+
+
+    @POST("/api/users/sendOtp")
+    suspend fun sendOtp(@Body request:SendOtpRequest):ApiResult<SuccessResponse>
     companion object{
         private var BASE_URL = Constant.BASE_URL
         fun create(context: Context): ApiService {

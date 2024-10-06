@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+
+
+    <include layout="@layout/toolbar_generic"
+        android:id="@+id/toolbar"></include>
+
+
+
+
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recyclerVw"
+        android:layout_below="@+id/toolbar"
+        android:paddingBottom="20dp"
+        android:layout_above="@+id/txtAddAdddress"
+        android:layout_marginTop="27dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+    <Button
+        android:layout_alignParentBottom="true"
+      android:layout_marginBottom="20dp"
+        android:background="@drawable/rect_green_app"
+        android:layout_width="match_parent"
+        android:text="+ Add Adddress"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:id="@+id/txtAddAdddress"
+        android:layout_marginHorizontal="15dp"
+
+        android:layout_height="50dp"/>
+
+
+</RelativeLayout>

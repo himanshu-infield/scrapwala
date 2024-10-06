@@ -307,6 +307,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="18dp"
+                        android:id="@+id/linearSelectAddres"
+
                         android:layout_marginTop="8dp"
                         android:background="@drawable/dotted_rect_bg"
                         android:gravity="center">

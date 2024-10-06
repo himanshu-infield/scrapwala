@@ -330,6 +330,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15dp"
                     android:layout_marginTop="@dimen/_15dp"
+                    android:id="@+id/linearCategory"
                     android:weightSum="4">
 
                     <LinearLayout

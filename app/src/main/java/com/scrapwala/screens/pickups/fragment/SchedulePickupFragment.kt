@@ -31,7 +31,6 @@ import com.scrapwala.screens.pickups.category.ui.CategoryActivity
 import com.scrapwala.screens.pickups.SelectAddressActivity
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
 import com.scrapwala.screens.pickups.model.AddAddressData
-import com.scrapwala.screens.pickups.model.AddressData
 import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.screens.pickups.model.CreateCategoryData
 import com.scrapwala.screens.pickups.model.SuccessResponse

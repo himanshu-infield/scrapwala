@@ -42,6 +42,9 @@ class LoginActivity : BaseAppCompatActivity() {
         binding.txtGetOtp.setOnClickListener {
 
             if(validate()){
+
+
+
                 binding.txtVerify.setText("Enter verification code we sent to\n" +
                         "+91"+binding.edtPhone.text.toString())
 

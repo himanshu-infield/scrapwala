@@ -6,32 +6,12 @@
     android:layout_height="match_parent"
     >
 
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-
-        android:layout_height="match_parent">
-
-
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:src="@drawable/group_10349"
-            android:layout_height="match_parent"></ImageView>
-
-
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_splash_logo"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_splash_logo"
+        android:layout_height="wrap_content" />
 
 
     <!--    <pl.droidsonroids.gif.GifImageView-->

@@ -1,4 +1,4 @@
-package com.scrapwala.screens.pickups.category.adapter
+package com.scrapwala.screens.pickups.clickinterface
 
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
 

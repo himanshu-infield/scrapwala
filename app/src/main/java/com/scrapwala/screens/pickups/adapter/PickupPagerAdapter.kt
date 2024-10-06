@@ -11,24 +11,20 @@ import com.scrapwala.screens.pickups.fragment.UpcomingFragment
 class PickupPagerAdapter(
     private val myContext: Context,
     fm: FragmentManager,
-    private val totalTabs: Int,
-
-    var fragmentList: List<Fragment>
+    private val totalTabs: Int
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    override fun getCount(): Int {
-      return  fragmentList.size
-    }
 
     // This is for fragment tabs
     override fun getItem(position: Int): Fragment {
-
-        return fragmentList.get(position)
-
-
+        return when (position) {
+            0 -> SchedulePickupFragment()
+            1 -> UpcomingFragment()
+            2 -> CompletedFragment()
+            else -> throw IllegalArgumentException("Invalid tab position")
         }
     }
 
-
-
-
-
+    override fun getCount(): Int {
+        return totalTabs
+    }
+}

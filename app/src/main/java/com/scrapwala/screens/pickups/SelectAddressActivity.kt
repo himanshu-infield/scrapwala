@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import com.moengage.core.internal.utils.showToast
 import com.scrapwala.databinding.ActivitySelectaddressBinding
 import com.scrapwala.redirectionhandler.navigateToAddAdddress
+import com.scrapwala.screens.login.model.VerifyOtpResponse
 import com.scrapwala.screens.pickups.adapter.SelectAddressAdapter
 import com.scrapwala.screens.pickups.adapter.SelectAddressCallback
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
@@ -19,6 +20,7 @@ import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
 import com.scrapwala.utils.ErrorResponse
+import com.scrapwala.utils.Preferences
 import com.scrapwala.utils.extensionclass.hideSpinner
 import com.scrapwala.utils.extensionclass.showCustomToast
 import com.scrapwala.utils.extensionclass.showSpinner
@@ -35,10 +37,18 @@ class SelectAddressActivity: AppCompatActivity() {
     private val viewModel: PickupViewModel by viewModels()
     private lateinit var addressListResponse: AddressListResponse
 
+    private var userData: VerifyOtpResponse.Data?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectaddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val pref = Preferences.getUserData(this)
+        userData = Gson().fromJson(pref, VerifyOtpResponse.Data::class.java)
+        println("====================="+userData?.id)
+
+        val token = Preferences.getUserToken(this)
+        println("====================="+token)
 
         setUpToolbar()
         binding.txtAddAdddress.setOnClickListener {

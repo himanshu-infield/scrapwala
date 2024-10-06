@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.scrapwala.R
 import com.scrapwala.databinding.ItemCategoryBinding
-import com.scrapwala.screens.pickups.category.model.CategoryData
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
 
 class CategoryAdapter(
@@ -60,7 +59,7 @@ class CategoryAdapter(
         fun bindData(item: CategoryResponse.Data, position: Int) {
 
             itemViewBinding.root.setOnClickListener {
-                clickedItemCallback.clickedItem(position, item.name?:"")
+                clickedItemCallback.clickedItem(position, item)
             }
 
 

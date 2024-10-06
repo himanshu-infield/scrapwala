@@ -15,18 +15,19 @@
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent">
-            <include
+           <!-- <include
                 layout="@layout/layout_upcoming" />
             <include
                 layout="@layout/layout_upcoming" />
             <include
-                layout="@layout/layout_upcoming" />
+                layout="@layout/layout_upcoming" />-->
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recPickup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:itemCount="3"
+                android:visibility="visible"
+                tools:itemCount="1"
                 tools:listitem="@layout/layout_upcoming">
 
             </androidx.recyclerview.widget.RecyclerView>
@@ -34,12 +35,13 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/noData"
             style="@style/normal_14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:visibility="gone"
-            android:text="There is no complete pickup at\nthe moment"
+            android:text="There is no In Progress at\nthe moment"
             android:textColor="@color/_666666"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

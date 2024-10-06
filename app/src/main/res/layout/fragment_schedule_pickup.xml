@@ -127,9 +127,9 @@
                         app:trackColorInactive="#d0d0d0"
                         app:thumbColor="#75cb52"
                         app:thumbRadius="@dimen/_10dp"
-                        android:value="20"
+                        android:value="10"
                         android:valueFrom="10"
-                        android:valueTo="50" />
+                        android:valueTo="100" />
 
 
 
@@ -151,6 +151,7 @@
                                 android:fontFamily="@font/graphik_medium"
                                 android:hint="Estimate Weight"
                                 android:text=""
+                                android:inputType="number"
                                 android:paddingTop="0dp"
                                 android:paddingBottom="0dp"
                                 android:singleLine="true"
@@ -287,7 +288,7 @@
                         app:hintEnabled="false">
 
                         <com.scrapwala.utils.widgets.TextInputCustomClass
-                            android:id="@+id/edtAddress"
+                            android:id="@+id/edt_Address"
                             style="@style/filledEditBox"
                             android:layout_width="match_parent"
                             android:layout_height="53dp"

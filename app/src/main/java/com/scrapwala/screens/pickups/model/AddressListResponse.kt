@@ -23,7 +23,7 @@ data class AddressListResponse(
         @SerializedName("created_at")
         var createdAt: String?,
         @SerializedName("id")
-        var id: Int?,
+        var id: Int? = 0,
         @SerializedName("pincode")
         var pincode: String?,
         @SerializedName("user_id")

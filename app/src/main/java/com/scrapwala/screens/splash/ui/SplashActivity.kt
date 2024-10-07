@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.scrapwala.databinding.ActiivtySplashBinding
 import com.scrapwala.redirectionhandler.navigateToMainActivity
 import com.scrapwala.redirectionhandler.navigateToOnboardingActivity
+import com.scrapwala.utils.Preferences
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -38,7 +39,17 @@ class SplashActivity : AppCompatActivity() {
 
   Handler().postDelayed(Runnable {
 
-navigateToOnboardingActivity(this,null)
+
+
+      if(Preferences.getUserData(this).isNullOrEmpty()){
+          navigateToOnboardingActivity(this,null)
+
+      }
+      else{
+          navigateToMainActivity(this,null)
+
+      }
+
 //      navigateToMainActivity(this, null, true)
 
 },1000)

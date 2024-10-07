@@ -26,10 +26,13 @@ import com.scrapwala.MainActivity
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentProfileBinding
 import com.scrapwala.databinding.FragmentReferEarnBinding
+import com.scrapwala.redirectionhandler.navigateToAddAdddress
 import com.scrapwala.redirectionhandler.navigateToEditProfileActivity
 import com.scrapwala.redirectionhandler.navigateToLoginActivity
+import com.scrapwala.redirectionhandler.navigateToSelectAddress
 import com.scrapwala.screens.login.model.LoginViewModel
 import com.scrapwala.screens.login.model.SendOtpRequest
+import com.scrapwala.screens.login.model.VerifyOtpResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.screens.profile.model.ProfileViewModel
 import com.scrapwala.utils.ErrorResponse
@@ -45,6 +48,7 @@ import java.io.File
 class ProfileFragment : Fragment() {
 
 
+    private var userDataObj: VerifyOtpResponse.Data? = null
     private lateinit var binding: FragmentProfileBinding
 
     private val viewModel: ProfileViewModel by viewModels()
@@ -62,13 +66,28 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
 
+
+
         observeLogoutResponse()
     }
 
     private fun initView() {
+
+        userDataObj= Preferences.getUserDataObj(requireContext())
+
+
+
+        setUserData()
+
         binding.toolbar.tvHeading.text = getString(R.string.your_profile)
         binding.toolbar.imgBack.setOnClickListener{
             requireActivity().onBackPressed()
+        }
+
+
+        binding.relSavedAddress.setOnClickListener {
+
+            navigateToSelectAddress(requireActivity(),null)
         }
 
         binding.rlYourPickUp.setOnClickListener{
@@ -83,14 +102,9 @@ class ProfileFragment : Fragment() {
 
         binding.relLogout.setOnClickListener {
 
-
-
-            var userDataObj= Preferences.getUserDataObj(requireContext())
-
-
             if(userDataObj!=null){
                 var request=SendOtpRequest()
-                request.mobile=userDataObj.mobile
+                request.mobile=userDataObj?.mobile
 
                 showSpinner(context)
                 viewModel.logoutRequest(request)
@@ -111,8 +125,26 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun setUserData() {
+        if(userDataObj!=null){
+            if(userDataObj?.name.isNullOrEmpty().not()){
+                binding.txtUserName.setText(userDataObj?.name)
+            }
+            else{
+                binding.txtUserName.setText("")
+
+            }
 
 
+            if(userDataObj?.rewardPoint.isNullOrEmpty().not()){
+                binding.txtRewardPoint.setText(userDataObj?.rewardPoint)
+            }
+            else{
+                binding.txtRewardPoint.setText("")
+
+            }
+        }
+    }
 
 
     private fun observeLogoutResponse() {

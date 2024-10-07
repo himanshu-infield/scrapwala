@@ -111,7 +111,7 @@
                                         style="@style/medium_14sp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Narender Sharma"
+                                        android:id="@+id/txtUserName"
                                         android:textColor="@color/black" />
 
                                     <LinearLayout

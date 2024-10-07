@@ -62,6 +62,11 @@ interface ApiService {
 
     @POST("/api/users/sendOtp")
     suspend fun sendOtp(@Body request:SendOtpRequest):ApiResult<SuccessResponse>
+
+
+
+    @POST("/api/users/logout")
+    suspend fun logOut(@Body request:SendOtpRequest):ApiResult<SuccessResponse>
     companion object{
         private var BASE_URL = Constant.BASE_URL
         fun create(context: Context): ApiService {

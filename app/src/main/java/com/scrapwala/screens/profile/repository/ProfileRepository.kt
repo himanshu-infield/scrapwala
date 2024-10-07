@@ -11,7 +11,7 @@ import javax.inject.Inject
 class ProfileRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun logout(request:SendOtpRequest): ApiResult<SuccessResponse> {
-        return apiService.sendOtp(request)
+        return apiService.logOut(request)
     }
 
 

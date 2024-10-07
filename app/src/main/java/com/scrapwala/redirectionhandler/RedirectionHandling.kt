@@ -26,13 +26,22 @@ fun navigateToOnboardingActivity(context: Activity, bundle: Bundle?) {
 
 
 
-fun navigateToLoginActivity(context: Activity, bundle: Bundle?,needFlag: Boolean?) {
+fun navigateToLoginActivity(context: Activity, bundle: Bundle?,needFlag: Boolean=false) {
     var intent = Intent(context, LoginActivity::class.java)
     bundle?.let {
         intent.putExtras(it)
     }
 
+
+
+    if (needFlag) {
+        ActivityCompat.finishAffinity(context)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        //  context.startActivity(intent)
+
+    }
     context.startActivity(intent)
+
 
 }
 

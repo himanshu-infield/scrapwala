@@ -47,7 +47,7 @@ interface ApiService {
     @POST("/api/address/create")
     suspend fun saveAddress(@Body request:AddAddressData):ApiResult<SuccessResponse>
 
-    @POST("/api/category/create")
+    @POST("/api/pickup/create")
     suspend fun createCategory(@Body request: CreateCategoryData):ApiResult<SuccessResponse>
 
 

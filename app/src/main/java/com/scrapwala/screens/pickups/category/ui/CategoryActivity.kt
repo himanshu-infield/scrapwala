@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.scrapwala.databinding.ActivityCategoryBinding
 import com.scrapwala.screens.pickups.category.adapter.CategoryAdapter
+import com.scrapwala.screens.pickups.category.model.CategoryData
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
 import com.scrapwala.screens.pickups.clickinterface.ClickedItemCallback
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
@@ -74,11 +77,11 @@ class CategoryActivity: AppCompatActivity() {
 
     private fun renderData(it: CategoryResponse) {
 
-        val newExpert: CategoryResponse.Data =
-            CategoryResponse.Data("Metal","",101,"aa",1,"s","ss",101,111,"22",11)
-        val mutableExperts = categoryResponse.data?.toMutableList()
-        mutableExperts?.add(newExpert)
-        categoryResponse.data = mutableExperts?.toList()
+//        val newExpert: CategoryResponse.Data =
+//            CategoryResponse.Data("Metal","",101,"aa",1,"s","ss",101,111,"22",11)
+//        val mutableExperts = categoryResponse.data?.toMutableList()
+//        mutableExperts?.add(newExpert)
+//        categoryResponse.data = mutableExperts?.toList()
 
 
         val categories = categoryResponse.data
@@ -155,11 +158,11 @@ class CategoryActivity: AppCompatActivity() {
         var layoutManager = LinearLayoutManager(this)
 
         adapter=CategoryAdapter(this,sortedCategories!!,object: ClickedItemCallback {
-            override fun clickedItem(position: Int, item: String) {
+            override fun clickedItem(position: Int, item: CategoryResponse.Data) {
 
                 var intent=Intent()
 
-                intent.putExtra("clickedItem",item)
+                intent.putExtra("clickedItem",Gson().toJson(item))
 
                 setResult(100,intent)
                 finish()

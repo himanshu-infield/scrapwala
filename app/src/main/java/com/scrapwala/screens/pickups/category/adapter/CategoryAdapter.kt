@@ -60,7 +60,7 @@ class CategoryAdapter(
         fun bindData(item: CategoryResponse.Data, position: Int) {
 
             itemViewBinding.root.setOnClickListener {
-                clickedItemCallback.clickedItem(position, item.name?:"")
+                clickedItemCallback.clickedItem(position, item)
             }
 
 

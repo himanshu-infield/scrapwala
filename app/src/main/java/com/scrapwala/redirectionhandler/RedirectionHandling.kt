@@ -61,10 +61,10 @@ fun navigateToMainActivity(context: Activity, bundle: Bundle?, needFlag: Boolean
     if (needFlag) {
         ActivityCompat.finishAffinity(context)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+      //  context.startActivity(intent)
 
     }
-
+    context.startActivity(intent)
 //    else if (bringActivityFront) {
 //        val application = (context.application as? SquareyardsApplication)
 //        application?.let {

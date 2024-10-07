@@ -29,7 +29,7 @@ lateinit var binding: FragmentPickUpsBinding
     }
 
     private fun setUPTabLayout() {
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Upcoming"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("In Progress"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Completed"))
 
 

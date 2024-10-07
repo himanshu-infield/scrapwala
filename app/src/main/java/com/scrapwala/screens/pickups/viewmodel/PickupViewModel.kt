@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonObject
 import com.scrapwala.screens.pickups.model.AddAddressData
 import com.scrapwala.screens.pickups.model.CityListResponse
+import com.scrapwala.screens.pickups.model.CreateCategoryData
 import com.scrapwala.screens.pickups.repository.PickupRepository
 import com.scrapwala.utils.SingleEvent
 import com.scrapwala.utils.extensionclass.onError
@@ -38,6 +39,8 @@ class PickupViewModel @Inject constructor(
     var responseAddressList: MutableLiveData<Any> = MutableLiveData()
     var responseDeleteAddress: MutableLiveData<Any> = MutableLiveData()
     var responseSaveAddress: MutableLiveData<Any> = MutableLiveData()
+    var responseCreatePickUp: MutableLiveData<Any> = MutableLiveData()
+    var responsePickupsList: MutableLiveData<Any> = MutableLiveData()
 
     fun getCategoryList() {
         viewModelScope.launch {
@@ -123,6 +126,40 @@ class PickupViewModel @Inject constructor(
                 Log.d("APICALL", "optimisedApiCall: message $error")
             }.onFailureCallback {
                 responseSaveAddress.value = it
+            }
+        }
+    }
+
+
+    /**create Category**/
+    fun createCategory(request: CreateCategoryData) {
+        viewModelScope.launch {
+            val response = pickupRepository.createCategory(request)
+            response.onSuccess { data ->
+                responseCreatePickUp.value = data
+                Log.d("APICALL", "optimisedApiCall: data $data")
+            }.onError { error ->
+                responseCreatePickUp.value = error
+                Log.d("APICALL", "optimisedApiCall: message $error")
+            }.onFailureCallback {
+                responseCreatePickUp.value = it
+            }
+        }
+    }
+
+
+/**call in progress list api**/
+    fun apiInProgressList(id: Int,status:Int) {
+        viewModelScope.launch {
+            val response = pickupRepository.apiInProgressList(id,status)
+            response.onSuccess { data ->
+                responsePickupsList.value = data
+                Log.d("APICALL", "optimisedApiCall: data $data")
+            }.onError { error ->
+                responsePickupsList.value = error
+                Log.d("APICALL", "optimisedApiCall: message $error")
+            }.onFailureCallback {
+                responsePickupsList.value = it
             }
         }
     }

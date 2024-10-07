@@ -9,6 +9,8 @@ import com.scrapwala.screens.pickups.category.model.CategoryResponse
 import com.scrapwala.screens.pickups.model.AddAddressData
 import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.screens.pickups.model.CityListResponse
+import com.scrapwala.screens.pickups.model.CreateCategoryData
+import com.scrapwala.screens.pickups.model.InProgressListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.utils.ApiResult
 import com.scrapwala.utils.Constant
@@ -44,6 +46,13 @@ interface ApiService {
 
     @POST("/api/address/create")
     suspend fun saveAddress(@Body request:AddAddressData):ApiResult<SuccessResponse>
+
+    @POST("/api/pickup/create")
+    suspend fun createCategory(@Body request: CreateCategoryData):ApiResult<SuccessResponse>
+
+
+    @GET("/api/pickup/{id}/{statusId}")
+    suspend fun pickupList(@Path("id") id: Int,@Path("statusId") statusId: Int):ApiResult<InProgressListResponse>
 
 
 

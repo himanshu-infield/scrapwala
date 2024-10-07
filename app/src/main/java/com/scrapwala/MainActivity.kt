@@ -15,6 +15,7 @@ import com.scrapwala.screens.home.ui.DashBoardFragment
 import com.scrapwala.screens.pickups.PickUpsFragment
 import com.scrapwala.screens.profile.ProfileFragment
 import com.scrapwala.screens.referearn.ReferEarnFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
 var firstFragment: Fragment? = null
@@ -25,6 +26,7 @@ var thirdFragment: Fragment? = null
 
 var forthFragment: Fragment? = null
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
      lateinit var bindingBase: ActivityMainBinding

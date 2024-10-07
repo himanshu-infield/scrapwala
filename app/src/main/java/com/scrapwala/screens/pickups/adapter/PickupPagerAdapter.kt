@@ -21,10 +21,7 @@ class PickupPagerAdapter(
 
     // This is for fragment tabs
     override fun getItem(position: Int): Fragment {
-
         return fragmentList.get(position)
-
-
         }
     }
 

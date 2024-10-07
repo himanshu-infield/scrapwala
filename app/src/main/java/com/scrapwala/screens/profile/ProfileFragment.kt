@@ -116,11 +116,11 @@ class ProfileFragment : Fragment() {
 
 
     private fun observeLogoutResponse() {
-        viewModel.logOutResponse.observe(this as AppCompatActivity, Observer {
+        viewModel.logOutResponse.observe(requireActivity(), Observer {
             when (it) {
                 is SuccessResponse -> {
 
-                    navigateToLoginActivity(this,null)
+                    navigateToLoginActivity(requireActivity(),null)
 
                     hideSpinner()
 
@@ -129,13 +129,13 @@ class ProfileFragment : Fragment() {
 
                 is ErrorResponse -> {
                     if (it.message.isNullOrEmpty().not()) {
-                        showCustomToast(findViewById(android.R.id.content),this,it.message)
+                        showCustomToast(binding.root,requireActivity(),it.message)
                     }
                     hideSpinner()
                 }
 
                 is String -> {
-                    showCustomToast(findViewById(android.R.id.content),this,it)
+                    showCustomToast(binding.root,requireActivity(),it)
                     hideSpinner()
                 }
             }

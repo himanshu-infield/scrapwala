@@ -14,10 +14,15 @@ import androidx.fragment.app.Fragment
 import com.moengage.core.internal.utils.MoEUtils.getSystemService
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentReferEarnBinding
+import com.scrapwala.screens.login.model.VerifyOtpResponse
+import com.scrapwala.utils.Preferences
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ReferEarnFragment : Fragment() {
 
 private lateinit var binding: FragmentReferEarnBinding
+    private var pref: VerifyOtpResponse.Data? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,12 +34,19 @@ private lateinit var binding: FragmentReferEarnBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pref = Preferences.getUserDataObj(requireContext())
         initView()
     }
 
     private fun initView() {
         binding.toolbar.tvHeading.text = getString(R.string.refer_and_earn)
+
+        if (pref!=null&& pref?.referralCode.isNullOrEmpty().not()){
+            binding.couponCode.text = ""+pref?.referralCode
+        }
+
         binding.toolbar.imgBack.setOnClickListener{
+
             requireActivity().onBackPressed()
         }
 

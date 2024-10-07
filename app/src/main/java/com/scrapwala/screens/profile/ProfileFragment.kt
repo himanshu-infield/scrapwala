@@ -38,8 +38,10 @@ import com.scrapwala.utils.access_media.ChooseMediaActivity
 import com.scrapwala.utils.extensionclass.hideSpinner
 import com.scrapwala.utils.extensionclass.showCustomToast
 import com.scrapwala.utils.extensionclass.showSpinner
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
 

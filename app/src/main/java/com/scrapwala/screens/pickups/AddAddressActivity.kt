@@ -20,6 +20,7 @@ import com.moengage.core.internal.utils.showToast
 import com.scrapwala.R
 import com.scrapwala.databinding.ActivityAddaddressBinding
 import com.scrapwala.databinding.DialogGenericsearchBinding
+import com.scrapwala.screens.login.model.VerifyOtpResponse
 import com.scrapwala.screens.pickups.adapter.CityListAdapter
 import com.scrapwala.screens.pickups.adapter.ClickedCityItemCallback
 import com.scrapwala.screens.pickups.adapter.SelectAddressAdapter
@@ -28,6 +29,7 @@ import com.scrapwala.screens.pickups.model.CityListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
 import com.scrapwala.utils.ErrorResponse
+import com.scrapwala.utils.Preferences
 import com.scrapwala.utils.extensionclass.hideKeyboard
 import com.scrapwala.utils.extensionclass.hideSpinner
 import com.scrapwala.utils.extensionclass.setErrorMessage
@@ -44,11 +46,13 @@ class AddAddressActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddaddressBinding
 
     private val viewModel: PickupViewModel by viewModels()
+    private var pref: VerifyOtpResponse.Data? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddaddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        pref = Preferences.getUserDataObj(this)
         setUpToolbar()
         submitFuncionality()
 
@@ -230,7 +234,7 @@ class AddAddressActivity : AppCompatActivity() {
                     selectedAddressType = binding.edtOther.text.toString().trim()
                 }
                 val addAddressData = AddAddressData(
-                    userId = "1",
+                    userId = pref?.id!!.toString(),
                     addressType = selectedAddressType,
                     address = binding.edtAdddress.text.toString().trim(),
                     landmark = binding.edtLandmark.text.toString().trim(),

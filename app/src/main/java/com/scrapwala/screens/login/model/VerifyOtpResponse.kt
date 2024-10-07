@@ -15,7 +15,7 @@ data class VerifyOtpResponse(
 ) {
     data class Data(
         @SerializedName("id")
-        var id: Int?,
+        var id: Int? =0,
         @SerializedName("name")
         var name: String?,
         @SerializedName("gender")

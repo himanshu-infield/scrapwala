@@ -51,8 +51,8 @@ interface ApiService {
     suspend fun createCategory(@Body request: CreateCategoryData):ApiResult<SuccessResponse>
 
 
-    @GET("/api/pickup/{id}")
-    suspend fun pickupList(@Path("id") id: Int):ApiResult<InProgressListResponse>
+    @GET("/api/pickup/{id}/{statusId}")
+    suspend fun pickupList(@Path("id") id: Int,@Path("statusId") statusId: Int):ApiResult<InProgressListResponse>
 
 
 

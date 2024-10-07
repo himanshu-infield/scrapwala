@@ -149,9 +149,9 @@ class PickupViewModel @Inject constructor(
 
 
 /**call in progress list api**/
-    fun apiInProgressList(id: Int) {
+    fun apiInProgressList(id: Int,status:Int) {
         viewModelScope.launch {
-            val response = pickupRepository.apiInProgressList(id)
+            val response = pickupRepository.apiInProgressList(id,status)
             response.onSuccess { data ->
                 responsePickupsList.value = data
                 Log.d("APICALL", "optimisedApiCall: data $data")

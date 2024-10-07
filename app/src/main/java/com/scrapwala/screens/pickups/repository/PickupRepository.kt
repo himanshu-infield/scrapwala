@@ -41,8 +41,8 @@ class PickupRepository @Inject constructor(private val apiService: ApiService) {
     }
 
 
-    suspend fun apiInProgressList(id:Int): ApiResult<InProgressListResponse> {
-        return apiService.pickupList(id)
+    suspend fun apiInProgressList(id:Int,status:Int): ApiResult<InProgressListResponse> {
+        return apiService.pickupList(id,status)
     }
 
 }

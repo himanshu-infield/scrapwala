@@ -38,17 +38,14 @@ class SelectAddressActivity: AppCompatActivity() {
     private lateinit var addressListResponse: AddressListResponse
 
     private var userData: VerifyOtpResponse.Data?=null
+    private var pref:VerifyOtpResponse.Data? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectaddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val pref = Preferences.getUserData(this)
-        userData = Gson().fromJson(pref, VerifyOtpResponse.Data::class.java)
-        println("====================="+userData?.id)
+        pref = Preferences.getUserDataObj(this)
 
-        val token = Preferences.getUserToken(this)
-        println("====================="+token)
 
         setUpToolbar()
         binding.txtAddAdddress.setOnClickListener {
@@ -150,7 +147,7 @@ class SelectAddressActivity: AppCompatActivity() {
 
     private fun apiAddressList() {
         showSpinner(this@SelectAddressActivity)
-        viewModel.getAddressList(1)
+        viewModel.getAddressList(pref?.id!!)
     }
 
     private fun setUpToolbar() {

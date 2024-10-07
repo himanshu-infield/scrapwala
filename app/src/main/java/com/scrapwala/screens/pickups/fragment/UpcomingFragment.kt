@@ -8,16 +8,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
 import com.scrapwala.databinding.FragmentUpcomingBinding
 import com.scrapwala.redirectionhandler.navigateToPickupsActivity
+import com.scrapwala.screens.login.model.VerifyOtpResponse
 import com.scrapwala.screens.pickups.PickupsActivity
 import com.scrapwala.screens.pickups.adapter.PickUpsListAdapter
 import com.scrapwala.screens.pickups.model.InProgressListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
 import com.scrapwala.utils.ErrorResponse
+import com.scrapwala.utils.Preferences
 import com.scrapwala.utils.extensionclass.hideSpinner
 import com.scrapwala.utils.extensionclass.showCustomToast
 import com.scrapwala.utils.extensionclass.showSpinner
@@ -30,6 +33,7 @@ class UpcomingFragment : Fragment(), PickUpsListAdapter.PickupListener {
     lateinit var pickUpsListAdapter: PickUpsListAdapter
     lateinit var inProgressListResponse: InProgressListResponse
     private val viewModel: PickupViewModel by viewModels()
+    private var pref:VerifyOtpResponse.Data? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +45,17 @@ class UpcomingFragment : Fragment(), PickUpsListAdapter.PickupListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+         pref = Preferences.getUserDataObj(requireContext())
+       // userData = Gson().fromJson(pref, VerifyOtpResponse.Data::class.java)
+
+
         initView()
         observeApiUpcomingList()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         callApiUpcomingList()
     }
 
@@ -50,21 +63,21 @@ class UpcomingFragment : Fragment(), PickUpsListAdapter.PickupListener {
         viewModel.responsePickupsList.observe(requireActivity(), Observer {
             when (it) {
                 is InProgressListResponse -> {
-                  //  hideSpinner()
+//                    hideSpinner()
                     if (it.success == 1) {
                         renderData(it.data)
                     }
                 }
 
                 is ErrorResponse -> {
-                   // hideSpinner()
+//                    hideSpinner()
                     if (it.message.isNullOrEmpty().not()) {
                         showCustomToast(binding.root, requireActivity(), it.message)
                     }
                 }
 
                 is String -> {
-                   // hideSpinner()
+//                    hideSpinner()
                     showCustomToast(binding.root, requireActivity(), it)
                 }
             }
@@ -89,8 +102,11 @@ class UpcomingFragment : Fragment(), PickUpsListAdapter.PickupListener {
     }
 
     private fun callApiUpcomingList() {
-       // showSpinner(requireContext())
-        viewModel.apiInProgressList(1)
+//        showSpinner(requireContext())
+        if (pref?.id!=null){
+            viewModel.apiInProgressList(pref?.id!!,0)
+        }
+
     }
 
     private fun initView() {

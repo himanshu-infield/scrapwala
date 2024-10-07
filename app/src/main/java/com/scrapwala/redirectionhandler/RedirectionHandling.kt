@@ -26,7 +26,7 @@ fun navigateToOnboardingActivity(context: Activity, bundle: Bundle?) {
 
 
 
-fun navigateToLoginActivity(context: Activity, bundle: Bundle?) {
+fun navigateToLoginActivity(context: Activity, bundle: Bundle?,needFlag: Boolean?) {
     var intent = Intent(context, LoginActivity::class.java)
     bundle?.let {
         intent.putExtras(it)

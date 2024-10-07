@@ -11,7 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -23,13 +27,26 @@ import com.scrapwala.R
 import com.scrapwala.databinding.FragmentProfileBinding
 import com.scrapwala.databinding.FragmentReferEarnBinding
 import com.scrapwala.redirectionhandler.navigateToEditProfileActivity
+import com.scrapwala.redirectionhandler.navigateToLoginActivity
+import com.scrapwala.screens.login.model.LoginViewModel
+import com.scrapwala.screens.login.model.SendOtpRequest
+import com.scrapwala.screens.pickups.model.SuccessResponse
+import com.scrapwala.screens.profile.model.ProfileViewModel
+import com.scrapwala.utils.ErrorResponse
+import com.scrapwala.utils.Preferences
 import com.scrapwala.utils.access_media.ChooseMediaActivity
+import com.scrapwala.utils.extensionclass.hideSpinner
+import com.scrapwala.utils.extensionclass.showCustomToast
+import com.scrapwala.utils.extensionclass.showSpinner
 import java.io.File
 
 class ProfileFragment : Fragment() {
 
 
     private lateinit var binding: FragmentProfileBinding
+
+    private val viewModel: ProfileViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,6 +59,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+
+        observeLogoutResponse()
     }
 
     private fun initView() {
@@ -59,6 +78,24 @@ class ProfileFragment : Fragment() {
             (activity as MainActivity).bindingBase.bottomFragframeLayout.setCurrentItem(1, false)
         }
 
+
+        binding.relLogout.setOnClickListener {
+
+
+
+            var userDataObj= Preferences.getUserDataObj(requireContext())
+
+
+            if(userDataObj!=null){
+                var request=SendOtpRequest()
+                request.mobile=userDataObj.mobile
+
+                showSpinner(context)
+                viewModel.logoutRequest(request)
+            }
+
+        }
+
         binding.llEditProfile.setOnClickListener {
             navigateToEditProfileActivity(requireActivity(),null)
         }
@@ -70,6 +107,38 @@ class ProfileFragment : Fragment() {
             intent.putExtra("maxImageSelection", 1)
             takePictureLauncher?.launch(intent)
         }
+    }
+
+
+
+
+
+    private fun observeLogoutResponse() {
+        viewModel.logOutResponse.observe(this as AppCompatActivity, Observer {
+            when (it) {
+                is SuccessResponse -> {
+
+                    navigateToLoginActivity(this,null)
+
+                    hideSpinner()
+
+
+                }
+
+                is ErrorResponse -> {
+                    if (it.message.isNullOrEmpty().not()) {
+                        showCustomToast(findViewById(android.R.id.content),this,it.message)
+                    }
+                    hideSpinner()
+                }
+
+                is String -> {
+                    showCustomToast(findViewById(android.R.id.content),this,it)
+                    hideSpinner()
+                }
+            }
+
+        })
     }
 
 

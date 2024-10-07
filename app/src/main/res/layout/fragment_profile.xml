@@ -358,6 +358,7 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
+                            android:id="@+id/relLogout"
                             android:layout_height="wrap_content"
                             android:paddingVertical="12dp">
                             <ImageView

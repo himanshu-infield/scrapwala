@@ -5,19 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.scrapwala.databinding.FragmentDashBoardBinding
 import com.scrapwala.redirectionhandler.navigateToCategoryActivity
 import com.scrapwala.redirectionhandler.navigateToEditProfileActivity
 import com.scrapwala.redirectionhandler.navigateToPickupsActivity
 import com.scrapwala.screens.home.adapter.ViewPagerAdapter
+import com.scrapwala.screens.home.model.BannerResponse
+import com.scrapwala.screens.home.model.DashboardViewModel
 import com.scrapwala.screens.login.model.VerifyOtpResponse
+import com.scrapwala.utils.ErrorResponse
 import com.scrapwala.utils.Preferences
+import com.scrapwala.utils.extensionclass.hideSpinner
+import com.scrapwala.utils.extensionclass.showCustomToast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DashBoardFragment : Fragment() {
 
     lateinit var binding: FragmentDashBoardBinding
     private var userDataObj: VerifyOtpResponse.Data? = null
 
+
+
+    private val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +43,54 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        setViewPager()
+
+        getBanners()
+
+        observeBanners()
+    }
+
+    private fun observeBanners() {
+
+            viewModel.bannerResponse .observe(requireActivity() , Observer {
+                when (it) {
+                    is  BannerResponse -> {
+                        hideSpinner()
+
+
+                        if(it.success==1){
+
+                            setViewPager(it)
+                        }
+
+
+
+
+
+
+
+                    }
+
+                    is ErrorResponse -> {
+                        if (it.message.isNullOrEmpty().not()) {
+                            showCustomToast(binding.root,requireActivity(),it.message)
+                        }
+
+                        hideSpinner()
+                    }
+
+                    is String -> {
+                        showCustomToast(binding.root,requireActivity(),it)
+                        hideSpinner()
+                    }
+                }
+
+            })
+        }
+
+
+
+    private fun getBanners() {
+        viewModel.getBanners()
     }
 
     private fun initView() {
@@ -61,9 +120,9 @@ class DashBoardFragment : Fragment() {
         }
     }
 
-    private fun setViewPager() {
-        val items = listOf("Page 1", "Page 2", "Page 3", "Page 4")
-        val adapter = ViewPagerAdapter(items)
+    private fun setViewPager(response: BannerResponse) {
+        val items = response.data
+        val adapter = ViewPagerAdapter(requireActivity(),items)
 
         binding.viewPager.adapter = adapter
         binding.dotsIndicator.attachTo(binding.viewPager)

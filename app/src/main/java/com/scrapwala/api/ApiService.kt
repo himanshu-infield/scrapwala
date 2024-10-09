@@ -2,6 +2,7 @@ package com.scrapwala.api
 
 import android.content.Context
 import com.scrapwala.BuildConfig
+import com.scrapwala.screens.home.model.BannerResponse
 import com.scrapwala.screens.login.model.SendOtpRequest
 import com.scrapwala.screens.login.model.VerifyOtpRequest
 import com.scrapwala.screens.login.model.VerifyOtpResponse
@@ -54,6 +55,11 @@ interface ApiService {
     @GET("/api/pickup/{id}/{statusId}")
     suspend fun pickupList(@Path("id") id: Int,@Path("statusId") statusId: Int):ApiResult<InProgressListResponse>
 
+
+
+
+    @GET("/api/ad")
+    suspend fun getBanners():ApiResult<BannerResponse>
 
 
     @POST("/api/users/verifyOtp")

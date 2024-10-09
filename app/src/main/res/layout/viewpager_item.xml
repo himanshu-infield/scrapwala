@@ -1,41 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
+
+
+<ImageView
+    android:layout_width="match_parent"
     android:layout_marginHorizontal="@dimen/_15dp"
-    android:background="@drawable/rect_viewpager_dashboard"
-    android:orientation="vertical">
 
-    <LinearLayout
+    android:scaleType="fitCenter"
+    android:id="@+id/imgBannerImage"
+    android:adjustViewBounds="true"
+    android:layout_height="match_parent">
+
+</ImageView>
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_toLeftOf="@+id/img">
-        <TextView
-            style="@style/heading_20sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/earn_points_for_sale_trash" />
-        <TextView
-            style="@style/normal_12sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10dp"
-            android:textColor="@color/white"
-            android:text="With you we will help you" />
-
-    </LinearLayout>
-
-
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:src="@mipmap/ic_dustbin" />
+        android:layout_marginHorizontal="@dimen/_15dp"
+        android:background="@drawable/rect_viewpager_dashboard"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_toLeftOf="@+id/img">
+            <TextView
+                style="@style/heading_20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/earn_points_for_sale_trash" />
+            <TextView
+                style="@style/normal_12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:textColor="@color/white"
+                android:text="With you we will help you" />
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/ic_dustbin" />
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

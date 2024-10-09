@@ -35,6 +35,7 @@ import com.scrapwala.screens.login.model.SendOtpRequest
 import com.scrapwala.screens.login.model.VerifyOtpResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.screens.profile.model.ProfileViewModel
+import com.scrapwala.utils.Constant
 import com.scrapwala.utils.ErrorResponse
 import com.scrapwala.utils.Preferences
 import com.scrapwala.utils.access_media.ChooseMediaActivity
@@ -151,6 +152,13 @@ class ProfileFragment : Fragment() {
         viewModel.logOutResponse.observe(requireActivity(), Observer {
             when (it) {
                 is SuccessResponse -> {
+
+                    val settingsSqyrdPref = context?.getSharedPreferences(Constant.PREFERENCE_NAME, 0)
+                    //val settingsFilterPref = context.getSharedPreferences(Constant.FILTERS_NAME, 0)
+                    var editor = settingsSqyrdPref?.edit()
+                    editor?.clear()
+                    editor?.apply()
+
 
                     navigateToLoginActivity(requireActivity(),null)
 

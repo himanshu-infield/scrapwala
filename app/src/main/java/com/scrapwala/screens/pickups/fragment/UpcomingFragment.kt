@@ -63,21 +63,21 @@ class UpcomingFragment : Fragment(), PickUpsListAdapter.PickupListener {
         viewModel.responsePickupsList.observe(requireActivity(), Observer {
             when (it) {
                 is InProgressListResponse -> {
-//                    hideSpinner()
+                    hideSpinner()
                     if (it.success == 1) {
                         renderData(it.data)
                     }
                 }
 
                 is ErrorResponse -> {
-//                    hideSpinner()
+                    hideSpinner()
                     if (it.message.isNullOrEmpty().not()) {
                         showCustomToast(binding.root, requireActivity(), it.message)
                     }
                 }
 
                 is String -> {
-//                    hideSpinner()
+                    hideSpinner()
                     showCustomToast(binding.root, requireActivity(), it)
                 }
             }
@@ -102,7 +102,7 @@ class UpcomingFragment : Fragment(), PickUpsListAdapter.PickupListener {
     }
 
     private fun callApiUpcomingList() {
-//        showSpinner(requireContext())
+        showSpinner(requireContext())
         if (pref?.id!=null){
             viewModel.apiInProgressList(pref?.id!!,0)
         }

@@ -11,7 +11,7 @@ data class CreateCategoryData(
     @SerializedName("date")
     var date: String?,
     @SerializedName("message")
-    var message: String? ="",
+    var message: String? = "",
     @SerializedName("time")
     var time: String?,
     @SerializedName("user_id")
@@ -19,5 +19,8 @@ data class CreateCategoryData(
     @SerializedName("weight")
     var weight: String?,
     @SerializedName("weight_id")
-    var weightId: String? = ""
+    var weightId: String? = "",
+
+    @SerializedName("pickup_id")
+    var pickupId: String? = ""
 )

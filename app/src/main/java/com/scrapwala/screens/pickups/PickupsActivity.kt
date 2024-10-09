@@ -7,23 +7,41 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
+import com.google.gson.Gson
 import com.scrapwala.databinding.ActivityPickupsBinding
 import com.scrapwala.screens.pickups.adapter.PickupPagerAdapter
 import com.scrapwala.screens.pickups.fragment.CompletedFragment
 import com.scrapwala.screens.pickups.fragment.SchedulePickupFragment
 import com.scrapwala.screens.pickups.fragment.UpcomingFragment
+import com.scrapwala.screens.pickups.model.InProgressListResponse
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PickupsActivity : AppCompatActivity() {
-    private var adapter: PickupPagerAdapter?=null
+    public var adapter: PickupPagerAdapter?=null
     lateinit var binding: ActivityPickupsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPickupsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        getExtras()
         initView()
         setUPTabLayout()
+    }
+
+
+    public var editPickupObj: InProgressListResponse.Data? = null
+    private fun getExtras() {
+        if (intent.extras != null) {
+            if (intent.hasExtra("editPickup")) {
+                val editPickupObjString = intent.extras?.getString("editPickup")
+                if (editPickupObjString.isNullOrEmpty().not()) {
+                    editPickupObj = Gson().fromJson(editPickupObjString, InProgressListResponse.Data::class.java)
+                }
+            }
+
+        }
+
     }
 
     private fun setUPTabLayout() {
@@ -79,6 +97,9 @@ class PickupsActivity : AppCompatActivity() {
         }
 
     }
+
+
+
 
 
 

@@ -3,18 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screens.pickups.fragment.CompletedFragment">
+        tools:context=".screens.pickups.fragment.UpcomingFragment">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent">
+            <!-- <include
+                 layout="@layout/layout_upcoming" />
+             <include
+                 layout="@layout/layout_upcoming" />
+             <include
+                 layout="@layout/layout_upcoming" />-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recPickupCom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:itemCount="1"
+                tools:listitem="@layout/layout_upcoming">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/noData"
             style="@style/normal_14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="There is no complete pickup at\nthe moment"
+            android:visibility="gone"
+            android:text="There is no In Completed Pickup at\nthe moment"
             android:textColor="@color/_666666"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

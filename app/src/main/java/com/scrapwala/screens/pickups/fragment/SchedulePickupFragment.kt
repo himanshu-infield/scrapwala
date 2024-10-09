@@ -22,6 +22,7 @@ import com.google.gson.Gson
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
 import com.scrapwala.databinding.LayoutScheduledPickupBinding
+import com.scrapwala.screens.login.model.VerifyOtpResponse
 import com.scrapwala.screens.pickups.PickupsActivity
 import com.scrapwala.screens.pickups.category.ui.CategoryActivity
 import com.scrapwala.screens.pickups.SelectAddressActivity
@@ -32,6 +33,7 @@ import com.scrapwala.screens.pickups.model.InProgressListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
 import com.scrapwala.utils.ErrorResponse
+import com.scrapwala.utils.Preferences
 import com.scrapwala.utils.extensionclass.hideSpinner
 import com.scrapwala.utils.extensionclass.setErrorMessage
 import com.scrapwala.utils.extensionclass.showCustomToast
@@ -47,6 +49,8 @@ class SchedulePickupFragment : Fragment() {
     lateinit var binding: FragmentSchedulePickupBinding
 
     private val viewModel: PickupViewModel by viewModels()
+    private var editPickupObj: InProgressListResponse.Data? = null
+    private var pref: VerifyOtpResponse.Data? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -57,27 +61,44 @@ class SchedulePickupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pref = Preferences.getUserDataObj(requireContext())
         getExtras()
         initView()
         observeApiCreateCategory()
     }
 
 
-    private var editPickupObj: InProgressListResponse.Data? = null
     private fun getExtras() {
-        if (arguments != null) {
-            val editPickupObjString = arguments?.getString("editPickup")
-
-            if (editPickupObjString.isNullOrEmpty().not()) {
-                editPickupObj = Gson().fromJson(editPickupObjString, InProgressListResponse.Data::class.java)
-                setPickupData(editPickupObj)
-            }
+        if ((activity as PickupsActivity).editPickupObj!=null){
+            setPickupData((activity as PickupsActivity).editPickupObj)
         }
-
     }
 
     private fun setPickupData(editPickupObj: InProgressListResponse.Data?) {
         if (editPickupObj != null) {
+            viewModel.weight_id = editPickupObj.weightId?:0
+            viewModel.category_id = editPickupObj.categoryId?:0
+            weightUnt = editPickupObj!!.weightName ?: "Kg"
+
+            binding.slider.value = editPickupObj.weight!!.toFloat()
+
+            binding.edtAddress.setTag(R.id.edt_Address, editPickupObj.addressId ?: 0)
+
+            binding.edtCategory.setText(""+editPickupObj.categoryName)
+            binding.edtWeight.setText(""+editPickupObj.weight+" "+editPickupObj.weightName)
+
+
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val date = inputFormat.parse(editPickupObj.date)
+            val formattedDate = outputFormat.format(date)
+            binding.edtDate.setText(""+formattedDate)
+
+
+            binding.edtTime.setText(""+editPickupObj.time)
+            binding.edtAddress.setText(""+editPickupObj.addressLine1+" "+editPickupObj.addressLine2+" "+editPickupObj.pincode)
+            binding.edtMessage.setText(""+editPickupObj.message)
+
 
         }
     }
@@ -195,12 +216,16 @@ class SchedulePickupFragment : Fragment() {
     }
 
     private fun callApiCreateCategory() {
+
         val addressId = binding.edtAddress.getTag(R.id.edt_Address) as? Int
         val createCategoryData = CreateCategoryData(
-            userId = "1",
-            categoryId = selectCategoryObj?.id.toString(),
+            pickupId = editPickupObj?.id.toString(),
+            userId = pref?.id!!.toString(),
+          //  categoryId = selectCategoryObj?.id.toString(),
+            categoryId = viewModel.category_id.toString(),
             weight = binding.edtWeight.text.toString().filter { it.isDigit() }.trim(),
-            weightId = selectCategoryObj?.weightId.toString(),
+          //  weightId = selectCategoryObj?.weightId.toString(),
+            weightId = viewModel.weight_id.toString(),
             addressId = addressId.toString() ?: "",
             message = binding.edtMessage.text.toString().trim(),
             date = binding.edtDate.text.toString().trim(),
@@ -351,6 +376,8 @@ class SchedulePickupFragment : Fragment() {
                     if (selectCategoryObj != null && selectCategoryObj!!.name.isNullOrEmpty()
                             .not()
                     ) {
+                        viewModel.weight_id = selectCategoryObj?.weightId?:0
+                        viewModel.category_id = selectCategoryObj?.id?:0
                         binding.slider.value = 10F
                         binding.edtWeight.setText("")
                         weightUnt = selectCategoryObj!!.weight ?: "Kg"
@@ -395,6 +422,12 @@ class SchedulePickupFragment : Fragment() {
         }
 
         override fun afterTextChanged(s: Editable) {}
+    }
+
+
+    public fun setValuesOnView(item: InProgressListResponse.Data?) {
+        editPickupObj = item
+        setPickupData(editPickupObj)
     }
 
 }

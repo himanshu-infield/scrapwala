@@ -23,6 +23,10 @@ class PickupViewModel @Inject constructor(
     private val pickupRepository: PickupRepository,
 ) : ViewModel() {
 
+
+    var category_id = 0
+    var weight_id = 0
+
     var cityList: ArrayList<CityListResponse.Data> = ArrayList<CityListResponse.Data>()
     var selectedCityItem: CityListResponse.Data? = null
     private val _showDialog = MutableLiveData<Boolean>()

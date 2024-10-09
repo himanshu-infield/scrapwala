@@ -116,14 +116,12 @@ class UpcomingFragment : Fragment(), PickUpsListAdapter.PickupListener {
 
     override fun onItemSelected(item: InProgressListResponse.Data?, position: Int) {
         if (isAdded && activity is PickupsActivity) {
-            var bundle= Bundle()
-            bundle.putString("editPickup", Gson().toJson(item))
+
             (activity as PickupsActivity).binding.viewpager.currentItem = 0
 
-
-            val fragment = (activity as PickupsActivity).supportFragmentManager
-                .findFragmentByTag("f" + (activity as PickupsActivity).binding.viewpager.currentItem)
-            fragment?.arguments = bundle
+            if((activity as PickupsActivity).adapter!=null){
+                ((activity as PickupsActivity).adapter?.getItem(0) as SchedulePickupFragment).setValuesOnView(item)
+            }
 
 
 

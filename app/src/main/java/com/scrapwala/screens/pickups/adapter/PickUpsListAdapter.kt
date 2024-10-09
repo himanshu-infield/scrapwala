@@ -27,44 +27,50 @@ class PickUpsListAdapter(
 
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val item : InProgressListResponse.Data? = mData?.get(position)
-                viewHolder.binding.success.visibility = View.GONE
-                viewHolder.binding.rlEdit.visibility = View.VISIBLE
+        val item: InProgressListResponse.Data? = mData?.get(position)
 
-
-                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-                val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
-                val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
-                val date = inputFormat.parse(item?.date)
-                val day = dayFormat.format(date)
-                val month = monthFormat.format(date).uppercase()
-                println("Day: $day")   // Output: 30
-                println("Month: $month") // Output: OCT
-                viewHolder.binding.tvMonth.text = ""+month
-                viewHolder.binding.tvDate.text = ""+day
-
-                viewHolder.binding.tvaddressType.text = ""+item?.addressType
-
-                var address = StringBuilder("")
-                if (item?.addressLine1.isNullOrEmpty().not()){
-                    address.append(item?.addressLine1)
-                }
-                if (item?.addressLine2.isNullOrEmpty().not()){
-                    if (address.isNotEmpty()) {
-                        address.append(", ")
-                    }
-                    address.append(""+item?.addressLine2)
-                }
-
-                viewHolder.binding.tvAddressLine1.text = address
-                viewHolder.binding.tvAddressPin.text = item?.pincode
+        if (item?.status == 0) {
+            viewHolder.binding.success.visibility = View.GONE
+            viewHolder.binding.rlEdit.visibility = View.VISIBLE
+        }else{
+            viewHolder.binding.success.visibility = View.VISIBLE
+            viewHolder.binding.rlEdit.visibility = View.GONE
+        }
 
 
 
-                viewHolder.binding.llEdit.setOnClickListener {
-                    listener.onItemSelected(item, position)
-                }
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
+        val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
+        val date = inputFormat.parse(item?.date)
+        val day = dayFormat.format(date)
+        val month = monthFormat.format(date).uppercase()
+        println("Day: $day")   // Output: 30
+        println("Month: $month") // Output: OCT
+        viewHolder.binding.tvMonth.text = "" + month
+        viewHolder.binding.tvDate.text = "" + day
 
+        viewHolder.binding.tvaddressType.text = "" + item?.addressType
+
+        var address = StringBuilder("")
+        if (item?.addressLine1.isNullOrEmpty().not()) {
+            address.append(item?.addressLine1)
+        }
+        if (item?.addressLine2.isNullOrEmpty().not()) {
+            if (address.isNotEmpty()) {
+                address.append(", ")
+            }
+            address.append("" + item?.addressLine2)
+        }
+
+        viewHolder.binding.tvAddressLine1.text = address
+        viewHolder.binding.tvAddressPin.text = item?.pincode
+
+
+
+        viewHolder.binding.llEdit.setOnClickListener {
+            listener.onItemSelected(item, position)
+        }
 
 
     }

@@ -70,6 +70,7 @@ class SchedulePickupFragment : Fragment() {
 
     private fun getExtras() {
         if ((activity as PickupsActivity).editPickupObj!=null){
+            editPickupObj = (activity as PickupsActivity).editPickupObj
             setPickupData((activity as PickupsActivity).editPickupObj)
         }
     }

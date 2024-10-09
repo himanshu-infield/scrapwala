@@ -1,5 +1,6 @@
 package com.scrapwala.screens.pickups.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -113,11 +114,23 @@ class UpcomingFragment : Fragment(), PickUpsListAdapter.PickupListener {
 
     }
 
-    override fun onItemSelected(item: Any?, position: Int) {
+    override fun onItemSelected(item: InProgressListResponse.Data?, position: Int) {
         if (isAdded && activity is PickupsActivity) {
+            var bundle= Bundle()
+            bundle.putString("editPickup", Gson().toJson(item))
             (activity as PickupsActivity).binding.viewpager.currentItem = 0
+
+
+            val fragment = (activity as PickupsActivity).supportFragmentManager
+                .findFragmentByTag("f" + (activity as PickupsActivity).binding.viewpager.currentItem)
+            fragment?.arguments = bundle
+
+
+
         }else{
-            navigateToPickupsActivity(requireActivity(),null,true)
+            var bundle= Bundle()
+            bundle.putString("editPickup", Gson().toJson(item))
+            navigateToPickupsActivity(requireActivity(),bundle,true)
         }
     }
 }

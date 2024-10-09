@@ -1,6 +1,5 @@
 package com.scrapwala.screens.pickups.fragment
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
@@ -16,13 +15,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
-import com.moengage.core.internal.utils.showToast
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
 import com.scrapwala.databinding.LayoutScheduledPickupBinding
@@ -30,9 +26,9 @@ import com.scrapwala.screens.pickups.PickupsActivity
 import com.scrapwala.screens.pickups.category.ui.CategoryActivity
 import com.scrapwala.screens.pickups.SelectAddressActivity
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
-import com.scrapwala.screens.pickups.model.AddAddressData
 import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.screens.pickups.model.CreateCategoryData
+import com.scrapwala.screens.pickups.model.InProgressListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
 import com.scrapwala.utils.ErrorResponse
@@ -61,13 +57,33 @@ class SchedulePickupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getExtras()
         initView()
         observeApiCreateCategory()
     }
 
 
+    private var editPickupObj: InProgressListResponse.Data? = null
+    private fun getExtras() {
+        if (arguments != null) {
+            val editPickupObjString = arguments?.getString("editPickup")
+
+            if (editPickupObjString.isNullOrEmpty().not()) {
+                editPickupObj = Gson().fromJson(editPickupObjString, InProgressListResponse.Data::class.java)
+                setPickupData(editPickupObj)
+            }
+        }
+
+    }
+
+    private fun setPickupData(editPickupObj: InProgressListResponse.Data?) {
+        if (editPickupObj != null) {
+
+        }
+    }
+
     private fun initView() {
-       // binding.edtWeight.addTextChangedListener(weightTextWatcher)
+        // binding.edtWeight.addTextChangedListener(weightTextWatcher)
         binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 val intent = Intent(requireContext(), CategoryActivity::class.java)
@@ -93,13 +109,11 @@ class SchedulePickupFragment : Fragment() {
 //        binding.edtWeight.setText("$sliderValue $weightUnt")
 
 
-
-
-
         binding.btnSubmit.setOnClickListener {
             if (isValidate()) {
                 callApiCreateCategory()
-                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(requireView().windowToken, 0)
 
             }
@@ -120,31 +134,31 @@ class SchedulePickupFragment : Fragment() {
         binding.edtDate.setOnClickListener {
             showDatePickerDialog()
         }
-       /* binding.edtTime.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
+        /* binding.edtTime.setOnClickListener {
+             val calendar = Calendar.getInstance()
+             val hour = calendar.get(Calendar.HOUR_OF_DAY)
+             val minute = calendar.get(Calendar.MINUTE)
 
-            val timePickerDialog = TimePickerDialog(
-                requireContext(),
-                { _, selectedHour, selectedMinute ->
-                    // Determine AM/PM
-                    val amPm: String = if (selectedHour < 12) "AM" else "PM"
-                    // Convert selectedHour to 12-hour format
-                    val hourIn12Format = if (selectedHour % 12 == 0) 12 else selectedHour % 12
-                    // Format the time string
-                    val formattedTime =
-                        String.format("%02d:%02d %s", hourIn12Format, selectedMinute, amPm)
-                    // Set the time to your TextView (or EditText)
-                    binding.edtTime.setText(formattedTime)
-                },
-                hour,
-                minute,
-                false // Set false for 12-hour format (AM/PM)
-            )
-            timePickerDialog.show()
+             val timePickerDialog = TimePickerDialog(
+                 requireContext(),
+                 { _, selectedHour, selectedMinute ->
+                     // Determine AM/PM
+                     val amPm: String = if (selectedHour < 12) "AM" else "PM"
+                     // Convert selectedHour to 12-hour format
+                     val hourIn12Format = if (selectedHour % 12 == 0) 12 else selectedHour % 12
+                     // Format the time string
+                     val formattedTime =
+                         String.format("%02d:%02d %s", hourIn12Format, selectedMinute, amPm)
+                     // Set the time to your TextView (or EditText)
+                     binding.edtTime.setText(formattedTime)
+                 },
+                 hour,
+                 minute,
+                 false // Set false for 12-hour format (AM/PM)
+             )
+             timePickerDialog.show()
 
-        }*/
+         }*/
 
         binding.edtTime.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -160,7 +174,12 @@ class SchedulePickupFragment : Fragment() {
                     val currentSeconds = Calendar.getInstance().get(Calendar.SECOND)
 
                     // Format the time as "HH:mm:ss" (24-hour format)
-                    val formattedTime = String.format("%02d:%02d:%02d", selectedHour, selectedMinute, currentSeconds)
+                    val formattedTime = String.format(
+                        "%02d:%02d:%02d",
+                        selectedHour,
+                        selectedMinute,
+                        currentSeconds
+                    )
 
                     // Set the time to your EditText
                     binding.edtTime.setText(formattedTime)
@@ -198,27 +217,27 @@ class SchedulePickupFragment : Fragment() {
             when (it) {
                 is SuccessResponse -> {
                     hideSpinner()
-                    if (it.success==1){
-                binding.edtCategory.setText("")
-                binding.edtWeight.setText("")
-                binding.edtDate.setText("")
-                binding.edtTime.setText("")
-                binding.edtAddress.setText("")
-                binding.edtMessage.setText("")
-                openDialog()
+                    if (it.success == 1) {
+                        binding.edtCategory.setText("")
+                        binding.edtWeight.setText("")
+                        binding.edtDate.setText("")
+                        binding.edtTime.setText("")
+                        binding.edtAddress.setText("")
+                        binding.edtMessage.setText("")
+                        openDialog()
                     }
                 }
 
                 is ErrorResponse -> {
                     hideSpinner()
                     if (it.message.isNullOrEmpty().not()) {
-                        showCustomToast(binding.root,requireActivity(),it.message)
+                        showCustomToast(binding.root, requireActivity(), it.message)
                     }
                 }
 
                 is String -> {
                     hideSpinner()
-                    showCustomToast(binding.root,requireActivity(),it)
+                    showCustomToast(binding.root, requireActivity(), it)
                 }
             }
 
@@ -329,10 +348,12 @@ class SchedulePickupFragment : Fragment() {
                 var item = data?.getStringExtra("clickedItem")
                 if (item.isNullOrEmpty().not()) {
                     selectCategoryObj = Gson().fromJson(item, CategoryResponse.Data::class.java)
-                    if (selectCategoryObj != null && selectCategoryObj!!.name.isNullOrEmpty().not()) {
+                    if (selectCategoryObj != null && selectCategoryObj!!.name.isNullOrEmpty()
+                            .not()
+                    ) {
                         binding.slider.value = 10F
-                       binding.edtWeight.setText("")
-                        weightUnt = selectCategoryObj!!.weight?:"Kg"
+                        binding.edtWeight.setText("")
+                        weightUnt = selectCategoryObj!!.weight ?: "Kg"
                         setCatgory(selectCategoryObj!!.name ?: "")
                     }
                 }
@@ -357,7 +378,6 @@ class SchedulePickupFragment : Fragment() {
         }
 
 
-
     /**text watcher convert KG getFormattedPrice**/
     private val weightTextWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -369,7 +389,7 @@ class SchedulePickupFragment : Fragment() {
                 binding.edtWeight.setText(newText)
                 binding.edtWeight.setSelection(newText.length - 3)
                 binding.edtWeight.addTextChangedListener(this)
-            }else {
+            } else {
                 binding.edtWeight.setText("")
             }
         }

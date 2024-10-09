@@ -13,7 +13,7 @@ import java.util.Locale
 
 class PickUpsListAdapter(
     private val context: Context,
-    private val mData: List<Any?>,
+    private val mData: List<InProgressListResponse.Data?>,
     private val listener: PickupListener
 ) : RecyclerView.Adapter<PickUpsListAdapter.ViewHolder>() {
 
@@ -27,8 +27,7 @@ class PickUpsListAdapter(
 
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        when (val item = mData[position]) {
-            is InProgressListResponse.Data -> {
+        val item : InProgressListResponse.Data? = mData?.get(position)
                 viewHolder.binding.success.visibility = View.GONE
                 viewHolder.binding.rlEdit.visibility = View.VISIBLE
 
@@ -36,7 +35,7 @@ class PickUpsListAdapter(
                 val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
                 val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
                 val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
-                val date = inputFormat.parse(item.date)
+                val date = inputFormat.parse(item?.date)
                 val day = dayFormat.format(date)
                 val month = monthFormat.format(date).uppercase()
                 println("Day: $day")   // Output: 30
@@ -44,13 +43,13 @@ class PickUpsListAdapter(
                 viewHolder.binding.tvMonth.text = ""+month
                 viewHolder.binding.tvDate.text = ""+day
 
-                viewHolder.binding.tvaddressType.text = ""+item.addressType
+                viewHolder.binding.tvaddressType.text = ""+item?.addressType
 
                 var address = StringBuilder("")
-                if (item.addressLine1.isNullOrEmpty().not()){
+                if (item?.addressLine1.isNullOrEmpty().not()){
                     address.append(item?.addressLine1)
                 }
-                if (item.addressLine2.isNullOrEmpty().not()){
+                if (item?.addressLine2.isNullOrEmpty().not()){
                     if (address.isNotEmpty()) {
                         address.append(", ")
                     }
@@ -58,7 +57,7 @@ class PickUpsListAdapter(
                 }
 
                 viewHolder.binding.tvAddressLine1.text = address
-                viewHolder.binding.tvAddressPin.text = item.pincode
+                viewHolder.binding.tvAddressPin.text = item?.pincode
 
 
 
@@ -66,12 +65,6 @@ class PickUpsListAdapter(
                     listener.onItemSelected(item, position)
                 }
 
-            }
-//            is InProgressListResponse -> {
-//
-//
-//            }
-        }
 
 
     }
@@ -81,6 +74,6 @@ class PickUpsListAdapter(
     }
 
     interface PickupListener {
-        fun onItemSelected(item: Any?, position: Int)
+        fun onItemSelected(item: InProgressListResponse.Data?, position: Int)
     }
 }

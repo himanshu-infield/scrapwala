@@ -121,7 +121,10 @@ class DashBoardFragment : Fragment() {
     }
 
     private fun setViewPager(response: BannerResponse) {
-        val items = response.data
+//        val items = response.data
+
+        val items = listOf("Page 1", "Page 2", "Page 3", "Page 4")
+
         val adapter = ViewPagerAdapter(requireActivity(),items)
 
         binding.viewPager.adapter = adapter

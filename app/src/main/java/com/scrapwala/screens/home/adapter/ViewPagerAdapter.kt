@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.scrapwala.R
 import com.scrapwala.screens.home.model.BannerResponse
 
-class ViewPagerAdapter(var context:FragmentActivity,private val items: List<BannerResponse.Data>?) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
+class ViewPagerAdapter(var context:FragmentActivity,private val items: List<String>?) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
        // val textView: TextView = itemView.findViewById(R.id.textView)

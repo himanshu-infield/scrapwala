@@ -13,18 +13,26 @@ import com.scrapwala.screens.pickups.model.CityListResponse
 import com.scrapwala.screens.pickups.model.CreateCategoryData
 import com.scrapwala.screens.pickups.model.InProgressListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
+import com.scrapwala.screens.profile.model.UpdateProfileResponse
 import com.scrapwala.utils.ApiResult
 import com.scrapwala.utils.Constant
 import com.scrapwala.utils.network.NetworkResultCallAdapterFactory
 import okhttp3.Interceptor
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.HeaderMap
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.PartMap
 import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
@@ -50,6 +58,27 @@ interface ApiService {
 
     @POST("/api/pickup/create")
     suspend fun createCategory(@Body request: CreateCategoryData):ApiResult<SuccessResponse>
+
+    @Multipart
+    @POST("/api/users/update")
+    suspend fun saveUser(
+        @Header("Authorization") auth: String,
+        @PartMap map: HashMap<String, RequestBody>,
+    ): ApiResult<UpdateProfileResponse>
+
+    @Multipart
+    @POST("api/users/update")
+    suspend fun saveUserData(
+        @Header("Authorization") token: String,
+        @Part("id") id: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("mobile") mobile: RequestBody,
+        @Part("city") city: RequestBody?,
+        @Part image: MultipartBody.Part?
+    ): ApiResult<UpdateProfileResponse>
+
 
 
     @GET("/api/pickup/{id}/{statusId}")

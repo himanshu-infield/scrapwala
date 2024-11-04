@@ -3,16 +3,17 @@ package com.scrapwala.screens.profile
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,20 +22,19 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.scrapwala.MainActivity
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentProfileBinding
-import com.scrapwala.databinding.FragmentReferEarnBinding
-import com.scrapwala.redirectionhandler.navigateToAddAdddress
 import com.scrapwala.redirectionhandler.navigateToEditProfileActivity
 import com.scrapwala.redirectionhandler.navigateToLoginActivity
 import com.scrapwala.redirectionhandler.navigateToSelectAddress
-import com.scrapwala.screens.login.model.LoginViewModel
 import com.scrapwala.screens.login.model.SendOtpRequest
 import com.scrapwala.screens.login.model.VerifyOtpResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
-import com.scrapwala.screens.profile.model.ProfileViewModel
+import com.scrapwala.screens.profile.model.UpdateProfileResponse
+import com.scrapwala.screens.profile.viewmodel.ProfileViewModel
 import com.scrapwala.utils.Constant
 import com.scrapwala.utils.ErrorResponse
 import com.scrapwala.utils.Preferences
@@ -43,7 +43,14 @@ import com.scrapwala.utils.extensionclass.hideSpinner
 import com.scrapwala.utils.extensionclass.showCustomToast
 import com.scrapwala.utils.extensionclass.showSpinner
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.util.Locale
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -53,6 +60,10 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
 
     private val viewModel: ProfileViewModel by viewModels()
+    private var pref: VerifyOtpResponse.Data? = null
+    private var token: String = ""
+    private var compressedFile: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,11 +76,48 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pref = Preferences.getUserDataObj(requireContext())
+        token = Preferences.getUserToken(requireContext())
         initView()
 
 
-
+        setUserData()
         observeLogoutResponse()
+        observeSaveUserResponse()
+    }
+
+    private fun observeSaveUserResponse() {
+        viewModel.saveUserResponse.observe(requireActivity(), Observer {
+            when (it) {
+                is UpdateProfileResponse -> {
+                    hideSpinner()
+//                    it.data.let {
+//                        MyPefDatabase.saveInDB(
+//                            this@ProfileActivity,
+//                            "profilePicture",
+//                            "" + uploadUserDocumentResponse.documentName
+//                        )
+                        renderProfilePic("" + compressedFile)
+
+//                    }
+
+                }
+
+                is ErrorResponse -> {
+                    hideSpinner()
+                    if (it.message.isNullOrEmpty().not()) {
+                        showCustomToast(binding.root,requireActivity(),it.message)
+                    }
+
+                }
+
+                is String -> {
+                    hideSpinner()
+                    showCustomToast(binding.root,requireActivity(),it)
+                }
+            }
+
+        })
     }
 
     private fun initView() {
@@ -77,8 +125,6 @@ class ProfileFragment : Fragment() {
         userDataObj= Preferences.getUserDataObj(requireContext())
 
 
-
-        setUserData()
 
         binding.toolbar.tvHeading.text = getString(R.string.your_profile)
         binding.toolbar.imgBack.setOnClickListener{
@@ -128,6 +174,52 @@ class ProfileFragment : Fragment() {
 
     private fun setUserData() {
         if(userDataObj!=null){
+
+            if (userDataObj?.image.toString().isNullOrEmpty().not()) {
+                val requestOptions = RequestOptions()
+                val listenerImage: RequestListener<Drawable?> = object :
+                    RequestListener<Drawable?> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable?>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        if (userDataObj?.name.toString().isNullOrEmpty().not()) {
+                            binding.imgProfile.visibility = View.GONE
+                            binding.txtImgProfile.visibility = View.VISIBLE
+                            val firstLetter = userDataObj?.name?.firstOrNull()?.toUpperCase() ?: ""
+                            binding.txtImgProfile.text = firstLetter.toString()
+                        }
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: Target<Drawable?>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        // onResourceReady implementation
+                        return false
+                    }
+                }
+                binding.imgProfile.visibility = View.VISIBLE
+                binding.txtImgProfile.visibility = View.GONE
+                Glide.with(this).load(userDataObj?.image).listener(listenerImage).apply(requestOptions)
+                    .fitCenter().into(binding.imgProfile)
+            } else {
+                if (userDataObj?.name.toString().isNullOrEmpty().not()) {
+                    binding.imgProfile.visibility = View.GONE
+                    binding.txtImgProfile.visibility = View.VISIBLE
+                    val firstLetter = userDataObj?.name?.firstOrNull()?.toUpperCase() ?: ""
+                    binding.txtImgProfile.text = firstLetter.toString()
+                }
+            }
+
+
+
             if(userDataObj?.name.isNullOrEmpty().not()){
                 binding.txtUserName.setText(userDataObj?.name)
             }
@@ -193,12 +285,63 @@ class ProfileFragment : Fragment() {
                     arr?.forEach {
                         val file = File(it)
                        println("filepath $file")
-                       // uploadProfilePic(File(it))
-                        renderProfilePic(it)
+                        compressedFile = (it)
+                        uploadProfilePic(File(it))
+                      //  renderProfilePic(it)
                     }
                 }
             }
         }
+
+
+
+    private fun uploadProfilePic(compressedFile: File?) {
+        print("file path: $compressedFile")
+        var imageUri = Uri.fromFile(compressedFile)
+        var imageMimeType = MimeTypeMap.getSingleton()
+            .getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(imageUri.toString()))!!
+        if (imageMimeType.isEmpty()) {
+            imageMimeType = "image/jpeg"
+        }
+
+        val id: RequestBody = pref?.id!!.toString().toRequestBody("text/plain".toMediaType())
+        val name: RequestBody = pref?.name!!.toRequestBody("text/plain".toMediaType())
+        val gender: RequestBody = pref?.gender!!.toRequestBody("text/plain".toMediaType())
+        val email: RequestBody = pref?.email!!.toRequestBody("text/plain".toMediaType())
+        val mobile: RequestBody = pref?.mobile!!.toRequestBody("text/plain".toMediaType())
+        val city: RequestBody = pref?.city!!.toRequestBody("text/plain".toMediaType())
+
+        val coverPicBody = compressedFile?.asRequestBody(imageMimeType.toMediaType())!!
+
+
+
+//        val imageFile = File(this.compressedFile)
+//        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), imageFile)
+//        val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, requestFile)
+
+
+
+        var hashMap: HashMap<String, RequestBody> = hashMapOf()
+        hashMap.put("id", id)
+        hashMap.put("name", name)
+        hashMap.put("gender", gender)
+        hashMap.put("email", email)
+        hashMap.put("mobile", mobile)
+        hashMap.put("city", city)
+        hashMap.put(
+            String.format(Locale.getDefault(), "image\"; filename=\"%s", compressedFile?.name),
+            coverPicBody
+        )
+
+        showSpinner(context)
+        viewModel.saveUserRequest("Bearer $token", hashMap)
+
+//        showSpinner(context)
+//        viewModel.saveUserRequest("Bearer $token", id, name, gender, email, mobile, city, imagePart)
+    }
+
+
+
 
     private fun renderProfilePic(path: String) {
         binding.imgProfile.visibility = View.VISIBLE

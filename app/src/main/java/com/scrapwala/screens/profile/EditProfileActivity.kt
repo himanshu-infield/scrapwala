@@ -45,6 +45,7 @@ import java.io.File
 @AndroidEntryPoint
 class EditProfileActivity : AppCompatActivity() {
 
+
     lateinit var binding: ActivityEditProfileBinding
     private var pref: VerifyOtpResponse.Data? = null
     private var token: String = ""

@@ -81,6 +81,7 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <TextView
+                                android:id="@+id/changeName"
                                 style="@style/normal_11sp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -132,6 +133,7 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <TextView
+                                android:id="@+id/changeMob"
                                 style="@style/normal_11sp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -254,8 +256,8 @@
 
                                 android:layout_centerInParent="true"
                                 android:adjustViewBounds="true"
-                                android:background="@drawable/image"
-                                android:visibility="gone"
+                                android:background="@mipmap/placeholder_image"
+                                android:visibility="visible"
                                 app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
 
                             <TextView

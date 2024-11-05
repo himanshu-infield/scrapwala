@@ -65,6 +65,13 @@ class EditProfileActivity : AppCompatActivity() {
         disableAllInputField()
     }
 
+    override fun onResume() {
+        super.onResume()
+        pref = Preferences.getUserDataObj(this)
+        token = Preferences.getUserToken(this)
+        setUserData()
+    }
+
 
     private fun setCityPhone() {
         binding.edtCity.setOnTouchListener(View.OnTouchListener { view, motionEvent ->
@@ -226,7 +233,8 @@ class EditProfileActivity : AppCompatActivity() {
             }
             binding.imgProfile.visibility = View.VISIBLE
             binding.txtImgProfile.visibility = View.GONE
-            Glide.with(this).load(pref?.image).listener(listenerImage).apply(requestOptions)
+
+            Glide.with(this).load("https://treestructure.onrender.com/image/"+pref?.image).listener(listenerImage).apply(requestOptions)
                 .fitCenter().into(binding.imgProfile)
         } else {
             binding.imgProfile.visibility = View.GONE

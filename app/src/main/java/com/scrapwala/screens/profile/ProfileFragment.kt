@@ -24,6 +24,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.google.gson.Gson
 import com.scrapwala.MainActivity
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentProfileBinding
@@ -76,30 +77,29 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pref = Preferences.getUserDataObj(requireContext())
-        token = Preferences.getUserToken(requireContext())
+
         initView()
-
-
-        setUserData()
         observeLogoutResponse()
         observeSaveUserResponse()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        pref = Preferences.getUserDataObj(requireContext())
+        token = Preferences.getUserToken(requireContext())
+        setUserData()
     }
 
     private fun observeSaveUserResponse() {
         viewModel.saveUserResponse.observe(requireActivity(), Observer {
             when (it) {
-                is UpdateProfileResponse -> {
+                is VerifyOtpResponse -> {
                     hideSpinner()
-//                    it.data.let {
-//                        MyPefDatabase.saveInDB(
-//                            this@ProfileActivity,
-//                            "profilePicture",
-//                            "" + uploadUserDocumentResponse.documentName
-//                        )
+                    if(it.data!=null){
+                        Preferences.setUserData(requireContext(), Gson().toJson(it.data))
+                    }
                         renderProfilePic("" + compressedFile)
 
-//                    }
 
                 }
 
@@ -207,7 +207,7 @@ class ProfileFragment : Fragment() {
                 }
                 binding.imgProfile.visibility = View.VISIBLE
                 binding.txtImgProfile.visibility = View.GONE
-                Glide.with(this).load(userDataObj?.image).listener(listenerImage).apply(requestOptions)
+                Glide.with(this).load("https://treestructure.onrender.com/image/"+userDataObj?.image).listener(listenerImage).apply(requestOptions)
                     .fitCenter().into(binding.imgProfile)
             } else {
                 if (userDataObj?.name.toString().isNullOrEmpty().not()) {

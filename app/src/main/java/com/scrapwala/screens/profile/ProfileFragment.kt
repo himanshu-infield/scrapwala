@@ -85,8 +85,7 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        pref = Preferences.getUserDataObj(requireContext())
-        token = Preferences.getUserToken(requireContext())
+
         setUserData()
     }
 
@@ -99,6 +98,7 @@ class ProfileFragment : Fragment() {
                         Preferences.setUserData(requireContext(), Gson().toJson(it.data))
                     }
                         renderProfilePic("" + compressedFile)
+                        setUserData()
 
 
                 }
@@ -173,6 +173,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setUserData() {
+        pref = Preferences.getUserDataObj(requireContext())
+        token = Preferences.getUserToken(requireContext())
         if(userDataObj!=null){
 
             if (userDataObj?.image.toString().isNullOrEmpty().not()) {
@@ -374,7 +376,7 @@ class ProfileFragment : Fragment() {
                         target: Target<Bitmap?>,
                         isFirstResource: Boolean
                     ): Boolean {
-                        binding.imgProfile.setImageResource(R.drawable.menu_user)
+                        binding.imgProfile.setImageResource(R.mipmap.placeholder_image)
                         binding.imgProfile.setColorFilter(
                             ContextCompat.getColor(
                                 requireContext(),
@@ -394,7 +396,7 @@ class ProfileFragment : Fragment() {
                         return false
                     }
                 })
-                .error(R.drawable.menu_user)
+                .error(R.mipmap.placeholder_image)
                 .into(binding.imgProfile)
         }
     }

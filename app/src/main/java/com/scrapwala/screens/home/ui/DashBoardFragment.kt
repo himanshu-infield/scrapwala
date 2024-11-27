@@ -154,7 +154,7 @@ class DashBoardFragment : Fragment() {
                 }
                 binding.imgProfile.visibility = View.VISIBLE
                 binding.txtImgProfile.visibility = View.GONE
-                Glide.with(this).load(userDataObj?.image).listener(listenerImage).apply(requestOptions)
+                Glide.with(this).load("https://treestructure.onrender.com/image/"+userDataObj?.image).listener(listenerImage).apply(requestOptions)
                     .fitCenter().into(binding.imgProfile)
             } else {
                 if (userDataObj?.name.toString().isNullOrEmpty().not()) {

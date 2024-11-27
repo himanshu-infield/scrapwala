@@ -4,12 +4,14 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.webkit.MimeTypeMap
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -17,6 +19,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
@@ -26,6 +30,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import com.scrapwala.R
 import com.scrapwala.databinding.ActivityEditProfileBinding
 import com.scrapwala.databinding.DialogGenericsearchBinding
@@ -34,13 +39,22 @@ import com.scrapwala.screens.pickups.adapter.CityListAdapter
 import com.scrapwala.screens.pickups.adapter.ClickedCityItemCallback
 import com.scrapwala.screens.pickups.model.CityListResponse
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
+import com.scrapwala.screens.profile.viewmodel.ProfileViewModel
 import com.scrapwala.utils.ErrorResponse
 import com.scrapwala.utils.Preferences
 import com.scrapwala.utils.access_media.ChooseMediaActivity
 import com.scrapwala.utils.extensionclass.hideKeyboard
+import com.scrapwala.utils.extensionclass.hideSpinner
 import com.scrapwala.utils.extensionclass.setupFullHeight
+import com.scrapwala.utils.extensionclass.showCustomToast
+import com.scrapwala.utils.extensionclass.showSpinner
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.util.Locale
 
 @AndroidEntryPoint
 class EditProfileActivity : AppCompatActivity() {
@@ -50,6 +64,8 @@ class EditProfileActivity : AppCompatActivity() {
     private var pref: VerifyOtpResponse.Data? = null
     private var token: String = ""
     private val viewModelCity: PickupViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
+    private var compressedFile: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
@@ -63,6 +79,46 @@ class EditProfileActivity : AppCompatActivity() {
         callCityApi()
 
         disableAllInputField()
+
+        observeSaveUserResponse()
+    }
+
+
+    private fun observeSaveUserResponse() {
+        viewModel.saveUserResponse.observe(this, Observer {
+            when (it) {
+                is VerifyOtpResponse -> {
+                    hideSpinner()
+                    if(it.data!=null){
+                        Preferences.setUserData(this, Gson().toJson(it.data))
+                    }
+                    renderProfilePic("" + compressedFile)
+
+
+                }
+
+                is ErrorResponse -> {
+                    hideSpinner()
+                    if (it.message.isNullOrEmpty().not()) {
+                        showCustomToast(binding.root,this,it.message)
+                    }
+
+                }
+
+                is String -> {
+                    hideSpinner()
+                    showCustomToast(binding.root,this,it)
+                }
+            }
+
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        pref = Preferences.getUserDataObj(this)
+        token = Preferences.getUserToken(this)
+        setUserData()
     }
 
 
@@ -195,6 +251,8 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun setUserData() {
+        pref = Preferences.getUserDataObj(this)
+        token = Preferences.getUserToken(this)
         if (pref?.image.toString().isNullOrEmpty().not()) {
             val requestOptions = RequestOptions()
             val listenerImage: RequestListener<Drawable?> = object : RequestListener<Drawable?> {
@@ -226,7 +284,8 @@ class EditProfileActivity : AppCompatActivity() {
             }
             binding.imgProfile.visibility = View.VISIBLE
             binding.txtImgProfile.visibility = View.GONE
-            Glide.with(this).load(pref?.image).listener(listenerImage).apply(requestOptions)
+
+            Glide.with(this).load("https://treestructure.onrender.com/image/"+pref?.image).listener(listenerImage).apply(requestOptions)
                 .fitCenter().into(binding.imgProfile)
         } else {
             binding.imgProfile.visibility = View.GONE
@@ -299,13 +358,60 @@ class EditProfileActivity : AppCompatActivity() {
                     arr?.forEach {
                         val file = File(it)
                         println("filepath $file")
-                        // uploadProfilePic(File(it))
-                        renderProfilePic(it)
+                        compressedFile = (it)
+                         uploadProfilePic(File(it))
+//                        renderProfilePic(it)
                     }
                 }
             }
         }
 
+
+
+    private fun uploadProfilePic(compressedFile: File?) {
+        print("file path: $compressedFile")
+        var imageUri = Uri.fromFile(compressedFile)
+        var imageMimeType = MimeTypeMap.getSingleton()
+            .getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(imageUri.toString()))!!
+        if (imageMimeType.isEmpty()) {
+            imageMimeType = "image/jpeg"
+        }
+
+        val id: RequestBody = pref?.id!!.toString().toRequestBody("text/plain".toMediaType())
+        val name: RequestBody = pref?.name!!.toRequestBody("text/plain".toMediaType())
+        val gender: RequestBody = pref?.gender!!.toRequestBody("text/plain".toMediaType())
+        val email: RequestBody = pref?.email!!.toRequestBody("text/plain".toMediaType())
+        val mobile: RequestBody = pref?.mobile!!.toRequestBody("text/plain".toMediaType())
+        val city: RequestBody = pref?.city!!.toRequestBody("text/plain".toMediaType())
+
+        val coverPicBody = compressedFile?.asRequestBody(imageMimeType.toMediaType())!!
+
+
+
+//        val imageFile = File(this.compressedFile)
+//        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), imageFile)
+//        val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, requestFile)
+
+
+
+        var hashMap: HashMap<String, RequestBody> = hashMapOf()
+        hashMap.put("id", id)
+        hashMap.put("name", name)
+        hashMap.put("gender", gender)
+        hashMap.put("email", email)
+        hashMap.put("mobile", mobile)
+        hashMap.put("city", city)
+        hashMap.put(
+            String.format(Locale.getDefault(), "image\"; filename=\"%s", compressedFile?.name),
+            coverPicBody
+        )
+
+        showSpinner(this)
+        viewModel.saveUserRequest("Bearer $token", hashMap)
+
+//        showSpinner(context)
+//        viewModel.saveUserRequest("Bearer $token", id, name, gender, email, mobile, city, imagePart)
+    }
 
     private fun renderProfilePic(path: String) {
         binding.imgProfile.visibility = View.VISIBLE
@@ -338,7 +444,7 @@ class EditProfileActivity : AppCompatActivity() {
                         target: Target<Bitmap?>,
                         isFirstResource: Boolean
                     ): Boolean {
-                        binding.imgProfile.setImageResource(R.drawable.menu_user)
+                        binding.imgProfile.setImageResource(R.mipmap.placeholder_image)
                         binding.imgProfile.setColorFilter(
                             ContextCompat.getColor(
                                 this@EditProfileActivity,
@@ -358,7 +464,7 @@ class EditProfileActivity : AppCompatActivity() {
                         return false
                     }
                 })
-                .error(R.drawable.menu_user)
+                .error(R.mipmap.placeholder_image)
                 .into(binding.imgProfile)
         }
     }

@@ -64,7 +64,7 @@ interface ApiService {
     suspend fun saveUser(
         @Header("Authorization") auth: String,
         @PartMap map: HashMap<String, RequestBody>,
-    ): ApiResult<UpdateProfileResponse>
+    ): ApiResult<VerifyOtpResponse>
 
     @Multipart
     @POST("api/users/update")

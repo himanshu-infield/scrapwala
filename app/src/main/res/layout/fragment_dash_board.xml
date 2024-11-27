@@ -70,16 +70,17 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.google.android.material.imageview.ShapeableImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-android:adjustViewBounds="true"
-
-                                android:background="@drawable/image"
-                                android:scaleType="centerCrop"
+                                android:id="@+id/imgProfile"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_centerInParent="true"
+                                android:adjustViewBounds="true"
+                                android:background="@mipmap/placeholder_image"
                                 android:visibility="visible"
                                 app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
 
                             <TextView
+                                android:id="@+id/txtImgProfile"
                                 style="@style/semibold_14sp"
                                 android:textColor="@color/black"
                                 android:layout_centerInParent="true"

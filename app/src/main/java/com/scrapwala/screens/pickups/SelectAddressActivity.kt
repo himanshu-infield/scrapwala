@@ -48,7 +48,7 @@ class SelectAddressActivity: AppCompatActivity() {
 
 
         setUpToolbar()
-        binding.txtAddAdddress.setOnClickListener {
+        binding.txtAddAddress.setOnClickListener {
             navigateToAddAdddress(this,null)
         }
 

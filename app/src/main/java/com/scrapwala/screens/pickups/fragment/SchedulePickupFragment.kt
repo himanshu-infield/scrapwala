@@ -14,23 +14,31 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.scrapwala.R
 import com.scrapwala.databinding.FragmentSchedulePickupBinding
 import com.scrapwala.databinding.LayoutScheduledPickupBinding
+import com.scrapwala.databinding.LayoutWasteCategoryBinding
 import com.scrapwala.screens.login.model.VerifyOtpResponse
 import com.scrapwala.screens.pickups.PickupsActivity
 import com.scrapwala.screens.pickups.category.ui.CategoryActivity
 import com.scrapwala.screens.pickups.SelectAddressActivity
+import com.scrapwala.screens.pickups.adapter.WasteTypeAdapter
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
 import com.scrapwala.screens.pickups.model.AddressListResponse
 import com.scrapwala.screens.pickups.model.CreateCategoryData
 import com.scrapwala.screens.pickups.model.InProgressListResponse
 import com.scrapwala.screens.pickups.model.SuccessResponse
+import com.scrapwala.screens.pickups.model.WasteTypeCategoryModel
 import com.scrapwala.screens.pickups.viewmodel.PickupViewModel
 import com.scrapwala.utils.ErrorResponse
 import com.scrapwala.utils.Preferences
@@ -45,12 +53,13 @@ import java.util.Date
 import java.util.Locale
 
 @AndroidEntryPoint
-class SchedulePickupFragment : Fragment() {
+class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
     lateinit var binding: FragmentSchedulePickupBinding
-
     private val viewModel: PickupViewModel by viewModels()
     private var editPickupObj: InProgressListResponse.Data? = null
     private var pref: VerifyOtpResponse.Data? = null
+    private val wasteTypeCategoryModel = mutableListOf<WasteTypeCategoryModel>()
+    private lateinit var wasteTypeAdapter: WasteTypeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -62,9 +71,27 @@ class SchedulePickupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pref = Preferences.getUserDataObj(requireContext())
+        addDefaultWasteCategory()
         getExtras()
         initView()
         observeApiCreateCategory()
+    }
+
+    private fun addDefaultWasteCategory() {
+//        wasteTypeCategoryModel.add(WasteTypeCategoryModel())
+//        var itemBinding = DataBindingUtil.inflate<LayoutWasteCategoryBinding>(
+//            LayoutInflater.from(requireContext()),
+//            R.layout.layout_waste_category,
+//            null,
+//            false)
+//
+//        binding.linearContainerWasteCategory.addView(itemBinding.root)
+            wasteTypeCategoryModel.clear()
+            wasteTypeCategoryModel.add(WasteTypeCategoryModel())
+            wasteTypeAdapter = WasteTypeAdapter(requireActivity(), wasteTypeCategoryModel,this)
+            binding.recWasteCategory.layoutManager = LinearLayoutManager(requireActivity())
+            binding.recWasteCategory.adapter = wasteTypeAdapter
+
     }
 
 
@@ -77,17 +104,29 @@ class SchedulePickupFragment : Fragment() {
 
     private fun setPickupData(editPickupObj: InProgressListResponse.Data?) {
         if (editPickupObj != null) {
-            viewModel.weight_id = editPickupObj.weightId?:0
-            viewModel.category_id = editPickupObj.categoryId?:0
-            weightUnt = editPickupObj!!.weightName ?: "Kg"
+//            viewModel.weight_id = editPickupObj.weightId?:0
+//            viewModel.category_id = editPickupObj.categoryId?:0
+//            weightUnt = editPickupObj!!.weightName ?: "Kg"
 
-            binding.slider.value = editPickupObj.weight!!.toFloat()
+//            binding.wasteCategory.slider.value = editPickupObj.weight!!.toFloat()
+//            binding.wasteCategory.edtCategory.setText(""+editPickupObj.categoryName)
+//            binding.wasteCategory.edtWeight.setText(""+editPickupObj.weight+" "+editPickupObj.weightName)
+            wasteTypeCategoryModel.clear()
+            wasteTypeCategoryModel.add(WasteTypeCategoryModel(
+                ""+editPickupObj.categoryName,
+                ""+editPickupObj.weight,
+                ("" + editPickupObj.weightName) ?: "Kg",
+                editPickupObj.weightId?:0,
+                editPickupObj.categoryId?:0,
+                editPickupObj.weight!!.toFloat()?:10F,)
+
+            )
+            wasteTypeAdapter = WasteTypeAdapter(requireActivity(), wasteTypeCategoryModel,this)
+            binding.recWasteCategory.layoutManager = LinearLayoutManager(requireActivity())
+            binding.recWasteCategory.adapter = wasteTypeAdapter
+
 
             binding.edtAddress.setTag(R.id.edt_Address, editPickupObj.addressId ?: 0)
-
-            binding.edtCategory.setText(""+editPickupObj.categoryName)
-            binding.edtWeight.setText(""+editPickupObj.weight+" "+editPickupObj.weightName)
-
 
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
             val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -98,6 +137,7 @@ class SchedulePickupFragment : Fragment() {
 
             binding.edtTime.setText(""+editPickupObj.time)
             binding.edtAddress.setText(""+editPickupObj.addressLine1+" "+editPickupObj.addressLine2+" "+editPickupObj.pincode)
+
             binding.edtMessage.setText(""+editPickupObj.message)
 
 
@@ -105,31 +145,6 @@ class SchedulePickupFragment : Fragment() {
     }
 
     private fun initView() {
-        // binding.edtWeight.addTextChangedListener(weightTextWatcher)
-        binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                val intent = Intent(requireContext(), CategoryActivity::class.java)
-                someActivityResultLauncher.launch(intent)
-            }
-            false
-        })
-
-
-        binding.slider.setLabelFormatter { value: Float ->
-            "${value.toInt()}$weightUnt"
-        }
-        binding.slider.addOnChangeListener { slider, value, fromUser ->
-            // value is the current value of the slider
-            val sliderValue = value.toInt()
-            println("Slider value: $sliderValue $weightUnt")
-
-            // You can update a TextView or any other UI element with the value
-            binding.edtWeight.setText("$sliderValue $weightUnt".toString())
-            binding.edtWeight.setSelection(binding.edtWeight.text.toString().length)
-        }
-//        val sliderValue = binding.slider.value.toInt()
-//        binding.edtWeight.setText("$sliderValue $weightUnt")
-
 
         binding.btnSubmit.setOnClickListener {
             if (isValidate()) {
@@ -140,9 +155,6 @@ class SchedulePickupFragment : Fragment() {
 
             }
         }
-
-
-
 
 
         binding.linearSelectAddres.setOnClickListener {
@@ -214,44 +226,74 @@ class SchedulePickupFragment : Fragment() {
             timePickerDialog.show()
         }
 
+
+
+        binding.tvAddCategory.setOnClickListener {
+            val newItem = WasteTypeCategoryModel()
+             wasteTypeAdapter.addItem(newItem)
+
+
+        }
     }
 
     private fun callApiCreateCategory() {
+       val list = wasteTypeAdapter.getSourceIncomeList()
+//        println("----------$list")
 
         val addressId = binding.edtAddress.getTag(R.id.edt_Address) as? Int
-        val createCategoryData = CreateCategoryData(
-            pickupId = editPickupObj?.id.toString(),
-            userId = pref?.id!!.toString(),
-          //  categoryId = selectCategoryObj?.id.toString(),
-            categoryId = viewModel.category_id.toString(),
-            weight = binding.edtWeight.text.toString().filter { it.isDigit() }.trim(),
-          //  weightId = selectCategoryObj?.weightId.toString(),
-            weightId = viewModel.weight_id.toString(),
-            addressId = addressId.toString() ?: "",
-            message = binding.edtMessage.text.toString().trim(),
-            date = binding.edtDate.text.toString().trim(),
-            time = binding.edtTime.text.toString().trim()
-        )
-        var ss = Gson().toJson(createCategoryData)
-        println("----------$ss")
+        val jsonArray = JsonArray()
+        list.forEachIndexed { index, wasteTypeCategoryModel ->
+            if (list[index].selectedCategory.isNullOrEmpty().not()){
+                val jsonObject = JsonObject()
+                if (editPickupObj?.id!=null){
+                    jsonObject.addProperty("pickupId",editPickupObj?.id.toString()?:"")
+                }else{
+                    jsonObject.addProperty("pickupId","")
+                }
+
+                jsonObject.addProperty("userId",pref?.id!!.toString())
+                jsonObject.addProperty("categoryId",list[index].categoryId)
+                jsonObject.addProperty("weightId",list[index].weightId)
+                jsonObject.addProperty("weight",list[index].edtWeight)
+                jsonObject.addProperty("addressId",addressId.toString() ?: "")
+                jsonObject.addProperty("message",binding.edtMessage.text.toString().trim())
+                jsonObject.addProperty("date",binding.edtDate.text.toString().trim())
+                jsonObject.addProperty("time",binding.edtTime.text.toString().trim())
+                jsonArray.add(jsonObject)
+            }
+
+        }
+
+        println("----------$jsonArray")
         showSpinner(requireContext())
-        viewModel.createCategory(createCategoryData)
+        viewModel.responseCreatePickUp.observe(requireActivity(), observer!!)
+        viewModel.createCategory(jsonArray)
+
     }
 
+    private var observer: Observer<Any>? = null
     private fun observeApiCreateCategory() {
-        viewModel.responseCreatePickUp.observe(requireActivity(), Observer {
+//        viewModel.responseCreatePickUp.observe(requireActivity(), Observer {
+        observer = Observer<Any> { it ->
             when (it) {
                 is SuccessResponse -> {
                     hideSpinner()
                     if (it.success == 1) {
-                        binding.edtCategory.setText("")
-                        binding.edtWeight.setText("")
+                        wasteTypeAdapter.clearItem()
+                        wasteTypeCategoryModel.clear()
+//                        wasteTypeCategoryModel.add(WasteTypeCategoryModel())
+//                        wasteTypeAdapter = WasteTypeAdapter(requireActivity(), wasteTypeCategoryModel,this)
+//                        binding.recWasteCategory.layoutManager = LinearLayoutManager(requireActivity())
+//                        binding.recWasteCategory.adapter = wasteTypeAdapter
+
                         binding.edtDate.setText("")
                         binding.edtTime.setText("")
                         binding.edtAddress.setText("")
                         binding.edtMessage.setText("")
                         openDialog()
                     }
+                    viewModel.responseCreatePickUp.removeObserver(observer!!)
+
                 }
 
                 is ErrorResponse -> {
@@ -259,15 +301,18 @@ class SchedulePickupFragment : Fragment() {
                     if (it.message.isNullOrEmpty().not()) {
                         showCustomToast(binding.root, requireActivity(), it.message)
                     }
+                    viewModel.responseCreatePickUp.removeObserver(observer!!)
                 }
 
                 is String -> {
                     hideSpinner()
                     showCustomToast(binding.root, requireActivity(), it)
+                    viewModel.responseCreatePickUp.removeObserver(observer!!)
                 }
             }
 
-        })
+        }
+//        )
     }
 
 
@@ -303,17 +348,9 @@ class SchedulePickupFragment : Fragment() {
     }
 
     private fun isValidate(): Boolean {
-
+        val isValid = wasteTypeAdapter.validateInputs(binding.recWasteCategory)
         var formValid: Boolean = true
-        if (binding.edtCategory.text.toString().trim().isNullOrEmpty()) {
-            binding.category.setErrorMessage("Please enter select category")
-            formValid = false
-        }
 
-        if (binding.edtWeight.text.toString().trim().isNullOrEmpty()) {
-            binding.weight.setErrorMessage("Please enter estimate weight")
-            formValid = false
-        }
         if (binding.edtDate.text.toString().trim().isNullOrEmpty()) {
             binding.date.setErrorMessage("Please select date")
             formValid = false
@@ -326,7 +363,8 @@ class SchedulePickupFragment : Fragment() {
             binding.address.setErrorMessage("Please select address")
             formValid = false
         }
-        return formValid
+        return formValid && isValid
+
     }
 
 
@@ -341,14 +379,19 @@ class SchedulePickupFragment : Fragment() {
         layoutScheduledPickupBinding.imgClose.setOnClickListener {
             // finish()
             (activity as PickupsActivity).binding.viewpager.currentItem = 1
+            addDefaultWasteCategory()
             dialog.dismiss()
+
         }
 
         layoutScheduledPickupBinding.btnScheduleAnother.setOnClickListener {
+            addDefaultWasteCategory()
             dialog.dismiss()
+
         }
         layoutScheduledPickupBinding.viewPickup.setOnClickListener {
             (activity as PickupsActivity).binding.viewpager.currentItem = 1
+            addDefaultWasteCategory()
             dialog.dismiss()
         }
 
@@ -356,14 +399,6 @@ class SchedulePickupFragment : Fragment() {
 
     }
 
-
-    public fun setCatgory(item: String) {
-        if (item.isNullOrEmpty().not()) {
-            binding.edtCategory.setText(item)
-            binding.edtCategory.setSelection(binding.edtCategory.text.toString().length)
-        }
-
-    }
 
     private var selectCategoryObj: CategoryResponse.Data? = null
     private var weightUnt = "Kg"
@@ -377,12 +412,18 @@ class SchedulePickupFragment : Fragment() {
                     if (selectCategoryObj != null && selectCategoryObj!!.name.isNullOrEmpty()
                             .not()
                     ) {
-                        viewModel.weight_id = selectCategoryObj?.weightId?:0
-                        viewModel.category_id = selectCategoryObj?.id?:0
-                        binding.slider.value = 10F
-                        binding.edtWeight.setText("")
-                        weightUnt = selectCategoryObj!!.weight ?: "Kg"
-                        setCatgory(selectCategoryObj!!.name ?: "")
+
+
+                        selectWasteTypeCategoryModel?.weightId = selectCategoryObj?.weightId?:0
+                        selectWasteTypeCategoryModel?.categoryId = selectCategoryObj?.id?:0
+                        selectWasteTypeCategoryModel?.sliderValue = 10F
+                        selectWasteTypeCategoryModel?.weightUnt = selectCategoryObj!!.weight ?: "Kg"
+                        selectWasteTypeCategoryModel?.selectedCategory = selectCategoryObj!!.name ?: ""
+                        selectWasteTypeCategoryModel?.edtWeight =  ""
+                        wasteTypeAdapter.notifyItemChanged(selectPosition)
+
+
+
                     }
                 }
             } else if (result.resultCode == 101) {
@@ -406,29 +447,20 @@ class SchedulePickupFragment : Fragment() {
         }
 
 
-    /**text watcher convert KG getFormattedPrice**/
-    private val weightTextWatcher: TextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (s != null && s.toString().isNotEmpty() && !s.toString().endsWith("Kg")) {
-
-                binding.edtWeight.removeTextChangedListener(this)
-                val newText = s.toString().replace("Kg", "").trim() + " Kg"
-                binding.edtWeight.setText(newText)
-                binding.edtWeight.setSelection(newText.length - 3)
-                binding.edtWeight.addTextChangedListener(this)
-            } else {
-                binding.edtWeight.setText("")
-            }
-        }
-
-        override fun afterTextChanged(s: Editable) {}
-    }
-
 
     public fun setValuesOnView(item: InProgressListResponse.Data?) {
         editPickupObj = item
         setPickupData(editPickupObj)
+    }
+
+
+    private var selectWasteTypeCategoryModel:WasteTypeCategoryModel? = null
+    private var selectPosition = 0
+    override fun onItemCategorySelect(data: WasteTypeCategoryModel?, position: Int) {
+        selectWasteTypeCategoryModel = data
+        selectPosition = position
+        val intent = Intent(requireContext(), CategoryActivity::class.java)
+        someActivityResultLauncher.launch(intent)
     }
 
 }

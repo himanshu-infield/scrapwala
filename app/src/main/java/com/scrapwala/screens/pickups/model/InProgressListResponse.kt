@@ -41,7 +41,7 @@ data class InProgressListResponse(
         @SerializedName("is_active")
         var isActive: Int?,
         @SerializedName("message")
-        var message: String?,
+        var message: String = "",
         @SerializedName("mobile")
         var mobile: String?,
         @SerializedName("pincode")

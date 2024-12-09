@@ -12,4 +12,10 @@
     <string name="your_contribution_to_save_earth_till_now">Your contribution to save\nearth till now</string>
     <string name="profile_update">Profile Update</string>
     <string name="earn_points_for_sale_trash">Earn Points For\nSale Trash</string>
+
+
+    <string-array name="unit_name">
+        <item>Kg</item>
+        <item>Piece</item>
+    </string-array>
 </resources>

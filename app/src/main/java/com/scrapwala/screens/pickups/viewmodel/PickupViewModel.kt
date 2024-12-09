@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.scrapwala.screens.pickups.model.AddAddressData
 import com.scrapwala.screens.pickups.model.CityListResponse
@@ -136,7 +137,7 @@ class PickupViewModel @Inject constructor(
 
 
     /**create Category**/
-    fun createCategory(request: CreateCategoryData) {
+    fun createCategory(request: JsonArray) {
         viewModelScope.launch {
             val response = pickupRepository.createCategory(request)
             response.onSuccess { data ->

@@ -2,13 +2,14 @@ package com.scrapwala.screens.pickups.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.scrapwala.R
 import com.scrapwala.databinding.ItemAddressBinding
 import com.scrapwala.screens.pickups.model.AddressListResponse
+
 
 class SelectAddressAdapter(
     var context: Context,
@@ -68,7 +69,11 @@ class SelectAddressAdapter(
 
 
             itemViewBinding.imgDelete.setOnClickListener {
-                clickedItemCallback.deleteAddress(item)
+
+
+                showYesNoDialog(item)
+
+
             }
 
             if (item.addressType.isNullOrEmpty().not()) {
@@ -107,4 +112,30 @@ class SelectAddressAdapter(
         cityList.remove(item)
         notifyDataSetChanged()
     }
+
+
+    private fun showYesNoDialog(item: AddressListResponse.Data) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Confirmation")
+        builder.setMessage("Do you want to proceed?")
+
+        // Set Yes button action
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            // Handle Yes button action
+
+            clickedItemCallback.deleteAddress(item)
+            dialog.dismiss()
+        }
+
+        // Set No button action
+        builder.setNegativeButton("No") { dialog, _ ->
+            // Handle No button action
+            dialog.dismiss()
+        }
+
+        // Create and show the dialog
+        val dialog = builder.create()
+        dialog.show()
+    }
+
 }

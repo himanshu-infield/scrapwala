@@ -1,17 +1,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Background Rectangle -->
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="#75cb52"/>
 
-            <corners android:radius="14dp"/> <!-- First color -->
-        </shape>
-    </item>
 
     <!-- Top Rectangle with Margin Bottom -->
     <item
-        android:bottom="6dp"> <!-- Margin bottom between the two rectangles -->
+        > <!-- Margin bottom between the two rectangles -->
         <shape android:shape="rectangle">
             <solid android:color="#57bc2f"/>
             <corners android:radius="14dp"/> <!-- Second color -->

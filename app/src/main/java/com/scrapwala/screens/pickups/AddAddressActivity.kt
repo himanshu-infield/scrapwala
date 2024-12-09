@@ -2,6 +2,7 @@ package com.scrapwala.screens.pickups
 
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -59,6 +60,12 @@ class AddAddressActivity : AppCompatActivity() {
 
 
 
+
+        binding.edtPincode.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
+            // Allow only alphanumeric characters and spaces
+            val regex = Regex("[a-zA-Z0-9 ]*")
+            if (source.matches(regex)) source else ""
+        })
         binding.imgRemove.setOnClickListener {
             binding.tabs.visibility = View.VISIBLE
             binding.tabs.getTabAt(0)?.select()

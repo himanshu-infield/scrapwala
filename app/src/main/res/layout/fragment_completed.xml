@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:visibility="gone"
-            android:text="There is no In Completed Pickup at\nthe moment"
+            android:text="There is no completed pickup\nat the moment"
             android:textColor="@color/_666666"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -4,7 +4,7 @@ data class WasteTypeCategoryModel(
     var selectedCategory: String = "",
     var edtWeight: String = "",
 
-    var weightUnt: String = "Kg",
+    var weightUnt: String = "",
 
     var weightId: Int = 0,
     var categoryId: Int = 0,

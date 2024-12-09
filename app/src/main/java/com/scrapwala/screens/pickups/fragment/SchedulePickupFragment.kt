@@ -51,6 +51,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
@@ -236,6 +237,10 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
         }
     }
 
+
+    private fun convertTonsToKilograms(tons: Double): Double {
+        return tons * 1000
+    }
     private fun callApiCreateCategory() {
        val list = wasteTypeAdapter.getSourceIncomeList()
 //        println("----------$list")
@@ -254,7 +259,21 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
                 jsonObject.addProperty("userId",pref?.id!!.toString())
                 jsonObject.addProperty("categoryId",list[index].categoryId)
                 jsonObject.addProperty("weightId",list[index].weightId)
-                jsonObject.addProperty("weight",list[index].edtWeight)
+
+                if (list[index].weightUnt.contains("Tone",true)){
+                    val tons = list[index].edtWeight.toDouble()
+                    if (tons!=null){
+                        val kilograms = convertTonsToKilograms(tons)
+                        jsonObject.addProperty("weight",kilograms.roundToInt().toString())
+                    }else{
+                        jsonObject.addProperty("weight",list[index].edtWeight)
+                    }
+
+                }else{
+                    jsonObject.addProperty("weight",list[index].edtWeight)
+                }
+
+
                 jsonObject.addProperty("addressId",addressId.toString() ?: "")
                 jsonObject.addProperty("message",binding.edtMessage.text.toString().trim())
                 jsonObject.addProperty("date",binding.edtDate.text.toString().trim())

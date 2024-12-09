@@ -120,7 +120,18 @@ class WasteTypeAdapter(
 
 
         /**spinner data set**/
-         val incomeType: List<String> = listOf("Kg","Piece")
+        var incomeType: List<String> = listOf()
+        if (currentItem.weightUnt.contains("kg",true)){
+             incomeType = listOf("Kg","Tone")
+        }else  if (currentItem.weightUnt.contains("Piece",true)){
+             incomeType = listOf("Piece")
+        }else  if (currentItem.weightUnt.contains("Tone",true)){
+             incomeType = listOf("Kg","Tone")
+        }else{
+            incomeType = listOf("Kg","Tone","Piece")
+        }
+
+
         val incomeTypeAdapter = ArrayAdapter(context, R.layout.dropdown_menu_popup_item, incomeType)
         incomeTypeAdapter.setDropDownViewResource(R.layout.dropdown_menu_popup_item)
         holder.binding.spinnerUnitType.setAdapter(incomeTypeAdapter)
@@ -192,15 +203,40 @@ class WasteTypeAdapter(
                    val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
                    viewHolder?.binding?.category?.setErrorMessage("Please select category")
                }
-               if (isFieldEmpty) {
-                   isValid = false
-                   val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
-                   viewHolder?.binding?.weight?.setErrorMessage("Please enter estimate weight")
-               }else if (item.edtWeight.toInt()<=10){
-                   isValid = false
-                   val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
-                   viewHolder?.binding?.weight?.setErrorMessage("estimate weight grater 10")
-               }
+                if (item.weightUnt.contains("Piece",true)){
+                    if (isFieldEmpty) {
+                        isValid = false
+                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                        viewHolder?.binding?.weight?.setErrorMessage("Please enter number of pieces")
+                    }else if (item.edtWeight.toInt()<=0){
+                        isValid = false
+                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                        viewHolder?.binding?.weight?.setErrorMessage("Piece must be greater than 0")
+                    }
+                 }else if (item.weightUnt.contains("Tone",true)){
+                    if (isFieldEmpty) {
+                        isValid = false
+                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                        viewHolder?.binding?.weight?.setErrorMessage("Please enter number of Tone")
+                    }else if (item.edtWeight.toInt()<=0){
+                        isValid = false
+                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                        viewHolder?.binding?.weight?.setErrorMessage("Piece must be greater than 0")
+                    }
+                 } else{
+                    if (isFieldEmpty) {
+                        isValid = false
+                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                        viewHolder?.binding?.weight?.setErrorMessage("Please enter estimate weight")
+                    }else if (item.edtWeight.toInt()<=10){
+                        isValid = false
+                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                        viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 10")
+                    }
+                 }
+
+
+
            }else{
 
                val isFieldEmpty = item.edtWeight.isNullOrEmpty()
@@ -208,7 +244,7 @@ class WasteTypeAdapter(
                errorMap[index] = isFieldEmpty
 
                if (!selectedCategory){
-                   if (isFieldEmpty) {
+                  /* if (isFieldEmpty) {
                        isValid = false
                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
                        viewHolder?.binding?.weight?.setErrorMessage("Please enter estimate weight")
@@ -216,6 +252,37 @@ class WasteTypeAdapter(
                        isValid = false
                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
                        viewHolder?.binding?.weight?.setErrorMessage("estimate weight grater 10")
+                   }*/
+                   if (item.weightUnt.contains("Piece",true)){
+                       if (isFieldEmpty) {
+                           isValid = false
+                           val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                           viewHolder?.binding?.weight?.setErrorMessage("Please enter number of pieces")
+                       }else if (item.edtWeight.toInt()<=0){
+                           isValid = false
+                           val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                           viewHolder?.binding?.weight?.setErrorMessage("Piece must be greater than 0")
+                       }
+                   }else if (item.weightUnt.contains("Tone",true)){
+                       if (isFieldEmpty) {
+                           isValid = false
+                           val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                           viewHolder?.binding?.weight?.setErrorMessage("Please enter number of Tone")
+                       }else if (item.edtWeight.toInt()<=0){
+                           isValid = false
+                           val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                           viewHolder?.binding?.weight?.setErrorMessage("Piece must be greater than 0")
+                       }
+                   } else{
+                       if (isFieldEmpty) {
+                           isValid = false
+                           val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                           viewHolder?.binding?.weight?.setErrorMessage("Please enter estimate weight")
+                       }else if (item.edtWeight.toInt()<=10){
+                           isValid = false
+                           val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                           viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 10")
+                       }
                    }
 
 

@@ -1,6 +1,7 @@
 package com.scrapwala.screens.pickups.repository
 
 
+import com.google.gson.JsonArray
 import com.scrapwala.api.ApiService
 import com.scrapwala.screens.pickups.category.model.CategoryResponse
 import com.scrapwala.screens.pickups.model.AddAddressData
@@ -36,7 +37,7 @@ class PickupRepository @Inject constructor(private val apiService: ApiService) {
         return apiService.saveAddress(leadRequest)
     }
 
-    suspend fun createCategory(leadRequest: CreateCategoryData): ApiResult<SuccessResponse> {
+    suspend fun createCategory(leadRequest: JsonArray): ApiResult<SuccessResponse> {
         return apiService.createCategory(leadRequest)
     }
 

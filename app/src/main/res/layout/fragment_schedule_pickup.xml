@@ -1,8 +1,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.scrapwala.screens.pickups.fragment.SchedulePickupFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -11,156 +11,62 @@
         android:layout_height="0dp"
         android:fillViewport="true"
 
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="@dimen/_15dp"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <!--waste category-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waste Category"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
+                    android:background="@drawable/rect_radius12_f4f8fb"
+                    android:orientation="vertical">
 
 
-                    <!--Category Type-->
-                    <RelativeLayout
-                        android:id="@+id/rlEmployedType"
+                    <LinearLayout
+                        android:id="@+id/linearContainerWasteCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10dp">
+                        android:orientation="vertical">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/category"
+                        <!--<include
+                            android:id="@+id/wasteCategory"
+                            layout="@layout/layout_waste_category" />-->
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recWasteCategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColorHint="@color/_666666"
-                            android:imeOptions="actionNext"
-                            app:errorIconDrawable="@null"
-                            app:hintEnabled="false"
-                            app:endIconDrawable="@drawable/ic_down"
-                            app:endIconMode="custom">
+                            android:visibility="visible"
+                            tools:itemCount="1"
+                            tools:listitem="@layout/layout_waste_category" />
 
-                            <com.scrapwala.utils.widgets.TextInputCustomClass
-                                android:id="@+id/edtCategory"
-                                style="@style/filledEditBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="53dp"
-                                android:fontFamily="@font/graphik_medium"
-                                android:hint="Select Category"
-                                android:text=""
-                                android:paddingTop="0dp"
-                                android:paddingBottom="0dp"
-                                android:singleLine="true"
-                                android:textSize="14sp"
-                                android:focusable="false"
-                                android:clickable="true"/>
-
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <AutoCompleteTextView
-                            android:id="@+id/autoCompleteTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:overlapAnchor="false"
-                            android:dropDownVerticalOffset="2dp"
-                            android:textColor="@android:color/transparent"
-                            android:paddingStart="@dimen/_15dp"
-                            android:background="@android:color/transparent"
-                            android:inputType="none"/>
-
-                    </RelativeLayout>
-
-
-
-                </LinearLayout>
-
-                <!--weight Type-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
+                    </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tvAddCategory"
                         style="@style/medium_12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Estimate Weight"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
-
-                   <!-- <SeekBar
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10dp"/>-->
-
-                    <com.google.android.material.slider.Slider
-                        style="@style/Myslider"
-                        android:id="@+id/slider"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:stepSize="1"
-                        app:tickColor="@android:color/transparent"
-                        app:trackColorActive="#75cb52"
-                        app:trackHeight="8dp"
-                        app:trackColorInactive="#d0d0d0"
-                        app:thumbColor="#75cb52"
-                        app:thumbRadius="@dimen/_10dp"
-                        android:value="10"
-                        android:valueFrom="10"
-                        android:valueTo="100" />
-
-
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/weight"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_12dp"
-                            android:textColorHint="@color/_666666"
-                            android:imeOptions="actionNext"
-                            app:errorIconDrawable="@null"
-                            app:hintEnabled="false">
-
-                            <com.scrapwala.utils.widgets.TextInputCustomClass
-                                android:id="@+id/edtWeight"
-                                style="@style/filledEditBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="53dp"
-                                android:fontFamily="@font/graphik_medium"
-                                android:hint="Estimate Weight"
-                                android:text=""
-                                android:inputType="number"
-                                android:paddingTop="0dp"
-                                android:paddingBottom="0dp"
-                                android:singleLine="true"
-                                android:textSize="14sp"
-                                android:focusable="true"
-                                android:clickable="true"/>
-                        </com.google.android.material.textfield.TextInputLayout>
-
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginVertical="@dimen/_5dp"
+                        android:layout_marginHorizontal="@dimen/_15dp"
+                        android:drawableStart="@drawable/sharp_add_black_36"
+                        android:gravity="center_vertical"
+                        android:text="Add Category"
+                        android:textColor="@color/_333333" />
                 </LinearLayout>
 
 
@@ -168,18 +74,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
+                    android:background="@drawable/rect_radius12_f4f8fb"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_15dp">
 
                     <TextView
                         style="@style/medium_12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Date"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
+                        android:textColor="@color/_333333"
+                        android:textSize="@dimen/_12sp" />
 
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -187,27 +93,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12dp"
-                        android:textColorHint="@color/_666666"
                         android:imeOptions="actionNext"
-                        app:errorIconDrawable="@null"
-                        app:hintEnabled="false"
+                        android:textColorHint="@color/_666666"
                         app:endIconDrawable="@drawable/ic_calendar"
-                        app:endIconMode="custom">
+                        app:endIconMode="custom"
+                        app:errorIconDrawable="@null"
+                        app:hintEnabled="false">
 
                         <com.scrapwala.utils.widgets.TextInputCustomClass
                             android:id="@+id/edtDate"
                             style="@style/filledEditBox"
                             android:layout_width="match_parent"
                             android:layout_height="53dp"
+                            android:clickable="true"
+                            android:focusable="false"
                             android:fontFamily="@font/graphik_medium"
                             android:hint="Select Date"
-                            android:text=""
                             android:paddingTop="0dp"
                             android:paddingBottom="0dp"
                             android:singleLine="true"
-                            android:textSize="14sp"
-                            android:focusable="false"
-                            android:clickable="true"/>
+                            android:text=""
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -216,18 +122,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
+                    android:background="@drawable/rect_radius12_f4f8fb"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_15dp">
 
                     <TextView
                         style="@style/medium_12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Time"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
+                        android:textColor="@color/_333333"
+                        android:textSize="@dimen/_12sp" />
 
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -235,27 +141,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12dp"
-                        android:textColorHint="@color/_666666"
                         android:imeOptions="actionNext"
-                        app:errorIconDrawable="@null"
-                        app:hintEnabled="false"
+                        android:textColorHint="@color/_666666"
                         app:endIconDrawable="@drawable/ic_time"
-                        app:endIconMode="custom">
+                        app:endIconMode="custom"
+                        app:errorIconDrawable="@null"
+                        app:hintEnabled="false">
 
                         <com.scrapwala.utils.widgets.TextInputCustomClass
                             android:id="@+id/edtTime"
                             style="@style/filledEditBox"
                             android:layout_width="match_parent"
                             android:layout_height="53dp"
+                            android:clickable="true"
+                            android:focusable="false"
                             android:fontFamily="@font/graphik_medium"
                             android:hint="Select Time"
-                            android:text=""
                             android:paddingTop="0dp"
                             android:paddingBottom="0dp"
                             android:singleLine="true"
-                            android:textSize="14sp"
-                            android:focusable="false"
-                            android:clickable="true"/>
+                            android:text=""
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -265,26 +171,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
+                    android:background="@drawable/rect_radius12_f4f8fb"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_15dp">
 
                     <TextView
                         style="@style/medium_12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Address"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
+                        android:textColor="@color/_333333"
+                        android:textSize="@dimen/_12sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12dp"
-                        android:textColorHint="@color/_666666"
                         android:imeOptions="actionNext"
+                        android:textColorHint="@color/_666666"
                         app:errorIconDrawable="@null"
                         app:hintEnabled="false">
 
@@ -293,32 +199,33 @@
                             style="@style/filledEditBox"
                             android:layout_width="match_parent"
                             android:layout_height="53dp"
+                            android:clickable="true"
+                            android:focusable="true"
                             android:fontFamily="@font/graphik_medium"
                             android:hint="Enter Address"
-                            android:text=""
                             android:paddingTop="0dp"
                             android:paddingBottom="0dp"
                             android:singleLine="true"
-                            android:textSize="14sp"
-                            android:focusable="true"
-                            android:clickable="true"/>
+                            android:text=""
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
+                        android:id="@+id/linearSelectAddres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="18dp"
-                        android:id="@+id/linearSelectAddres"
-
                         android:layout_marginTop="8dp"
+
                         android:background="@drawable/dotted_rect_bg"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:padding="18dp">
+
                         <TextView
                             style="@style/semibold_12sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#64d540"
-                            android:text="+  Add Another Address"/>
+                            android:text="+  Add Another Address"
+                            android:textColor="#64d540" />
 
                     </LinearLayout>
 
@@ -329,26 +236,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="12dp"
-                    android:padding="@dimen/_15dp"
-                    android:background="@drawable/rect_radius12_f4f8fb">
+                    android:background="@drawable/rect_radius12_f4f8fb"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_15dp">
 
                     <TextView
                         style="@style/medium_12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Message"
-                        android:textSize="@dimen/_12sp"
-                        android:textColor="@color/_333333"/>
+                        android:textColor="@color/_333333"
+                        android:textSize="@dimen/_12sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/message"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12dp"
-                        android:textColorHint="@color/_666666"
                         android:imeOptions="actionNext"
+                        android:textColorHint="@color/_666666"
                         app:errorIconDrawable="@null"
                         app:hintEnabled="false">
 
@@ -357,23 +264,21 @@
                             style="@style/filledEditBox"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
+                            android:clickable="true"
+                            android:focusable="true"
                             android:fontFamily="@font/graphik_medium"
-                            android:hint="Enter message if any"
                             android:gravity="top"
+                            android:hint="Enter message if any"
                             android:paddingTop="20dp"
                             android:paddingBottom="0dp"
                             android:singleLine="true"
-                            android:textSize="14sp"
-                            android:focusable="true"
-                            android:clickable="true"/>
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
 
             </LinearLayout>
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -383,22 +288,24 @@
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent">
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_15dp"/>
+            android:layout_height="@dimen/_15dp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rect_green_app"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rect_green_app">
 
             <TextView
-                style="@style/semibold_14sp"
                 android:id="@+id/btnSubmit"
+                style="@style/semibold_14sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"

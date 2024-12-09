@@ -1,6 +1,7 @@
 package com.scrapwala.api
 
 import android.content.Context
+import com.google.gson.JsonArray
 import com.scrapwala.BuildConfig
 import com.scrapwala.screens.home.model.BannerResponse
 import com.scrapwala.screens.login.model.SendOtpRequest
@@ -57,7 +58,7 @@ interface ApiService {
     suspend fun saveAddress(@Body request:AddAddressData):ApiResult<SuccessResponse>
 
     @POST("/api/pickup/create")
-    suspend fun createCategory(@Body request: CreateCategoryData):ApiResult<SuccessResponse>
+    suspend fun createCategory(@Body request: JsonArray):ApiResult<SuccessResponse>
 
     @Multipart
     @POST("/api/users/update")

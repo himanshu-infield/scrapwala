@@ -76,6 +76,16 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
         getExtras()
         initView()
         observeApiCreateCategory()
+        setCursorVisible()
+    }
+
+    private fun setCursorVisible() {
+        binding.edtAddress.isCursorVisible = false
+        binding.edtAddress.isFocusable = false
+        binding.edtAddress.isClickable = true
+
+
+
     }
 
     private fun addDefaultWasteCategory() {

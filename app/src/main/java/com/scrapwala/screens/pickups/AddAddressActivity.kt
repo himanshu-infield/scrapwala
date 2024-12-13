@@ -63,7 +63,7 @@ class AddAddressActivity : AppCompatActivity() {
 
         binding.edtPincode.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
             // Allow only alphanumeric characters and spaces
-            val regex = Regex("[a-zA-Z0-9 ]*")
+            val regex = Regex("[0-9]*")
             if (source.matches(regex)) source else ""
         })
         binding.imgRemove.setOnClickListener {

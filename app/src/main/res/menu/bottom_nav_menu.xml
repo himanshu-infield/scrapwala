@@ -4,25 +4,25 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/bottom_nav_home"
+        android:icon="@drawable/home_selector"
         android:title="@string/home" />
 
     <item
         android:id="@+id/navigation_refer_earn"
-        android:icon="@drawable/bottom_nav_refer"
+        android:icon="@drawable/ic_refer_selector"
         android:title="@string/refer_earn" />
 
 
 
     <item
         android:id="@+id/navigation_pickups"
-        android:icon="@drawable/bottom_nav_pickups"
+        android:icon="@drawable/pickup_selector"
         android:title="@string/pickups" />
 
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/bottom_nav_profile"
+        android:icon="@drawable/ic_profileselector"
         android:title="@string/profile" />
 
 

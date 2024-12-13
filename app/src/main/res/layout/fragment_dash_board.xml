@@ -63,6 +63,7 @@
                         <RelativeLayout
                             android:id="@+id/relativeImageView"
                             android:layout_width="50dp"
+                            android:visibility="gone"
                             android:layout_height="50dp"
                             android:background="@drawable/circle_white"
                             app:layout_constraintBottom_toBottomOf="parent"

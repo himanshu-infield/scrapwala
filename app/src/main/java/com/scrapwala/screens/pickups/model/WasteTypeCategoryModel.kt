@@ -8,6 +8,6 @@ data class WasteTypeCategoryModel(
 
     var weightId: Int = 0,
     var categoryId: Int = 0,
-    var sliderValue: Float = 10F
+    var sliderValue: Float = 1F
 )
 

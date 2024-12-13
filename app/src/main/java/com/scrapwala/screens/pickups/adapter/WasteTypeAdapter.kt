@@ -59,11 +59,41 @@ class WasteTypeAdapter(
             holder.binding.separator.visibility = View.GONE
         }
 
+        if (currentItem.edtWeight.isNullOrEmpty().not()){
+            if (currentItem.edtWeight.toInt()>=1000 && currentItem.weightUnt.equals("Kg",true)){
+
+                var ss = (currentItem.edtWeight.toInt())/1000
+
+
+                currentItem.edtWeight = ss.toString()
+                currentItem.weightUnt = "Tone"
+                currentItem.sliderValue = ss.toFloat()
+
+            }else{
+
+            }
+
+        }
+
         holder.binding.edtCategory.isCursorVisible = false
         holder.binding.spinnerUnitType.inputType = InputType.TYPE_NULL
         holder.binding.spinnerUnitType.setText(""+currentItem.weightUnt,false)
 
-        holder.binding.slider.value = currentItem.sliderValue
+        try {
+
+
+            if(currentItem.sliderValue>100){
+                holder.binding.slider.value=100F
+                currentItem.sliderValue = 100F
+            }
+            else{
+                holder.binding.slider.value = currentItem.sliderValue
+            }
+
+        }catch (e:Exception){
+            holder.binding.slider.value = 1F
+        }
+
 
         if (currentItem.edtWeight.isNullOrEmpty().not()){
             holder.binding.edtWeight.setText(currentItem.edtWeight)
@@ -96,10 +126,17 @@ class WasteTypeAdapter(
 
 
 
+try {
+    holder.binding.slider.setLabelFormatter { value: Float ->
+        "${value.toInt()}${currentItem.weightUnt}"
+    }
+}catch (e:Exception){
+    e.printStackTrace()
+//    holder.binding.slider.setLabelFormatter { value: Float ->
+//        "${value.toInt()}${1}"
+//}
+}
 
-        holder.binding.slider.setLabelFormatter { value: Float ->
-            "${value.toInt()}${currentItem.weightUnt}"
-        }
 
         holder.binding.slider.addOnChangeListener { slider, value, fromUser ->
             // value is the current value of the slider
@@ -228,10 +265,10 @@ class WasteTypeAdapter(
                         isValid = false
                         val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
                         viewHolder?.binding?.weight?.setErrorMessage("Please enter estimate weight")
-                    }else if (item.edtWeight.toInt()<=10){
+                    }else if (item.edtWeight.toInt()<=0){
                         isValid = false
                         val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
-                        viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 10")
+                        viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 0")
                     }
                  }
 
@@ -278,10 +315,10 @@ class WasteTypeAdapter(
                            isValid = false
                            val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
                            viewHolder?.binding?.weight?.setErrorMessage("Please enter estimate weight")
-                       }else if (item.edtWeight.toInt()<=10){
+                       }else if (item.edtWeight.toInt()<=0){
                            isValid = false
                            val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
-                           viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 10")
+                           viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 0")
                        }
                    }
 

@@ -250,7 +250,14 @@ try {
                         val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
                         viewHolder?.binding?.weight?.setErrorMessage("Piece must be greater than 0")
                     }
-                 }else if (item.weightUnt.contains("Tone",true)){
+
+                    else if (item.edtWeight.toInt()>2000){
+                        isValid = false
+                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                        viewHolder?.binding?.weight?.setErrorMessage("Piece should be less than 2000")
+                    }
+
+                }else if (item.weightUnt.contains("Tone",true)){
                     if (isFieldEmpty) {
                         isValid = false
                         val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
@@ -258,7 +265,13 @@ try {
                     }else if (item.edtWeight.toInt()<=0){
                         isValid = false
                         val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
-                        viewHolder?.binding?.weight?.setErrorMessage("Piece must be greater than 0")
+                        viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 0 Tone")
+                    }
+
+                    else if (item.edtWeight.toInt()>2){
+                        isValid = false
+                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                        viewHolder?.binding?.weight?.setErrorMessage("Weight must be less than 2 Tone")
                     }
                  } else{
                     if (isFieldEmpty) {
@@ -268,7 +281,13 @@ try {
                     }else if (item.edtWeight.toInt()<=0){
                         isValid = false
                         val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
-                        viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 0")
+                        viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 0 Kg")
+                    }
+
+                    else if (item.edtWeight.toInt()>999){
+                        isValid = false
+                        val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                        viewHolder?.binding?.weight?.setErrorMessage("Weight must be less than 999 Kg")
                     }
                  }
 
@@ -295,20 +314,37 @@ try {
                            isValid = false
                            val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
                            viewHolder?.binding?.weight?.setErrorMessage("Please enter number of pieces")
-                       }else if (item.edtWeight.toInt()<=0){
+                       }
+                       else if (item.edtWeight.toInt()<=0){
                            isValid = false
                            val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
                            viewHolder?.binding?.weight?.setErrorMessage("Piece must be greater than 0")
                        }
+
+                       else if (item.edtWeight.toInt()>2000){
+                           isValid = false
+                           val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                           viewHolder?.binding?.weight?.setErrorMessage("Piece should be less than 2000")
+                       }
+
+
                    }else if (item.weightUnt.contains("Tone",true)){
                        if (isFieldEmpty) {
                            isValid = false
                            val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
                            viewHolder?.binding?.weight?.setErrorMessage("Please enter number of Tone")
-                       }else if (item.edtWeight.toInt()<=0){
+                       }
+                       else if (item.edtWeight.toInt()<=0){
                            isValid = false
                            val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
-                           viewHolder?.binding?.weight?.setErrorMessage("Piece must be greater than 0")
+                           viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 0")
+                       }
+
+
+                       else if (item.edtWeight.toInt()>2){
+                           isValid = false
+                           val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                           viewHolder?.binding?.weight?.setErrorMessage("Weight must be less than 2 Tone")
                        }
                    } else{
                        if (isFieldEmpty) {
@@ -318,7 +354,13 @@ try {
                        }else if (item.edtWeight.toInt()<=0){
                            isValid = false
                            val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
-                           viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 0")
+                           viewHolder?.binding?.weight?.setErrorMessage("Weight must be greater than 0 Kg")
+                       }
+
+                       else if (item.edtWeight.toInt()>999){
+                           isValid = false
+                           val viewHolder = recyclerView.findViewHolderForAdapterPosition(index) as? IncomeTypeViewHolder
+                           viewHolder?.binding?.weight?.setErrorMessage("Weight must be less than 999 Kg")
                        }
                    }
 

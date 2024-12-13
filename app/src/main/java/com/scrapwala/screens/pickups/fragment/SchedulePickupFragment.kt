@@ -129,7 +129,7 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
                 ("" + editPickupObj.weightName) ?: "Kg",
                 editPickupObj.weightId?:0,
                 editPickupObj.categoryId?:0,
-                editPickupObj.weight!!.toFloat()?:10F,)
+                editPickupObj.weight!!.toFloat()?:1F,)
 
             )
             wasteTypeAdapter = WasteTypeAdapter(requireActivity(), wasteTypeCategoryModel,this)
@@ -146,7 +146,11 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
             binding.edtDate.setText(""+formattedDate)
 
 
-            binding.edtTime.setText(""+editPickupObj.time)
+
+//            binding.edtTime.setText(""+editPickupObj.time)
+            binding.edtTime.setText(convertAM(editPickupObj.time.toString()))
+
+
             binding.edtAddress.setText(""+editPickupObj.addressLine1+" "+editPickupObj.addressLine2+" "+editPickupObj.pincode)
 
             binding.edtMessage.setText(""+editPickupObj.message)
@@ -206,13 +210,35 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
          }*/
 
         binding.edtTime.setOnClickListener {
+
+
+
+            if ( binding.edtDate.text.isNullOrEmpty()){
+                openTimePicker()
+            }else{
+                val dateStr = binding.edtDate.text.toString()
+                val isFuture = isFutureOrCurrentDate(dateStr)
+
+                if (isFuture){
+                    openTimePickerCurrent()
+                }else{
+                    openTimePicker()
+                }
+
+            }
+
+
+
+
+
+
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
             val second = calendar.get(Calendar.SECOND)
 
             // Open TimePickerDialog
-            val timePickerDialog = TimePickerDialog(
+            /*val timePickerDialog = TimePickerDialog(
                 requireContext(),
                 { _, selectedHour, selectedMinute ->
                     // Get the current second when the time is selected
@@ -234,7 +260,7 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
                 true // Set true for 24-hour format
             )
 
-            timePickerDialog.show()
+            timePickerDialog.show()*/
         }
 
 
@@ -287,7 +313,11 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
                 jsonObject.addProperty("addressId",addressId.toString() ?: "")
                 jsonObject.addProperty("message",binding.edtMessage.text.toString().trim())
                 jsonObject.addProperty("date",binding.edtDate.text.toString().trim())
-                jsonObject.addProperty("time",binding.edtTime.text.toString().trim())
+
+//                jsonObject.addProperty("time",binding.edtTime.text.toString().trim())
+                val time24Hour = convertTo24HourFormat(binding.edtTime.text.toString().trim())
+                jsonObject.addProperty("time",time24Hour+":00")
+
                 jsonArray.add(jsonObject)
             }
 
@@ -362,6 +392,7 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
                 val outputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val date: Date? = inputDateFormat.parse(selected_Date)
                 val outputDate = date?.let { outputDateFormat.format(it) }
+                binding.edtTime.setText("")
                 binding.edtDate.setText(outputDate.toString())
 
             },
@@ -445,7 +476,7 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
 
                         selectWasteTypeCategoryModel?.weightId = selectCategoryObj?.weightId?:0
                         selectWasteTypeCategoryModel?.categoryId = selectCategoryObj?.id?:0
-                        selectWasteTypeCategoryModel?.sliderValue = 10F
+                        selectWasteTypeCategoryModel?.sliderValue = 1F
                         selectWasteTypeCategoryModel?.weightUnt = selectCategoryObj!!.weight ?: "Kg"
                         selectWasteTypeCategoryModel?.selectedCategory = selectCategoryObj!!.name ?: ""
                         selectWasteTypeCategoryModel?.edtWeight =  ""
@@ -492,4 +523,143 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
         someActivityResultLauncher.launch(intent)
     }
 
+
+
+
+
+    private fun openTimePicker() {
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+// Define the end time as 9:00 PM in 24-hour format
+        val endHour = 21
+        val endMinute = 0
+
+        val timePickerDialog = TimePickerDialog(
+            requireActivity(),
+            { _, selectedHour, selectedMinute ->
+                // Check if the selected time is after the current time
+                val isAfterCurrentTime = selectedHour > currentHour ||
+                        (selectedHour == currentHour && selectedMinute > currentMinute)
+                // Check if the selected time is before or at 9:00 PM
+                val isBeforeEndTime = selectedHour < endHour ||
+                        (selectedHour == endHour && selectedMinute <= endMinute)
+
+                if (isAfterCurrentTime && isBeforeEndTime) {
+                    // Format the time string as per 12-hour format
+                    val amPm: String = if (selectedHour < 12) "AM" else "PM"
+                    val hourIn12Format = if (selectedHour % 12 == 0) 12 else selectedHour % 12
+                    val formattedTime = String.format("%02d:%02d %s", hourIn12Format, selectedMinute, amPm)
+
+                    // Set the time to your TextView (or EditText)
+                    binding.edtTime.setText(formattedTime)
+                } else {
+                    // Show a message if the selected time is outside the range
+                    showCustomToast(
+                        binding.root,
+                        requireActivity(),
+                        "Please select future date and time"
+                    )
+                }
+            },
+            currentHour,
+            currentMinute,
+            false // Set false for 12-hour format (AM/PM)
+        )
+        timePickerDialog.show()
+
+
+
+    }
+
+
+    fun isFutureOrCurrentDate(dateString: String): Boolean {
+        // Define the input date format
+//        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        // Parse the given date string
+        val givenDate: Date = dateFormat.parse(dateString)
+
+        // Get the current date and set time to 00:00:00 for comparison
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val currentDate: Date = calendar.time
+
+        var isFutureDate:Boolean=true
+
+        if(givenDate.equals(currentDate)||givenDate.before(currentDate)){
+            isFutureDate=false
+        }
+        // Compare the parsed date with the current date
+        return isFutureDate
+    }
+
+
+    private fun openTimePickerCurrent() {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            requireActivity(),
+            { _, selectedHour, selectedMinute ->
+                // Check if the selected time is between 9:00 AM and 9:00 PM
+                if (selectedHour >= 9 && selectedHour < 21) { // 9 AM is 9, 9 PM is 21 in 24-hour format
+                    // Format the time string as per 12-hour format
+                    val amPm: String = if (selectedHour < 12) "AM" else "PM"
+                    val hourIn12Format = if (selectedHour % 12 == 0) 12 else selectedHour % 12
+                    val formattedTime =
+                        String.format("%02d:%02d %s", hourIn12Format, selectedMinute, amPm)
+
+                    // Set the time to your TextView (or EditText)
+                    binding.edtTime.setText(formattedTime)
+                } else {
+                    // Show a message if the selected time is outside the range
+                    showCustomToast(
+                        binding.root,
+                        requireActivity(),
+                        "Please select a time between 9:00 AM and 9:00 PM"
+                    )
+
+                }
+            },
+            hour,
+            minute,
+            false // Set false for 12-hour format (AM/PM)
+        )
+        timePickerDialog.show()
+
+
+
+
+
+
+
+    }
+
+
+
+    fun convertTo24HourFormat(time: String): String {
+        val inputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val date = inputFormat.parse(time)
+        return outputFormat.format(date)
+    }
+
+    fun convertAM(time: String): String{
+        val time24Hour = time
+        val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault()) // Input format
+        val outputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault()) // Output AM/PM format
+
+        val date = inputFormat.parse(time24Hour) // Parse the 24-hour time
+        val time12Hour = outputFormat.format(date).uppercase(Locale.getDefault()) // Format it to AM/PM
+
+        println(time12Hour) // Output: 12:49 PM
+        return time12Hour
+    }
 }

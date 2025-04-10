@@ -146,7 +146,7 @@ try {
             holder.binding.edtWeight.setSelection(holder.binding.edtWeight.text.toString().length)
         }
 
-
+        holder.binding.autoCompleteTextView.inputType = InputType.TYPE_NULL
         holder.binding.autoCompleteTextView.setOnTouchListener(View.OnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 listener.onItemCategorySelect(currentItem, position)

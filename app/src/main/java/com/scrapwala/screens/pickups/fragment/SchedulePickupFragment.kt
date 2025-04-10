@@ -459,6 +459,27 @@ class SchedulePickupFragment : Fragment(),WasteTypeAdapter.OnItemClickListener {
                 var item = data?.getStringExtra("clickedItem")
                 if (item.isNullOrEmpty().not()) {
                     selectCategoryObj = Gson().fromJson(item, CategoryResponse.Data::class.java)
+
+
+                    //check category duplicate not add category when duplicate
+                    val list = wasteTypeAdapter.getSourceIncomeList()
+
+                    val isDuplicate = list.any {
+                        !it.selectedCategory.isNullOrEmpty() &&
+                                it.selectedCategory == selectCategoryObj?.name
+                    }
+
+                    if (isDuplicate && selectWasteTypeCategoryModel?.selectedCategory.isNullOrEmpty()) {
+                        showCustomToast(binding.root, requireActivity(), "This category is already added")
+                        return@registerForActivityResult
+                    }
+
+
+
+
+
+
+
                     if (selectCategoryObj != null && selectCategoryObj!!.name.isNullOrEmpty()
                             .not()
                     ) {

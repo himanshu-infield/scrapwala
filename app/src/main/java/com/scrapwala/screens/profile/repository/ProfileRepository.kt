@@ -19,7 +19,8 @@ class ProfileRepository @Inject constructor(private val apiService: ApiService) 
 
 
     suspend fun saveUser(
-        token: String, body: HashMap<String, RequestBody>
+        token: String,
+        body: HashMap<String, RequestBody>,
     ): ApiResult<VerifyOtpResponse> {
         return apiService.saveUser(token,body)
     }

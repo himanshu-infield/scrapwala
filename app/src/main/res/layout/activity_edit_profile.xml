@@ -140,6 +140,7 @@
                                 android:layout_marginEnd="@dimen/_16dp"
                                 android:paddingVertical="4dp"
                                 android:text="CHANGE"
+                                android:visibility="gone"
                                 android:textColor="#dc6770"
                                 app:layout_constraintBottom_toBottomOf="@+id/mobile"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +187,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_12dp"
                             android:textColorHint="@color/_666666"
-                            android:imeOptions="actionNext"
+                            android:imeOptions="actionDone"
                             app:errorIconDrawable="@null"
                             app:hintEnabled="false"
                             app:endIconDrawable="@drawable/ic_down"
@@ -215,6 +216,7 @@
                             android:paddingBottom="35dp"
                             android:layout_marginTop="@dimen/_20dp">
                             <TextView
+                                android:id="@+id/tvUpdateProfile"
                                 style="@style/semibold_14sp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

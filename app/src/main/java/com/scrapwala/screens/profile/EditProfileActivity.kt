@@ -31,6 +31,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
+import com.moengage.core.internal.utils.showToast
 import com.scrapwala.R
 import com.scrapwala.databinding.ActivityEditProfileBinding
 import com.scrapwala.databinding.DialogGenericsearchBinding
@@ -50,6 +51,8 @@ import com.scrapwala.utils.extensionclass.showCustomToast
 import com.scrapwala.utils.extensionclass.showSpinner
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -81,6 +84,7 @@ class EditProfileActivity : AppCompatActivity() {
         disableAllInputField()
 
         observeSaveUserResponse()
+
     }
 
 
@@ -90,9 +94,11 @@ class EditProfileActivity : AppCompatActivity() {
                 is VerifyOtpResponse -> {
                     hideSpinner()
                     if(it.data!=null){
+                        showCustomToast(binding.root,this,it.message.toString(),true,0,"#57bc2f")
                         Preferences.setUserData(this, Gson().toJson(it.data))
+                        setUserData()
                     }
-                    renderProfilePic("" + compressedFile)
+//                    renderProfilePic("" + compressedFile)
 
 
                 }
@@ -347,6 +353,33 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
 
+        binding.tvUpdateProfile.setOnClickListener {
+            updateProfile()
+        }
+    }
+
+    private fun updateProfile() {
+
+        val id: RequestBody = pref?.id!!.toString().toRequestBody("text/plain".toMediaType())
+        val name: RequestBody = binding.edtName.text.toString().toRequestBody("text/plain".toMediaType())
+        val gender: RequestBody = pref?.gender!!.toRequestBody("text/plain".toMediaType())
+        val email: RequestBody = pref?.email!!.toRequestBody("text/plain".toMediaType())
+        val mobile: RequestBody = pref?.mobile!!.toRequestBody("text/plain".toMediaType())
+        val city: RequestBody = binding.edtCity.text.toString().toRequestBody("text/plain".toMediaType())
+
+
+
+
+        var hashMap: HashMap<String, RequestBody> = hashMapOf()
+        hashMap.put("id", id)
+        hashMap.put("name", name)
+        hashMap.put("gender", gender)
+        hashMap.put("email", email)
+        hashMap.put("mobile", mobile)
+        hashMap.put("city", city)
+
+        showSpinner(this)
+        viewModel.saveUserRequest("Bearer $token", hashMap)
     }
 
     private val takePictureLauncher =
@@ -394,7 +427,7 @@ class EditProfileActivity : AppCompatActivity() {
 
 
 
-        var hashMap: HashMap<String, RequestBody> = hashMapOf()
+        var hashMap= HashMap<String, RequestBody>()
         hashMap.put("id", id)
         hashMap.put("name", name)
         hashMap.put("gender", gender)
@@ -484,9 +517,9 @@ class EditProfileActivity : AppCompatActivity() {
         binding.edtEmail.isFocusable = false
         binding.edtEmail.isFocusableInTouchMode = false
 
-        binding.edtCity.isClickable = false
-        binding.edtCity.isFocusable = false
-        binding.edtCity.isEnabled = false
-        binding.edtCity.isFocusableInTouchMode = false
+//        binding.edtCity.isClickable = false
+//        binding.edtCity.isFocusable = false
+//        binding.edtCity.isEnabled = false
+//        binding.edtCity.isFocusableInTouchMode = false
     }
 }

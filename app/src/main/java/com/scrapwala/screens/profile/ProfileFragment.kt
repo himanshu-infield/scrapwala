@@ -97,7 +97,7 @@ class ProfileFragment : Fragment() {
                     if(it.data!=null){
                         Preferences.setUserData(requireContext(), Gson().toJson(it.data))
                     }
-                        renderProfilePic("" + compressedFile)
+//                        renderProfilePic("" + compressedFile)
                         setUserData()
 
 
@@ -173,6 +173,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setUserData() {
+        userDataObj= Preferences.getUserDataObj(requireContext())
         pref = Preferences.getUserDataObj(requireContext())
         token = Preferences.getUserToken(requireContext())
         if(userDataObj!=null){
@@ -316,14 +317,7 @@ class ProfileFragment : Fragment() {
         val coverPicBody = compressedFile?.asRequestBody(imageMimeType.toMediaType())!!
 
 
-
-//        val imageFile = File(this.compressedFile)
-//        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), imageFile)
-//        val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, requestFile)
-
-
-
-        var hashMap: HashMap<String, RequestBody> = hashMapOf()
+        var hashMap = HashMap<String, RequestBody>()
         hashMap.put("id", id)
         hashMap.put("name", name)
         hashMap.put("gender", gender)
